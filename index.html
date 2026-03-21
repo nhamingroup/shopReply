@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hướng dẫn cài đặt ShopReply</title>
+  <style>
+    /* ===== Reset & Base ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue-50: #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-200: #bfdbfe;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+      --blue-800: #1e40af;
+      --blue-900: #1e3a5f;
+      --green-500: #22c55e;
+      --green-600: #16a34a;
+      --green-700: #15803d;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-300: #d1d5db;
+      --gray-400: #9ca3af;
+      --gray-500: #6b7280;
+      --gray-600: #4b5563;
+      --gray-700: #374151;
+      --gray-800: #1f2937;
+      --gray-900: #111827;
+      --sidebar-w: 280px;
+    }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      color: var(--gray-800);
+      background: var(--gray-50);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    a { color: var(--blue-600); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Screenshots */
+    .screenshot {
+      margin: 20px 0;
+      text-align: center;
+    }
+    .screenshot img {
+      max-width: 100%;
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    .screenshot figcaption {
+      margin-top: 8px;
+      font-size: 13px;
+      color: var(--gray-500);
+      font-style: italic;
+    }
+
+    /* ===== Header ===== */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fff;
+      border-bottom: 1px solid var(--gray-200);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 40px;
+      height: 40px;
+      background: var(--green-600);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 20px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .header-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--gray-900);
+    }
+
+    .header-subtitle {
+      font-size: 13px;
+      color: var(--gray-500);
+    }
+
+    .header-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      background: var(--blue-50);
+      color: var(--blue-700);
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 20px;
+      border: 1px solid var(--blue-200);
+    }
+
+    .toc-toggle {
+      display: none;
+      background: var(--blue-600);
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* ===== Layout ===== */
+    .layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      gap: 0;
+      min-height: calc(100vh - 64px);
+    }
+
+    /* ===== Sidebar / TOC ===== */
+    .sidebar {
+      width: var(--sidebar-w);
+      flex-shrink: 0;
+      position: sticky;
+      top: 64px;
+      height: calc(100vh - 64px);
+      overflow-y: auto;
+      padding: 24px 20px;
+      border-right: 1px solid var(--gray-200);
+      background: #fff;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--gray-400);
+      margin-bottom: 12px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-list li { margin-bottom: 2px; }
+
+    .toc-list a {
+      display: block;
+      padding: 6px 12px;
+      font-size: 14px;
+      color: var(--gray-600);
+      border-radius: 6px;
+      transition: all 0.15s;
+    }
+
+    .toc-list a:hover {
+      background: var(--blue-50);
+      color: var(--blue-700);
+      text-decoration: none;
+    }
+
+    .toc-list a.active {
+      background: var(--blue-50);
+      color: var(--blue-700);
+      font-weight: 600;
+    }
+
+    .toc-list .toc-sub {
+      padding-left: 24px;
+      font-size: 13px;
+      color: var(--gray-500);
+    }
+
+    /* ===== Main Content ===== */
+    .main {
+      flex: 1;
+      min-width: 0;
+      padding: 32px 40px 80px;
+    }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, var(--blue-600) 0%, var(--blue-800) 100%);
+      color: #fff;
+      border-radius: 16px;
+      padding: 40px;
+      margin-bottom: 40px;
+    }
+
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      font-size: 16px;
+      opacity: 0.9;
+      line-height: 1.6;
+    }
+
+    .hero .privacy-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+      padding: 8px 16px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .hero .privacy-badge svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Sections */
+    .section {
+      margin-bottom: 48px;
+    }
+
+    .section h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--gray-900);
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--blue-100);
+    }
+
+    .section h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--gray-800);
+      margin-top: 28px;
+      margin-bottom: 12px;
+    }
+
+    .section p, .section li {
+      color: var(--gray-700);
+      margin-bottom: 8px;
+    }
+
+    .section ul, .section ol {
+      padding-left: 24px;
+      margin-bottom: 16px;
+    }
+
+    .section ol > li {
+      margin-bottom: 8px;
+    }
+
+    .section ol > li::marker {
+      font-weight: 600;
+      color: var(--blue-600);
+    }
+
+    /* Cards */
+    .card {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    /* Table */
+    .table-wrapper {
+      overflow-x: auto;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--gray-200);
+    }
+
+    th {
+      background: var(--blue-50);
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--blue-800);
+      border-bottom: 2px solid var(--blue-200);
+    }
+
+    td {
+      padding: 12px 16px;
+      font-size: 14px;
+      border-bottom: 1px solid var(--gray-100);
+      color: var(--gray-700);
+    }
+
+    tr:last-child td { border-bottom: none; }
+
+    /* Tips / Notes */
+    .tip {
+      background: var(--blue-50);
+      border: 1px solid var(--blue-200);
+      border-left: 4px solid var(--blue-500);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      font-size: 14px;
+      color: var(--blue-800);
+    }
+
+    .tip strong { color: var(--blue-700); }
+
+    .tip-green {
+      background: #f0fdf4;
+      border-color: #bbf7d0;
+      border-left-color: var(--green-500);
+      color: var(--green-700);
+    }
+
+    .tip-green strong { color: var(--green-700); }
+
+    .tip-amber {
+      background: #fffbeb;
+      border-color: #fde68a;
+      border-left-color: #f59e0b;
+      color: #92400e;
+    }
+
+    /* Code */
+    code {
+      background: var(--gray-100);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+      color: var(--blue-700);
+    }
+
+    pre {
+      background: var(--gray-900);
+      color: #e5e7eb;
+      border-radius: 10px;
+      padding: 16px 20px;
+      overflow-x: auto;
+      font-size: 13px;
+      line-height: 1.6;
+      margin: 12px 0 16px;
+    }
+
+    pre code {
+      background: none;
+      padding: 0;
+      color: inherit;
+    }
+
+    /* Step number badges */
+    .step-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: var(--blue-600);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 14px;
+      font-weight: 700;
+      margin-right: 12px;
+      flex-shrink: 0;
+    }
+
+    .step-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .step-header h2 {
+      border: none;
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
+
+    /* FAQ */
+    .faq-item {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 12px;
+    }
+
+    .faq-item h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--gray-900);
+      margin: 0 0 8px;
+    }
+
+    .faq-item p {
+      font-size: 14px;
+      color: var(--gray-600);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--gray-900);
+      color: var(--gray-400);
+      padding: 40px 24px;
+      text-align: center;
+    }
+
+    .footer-inner {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .footer h3 {
+      color: #fff;
+      font-size: 18px;
+      margin-bottom: 16px;
+    }
+
+    .footer p {
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .footer a {
+      color: var(--blue-200);
+    }
+
+    .footer-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .footer-logo {
+      width: 32px;
+      height: 32px;
+      background: var(--green-600);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .footer-divider {
+      border: none;
+      border-top: 1px solid var(--gray-700);
+      margin: 24px 0;
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--gray-500);
+    }
+
+    /* Language Switcher */
+    .lang-switcher {
+      display: inline-flex;
+      border: 1px solid var(--gray-300);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-right: 8px;
+    }
+
+    .lang-btn {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      background: #fff;
+      color: var(--gray-500);
+      transition: all 0.15s;
+    }
+
+    .lang-btn:first-child {
+      border-right: 1px solid var(--gray-300);
+    }
+
+    .lang-btn.active {
+      background: var(--blue-600);
+      color: #fff;
+    }
+
+    .lang-btn:hover:not(.active) {
+      background: var(--gray-100);
+    }
+
+    .lang-flag {
+      width: 18px;
+      height: 13px;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 900px) {
+      .sidebar {
+        display: none;
+        position: fixed;
+        top: 64px;
+        left: 0;
+        width: 100%;
+        height: calc(100vh - 64px);
+        z-index: 90;
+        border-right: none;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      }
+
+      .sidebar.open {
+        display: block;
+      }
+
+      .toc-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .main {
+        padding: 20px 16px 60px;
+      }
+
+      .hero {
+        padding: 28px 24px;
+        border-radius: 12px;
+      }
+
+      .hero h1 {
+        font-size: 22px;
+      }
+
+      .header-badge { display: none; }
+
+      .section h2 { font-size: 20px; }
+
+      .step-badge {
+        width: 28px;
+        height: 28px;
+        font-size: 13px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-inner { padding: 0 12px; }
+      .main { padding: 16px 12px 60px; }
+      .hero { padding: 20px 16px; }
+      .hero h1 { font-size: 20px; }
+      .card { padding: 16px; }
+      table { font-size: 13px; }
+      th, td { padding: 10px 12px; }
+    }
+
+    /* ===== Print ===== */
+    @media print {
+      .header, .sidebar, .toc-toggle, .footer { display: none; }
+
+      body {
+        background: #fff;
+        font-size: 12pt;
+        color: #000;
+      }
+
+      .layout { display: block; }
+
+      .main {
+        padding: 0;
+        max-width: 100%;
+      }
+
+      .hero {
+        background: none;
+        color: #000;
+        border: 2px solid #000;
+        border-radius: 0;
+        padding: 20px;
+      }
+
+      .hero h1 { font-size: 24pt; }
+
+      .section { page-break-inside: avoid; }
+
+      .card, .faq-item {
+        border: 1px solid #ccc;
+        box-shadow: none;
+      }
+
+      pre {
+        background: #f5f5f5;
+        color: #000;
+        border: 1px solid #ccc;
+      }
+
+      a { color: #000; text-decoration: underline; }
+      a::after { content: " (" attr(href) ")"; font-size: 9pt; color: #666; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== Header ===== -->
+<header class="header">
+  <div class="header-inner">
+    <div class="header-brand">
+      <div class="logo">S</div>
+      <div>
+        <div class="header-title">ShopReply</div>
+        <div class="header-subtitle" data-i18n="header_subtitle">Hướng dẫn cài đặt & sử dụng</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div class="lang-switcher">
+        <button class="lang-btn active" onclick="switchLang('vi')" id="btn-vi">
+          <svg class="lang-flag" viewBox="0 0 900 600"><rect width="900" height="600" fill="#da251d"/><polygon points="450,120 520,330 340,210 560,210 380,330" fill="#ff0"/></svg>
+          VI
+        </button>
+        <button class="lang-btn" onclick="switchLang('en')" id="btn-en">
+          <svg class="lang-flag" viewBox="0 0 900 600"><rect width="900" height="600" fill="#00247d"/><path d="M0,0L900,600M900,0L0,600" stroke="#fff" stroke-width="80"/><path d="M0,0L900,600M900,0L0,600" stroke="#cf142b" stroke-width="50"/><path d="M450,0V600M0,300H900" stroke="#fff" stroke-width="120"/><path d="M450,0V600M0,300H900" stroke="#cf142b" stroke-width="70"/></svg>
+          EN
+        </button>
+      </div>
+      <span class="header-badge">v1.0</span>
+      <button class="toc-toggle" onclick="toggleTOC()" aria-label="Menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+        <span data-i18n="toc_toggle">Mục lục</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ===== Layout ===== -->
+<div class="layout">
+
+  <!-- Sidebar / TOC -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-title" data-i18n="toc_title">Mục lục</div>
+    <ul class="toc-list">
+      <li><a href="#yeu-cau" data-i18n="toc_req">Yêu cầu hệ thống</a></li>
+      <li><a href="#ollama" class="toc-sub" data-i18n="toc_ollama">Cài Ollama (tùy chọn)</a></li>
+      <li><a href="#buoc-1" data-i18n="toc_step1">Bước 1: Cài Backend</a></li>
+      <li><a href="#kiem-tra" class="toc-sub" data-i18n="toc_verify">Kiểm tra thành công</a></li>
+      <li><a href="#buoc-2" data-i18n="toc_step2">Bước 2: Cài Chrome Extension</a></li>
+      <li><a href="#buoc-3" data-i18n="toc_step3">Bước 3: Import Q&A</a></li>
+      <li><a href="#import-file" class="toc-sub" data-i18n="toc_import_file">Import từ file</a></li>
+      <li><a href="#them-tung-cau" class="toc-sub" data-i18n="toc_add_one">Thêm từng câu</a></li>
+      <li><a href="#scan-chat" class="toc-sub" data-i18n="toc_scan">Scan lịch sử chat</a></li>
+      <li><a href="#tu-hoc" class="toc-sub" data-i18n="toc_selflearn">Bot tự học</a></li>
+      <li><a href="#buoc-4" data-i18n="toc_step4">Bước 4: Bắt đầu sử dụng</a></li>
+      <li><a href="#cai-dat" data-i18n="toc_settings">Tùy chỉnh cài đặt</a></li>
+      <li><a href="#auto-start" data-i18n="toc_autostart">Khởi động cùng Windows</a></li>
+      <li><a href="#faq" data-i18n="toc_faq">Câu hỏi thường gặp</a></li>
+      <li><a href="#lien-he" data-i18n="toc_contact">Liên hệ hỗ trợ</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main">
+
+    <!-- Hero -->
+    <div class="hero">
+      <h1 data-i18n="hero_title">Hướng dẫn cài đặt ShopReply</h1>
+      <p data-i18n="hero_desc">Phần mềm tự động trả lời tin nhắn cho shop bán hàng trên Facebook & Zalo.<br>
+      Mọi dữ liệu đều được xử lý <strong>trên máy của bạn</strong> — không gì bị gửi lên cloud.</p>
+      <div class="privacy-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span data-i18n="hero_privacy">100% bảo mật — dữ liệu không rời máy bạn</span>
+      </div>
+    </div>
+
+    <!-- Yêu cầu hệ thống -->
+    <section class="section" id="yeu-cau">
+      <h2 data-i18n="sec_req_title">Yêu cầu hệ thống</h2>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th data-i18n="sec_req_th1">Hạng mục</th>
+              <th data-i18n="sec_req_th2">Yêu cầu tối thiểu</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-i18n="sec_req_os">Hệ điều hành</td>
+              <td data-i18n="sec_req_os_val">Windows 10 trở lên (64-bit)</td>
+            </tr>
+            <tr>
+              <td data-i18n="sec_req_ram">RAM</td>
+              <td data-i18n="sec_req_ram_val">8 GB (khuyến nghị 16 GB nếu dùng AI gợi ý)</td>
+            </tr>
+            <tr>
+              <td data-i18n="sec_req_disk">Ổ cứng</td>
+              <td data-i18n="sec_req_disk_val">~2 GB trống (cho backend + model embedding)</td>
+            </tr>
+            <tr>
+              <td data-i18n="sec_req_browser">Trình duyệt</td>
+              <td data-i18n="sec_req_browser_val">Google Chrome phiên bản 120+</td>
+            </tr>
+            <tr>
+              <td data-i18n="sec_req_net">Mạng</td>
+              <td data-i18n="sec_req_net_val">Không cần internet để trả lời tự động. Cần internet để cài Chrome Extension</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="ollama">
+        <h3 data-i18n="sec_ollama_title">Tùy chọn: Cài Ollama (để có AI gợi ý)</h3>
+        <p data-i18n="sec_ollama_desc">Nếu bạn muốn ShopReply <strong>gợi ý câu trả lời bằng AI</strong> cho những câu hỏi mới:</p>
+        <ol>
+          <li data-i18n="sec_ollama_1">Tải Ollama tại: <a href="https://ollama.com/download" target="_blank">ollama.com/download</a></li>
+          <li data-i18n="sec_ollama_2">Cài đặt bình thường (Next > Next > Install)</li>
+          <li data-i18n="sec_ollama_3">Mở Command Prompt, chạy: <code>ollama pull qwen2.5:7b</code></li>
+          <li data-i18n="sec_ollama_4">Đợi tải xong (khoảng 4-5 GB)</li>
+        </ol>
+        <div class="tip" data-i18n="sec_ollama_tip">
+          <strong>Lưu ý:</strong> Nếu không cài Ollama, ShopReply vẫn hoạt động bình thường — chỉ là không có AI gợi ý cho câu hỏi mới.
+        </div>
+      </div>
+    </section>
+
+    <!-- Bước 1 -->
+    <section class="section" id="buoc-1">
+      <div class="step-header">
+        <span class="step-badge">1</span>
+        <h2 data-i18n="sec_s1_title">Cài Backend (1 lần duy nhất)</h2>
+      </div>
+
+      <div class="card">
+        <ol>
+          <li data-i18n="sec_s1_1">Download file <code>ShopReply-Backend.exe</code></li>
+          <li data-i18n="sec_s1_2">Tạo 1 thư mục riêng, ví dụ: <code>C:\ShopReply\</code></li>
+          <li data-i18n="sec_s1_3">Bỏ file .exe vào thư mục đó</li>
+          <li data-i18n="sec_s1_4">Double-click để chạy</li>
+          <li data-i18n="sec_s1_5"><strong>Lần đầu chạy sẽ mất 30-60 giây</strong> để tải model embedding (chỉ lần đầu)</li>
+          <li data-i18n="sec_s1_6">Biểu tượng ShopReply (hình tròn xanh chữ "S") sẽ hiện ở <strong>khay hệ thống</strong> (góc dưới phải màn hình)</li>
+        </ol>
+      </div>
+
+      <div class="tip" data-i18n="sec_s1_tip">
+        <strong>Mẹo:</strong> Nếu không thấy biểu tượng, click mũi tên <strong>^</strong> ở khay hệ thống để hiện các biểu tượng ẩn.
+      </div>
+
+      <div id="kiem-tra">
+        <h3 data-i18n="sec_s1_verify_title">Kiểm tra đã chạy thành công</h3>
+        <div class="card">
+          <ol>
+            <li data-i18n="sec_s1_verify_1">Click phải biểu tượng ShopReply ở khay hệ thống</li>
+            <li data-i18n="sec_s1_verify_2">Chọn <strong>"Open Health Check"</strong></li>
+            <li data-i18n="sec_s1_verify_3">Trình duyệt sẽ mở và hiện trạng thái <code>"status": "ok"</code> — vậy là thành công!</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bước 2 -->
+    <section class="section" id="buoc-2">
+      <div class="step-header">
+        <span class="step-badge">2</span>
+        <h2 data-i18n="sec_s2_title">Cài Chrome Extension</h2>
+      </div>
+
+      <div class="card">
+        <ol>
+          <li data-i18n="sec_s2_1">Mở Chrome Web Store (link sẽ được cung cấp sau)</li>
+          <li data-i18n="sec_s2_2">Nhấn <strong>"Thêm vào Chrome"</strong> (Add to Chrome)</li>
+          <li data-i18n="sec_s2_3">Nhấn <strong>"Thêm tiện ích mở rộng"</strong> (Add extension)</li>
+          <li data-i18n="sec_s2_4">Ghim biểu tượng ShopReply vào thanh công cụ:
+            <ul>
+              <li data-i18n="sec_s2_4a">Click biểu tượng puzzle (tiện ích mở rộng) ở góc phải Chrome</li>
+              <li data-i18n="sec_s2_4b">Tìm <strong>ShopReply</strong> > click biểu tượng ghim</li>
+            </ul>
+          </li>
+        </ol>
+      </div>
+
+      <figure class="screenshot">
+        <img src="images/popup.png" alt="ShopReply Popup - Giao diện chính sau khi cài đặt">
+        <figcaption data-i18n="sec_s2_cap">Popup chính của ShopReply — hiển thị số Q&A, thống kê auto-reply, nút bật/tắt nhanh</figcaption>
+      </figure>
+    </section>
+
+    <!-- Bước 3 -->
+    <section class="section" id="buoc-3">
+      <div class="step-header">
+        <span class="step-badge">3</span>
+        <h2 data-i18n="sec_s3_title">Import bộ câu hỏi - trả lời</h2>
+      </div>
+
+      <p data-i18n="sec_s3_desc">Đây là bước quan trọng nhất — bạn cần "dạy" cho bot biết cách trả lời khách hàng.</p>
+
+      <!-- Cách 1 -->
+      <div class="card" id="import-file">
+        <h3 style="margin-top:0;" data-i18n="sec_s3_m1_title">Cách 1: Import từ file (khuyến nghị)</h3>
+        <ol>
+          <li data-i18n="sec_s3_m1_1">Chuẩn bị file CSV với 2 cột: <code>question</code> và <code>answer</code></li>
+        </ol>
+        <p data-i18n="sec_s3_m1_example">Ví dụ:</p>
+        <pre><code>question,answer
+"Giá áo hoodie?","Áo hoodie giá 350k, size S-XL ạ"
+"Ship bao lâu?","Ship nội thành 1-2 ngày, ngoại thành 3-5 ngày ạ"
+"Có COD không?","Có COD nha bạn, nhận hàng rồi trả tiền ạ"</code></pre>
+        <ol start="2">
+          <li data-i18n="sec_s3_m1_2">Click biểu tượng ShopReply trên Chrome > <strong>"Cài đặt"</strong></li>
+          <li data-i18n="sec_s3_m1_3">Chọn tab <strong>"Import"</strong></li>
+          <li data-i18n="sec_s3_m1_4">Kéo thả file CSV vào hoặc click để chọn file</li>
+          <li data-i18n="sec_s3_m1_5">Xác nhận import</li>
+        </ol>
+      </div>
+
+      <figure class="screenshot">
+        <img src="images/qa-database.png" alt="Q&A Database - Bảng câu hỏi và trả lời">
+        <figcaption data-i18n="sec_s3_qa_cap">Tab Q&A Database — quản lý tất cả câu hỏi/trả lời, tìm kiếm, sửa, xóa</figcaption>
+      </figure>
+
+      <!-- Cách 2 -->
+      <div class="card" id="them-tung-cau">
+        <h3 style="margin-top:0;" data-i18n="sec_s3_m2_title">Cách 2: Thêm từng câu</h3>
+        <ol>
+          <li data-i18n="sec_s3_m2_1">Mở cài đặt ShopReply > tab <strong>"Q&A"</strong></li>
+          <li data-i18n="sec_s3_m2_2">Click <strong>"Thêm mới"</strong></li>
+          <li data-i18n="sec_s3_m2_3">Nhập câu hỏi và câu trả lời</li>
+          <li data-i18n="sec_s3_m2_4">Lưu lại</li>
+        </ol>
+      </div>
+
+      <!-- Cách 3 -->
+      <div class="card" id="scan-chat">
+        <h3 style="margin-top:0;" data-i18n="sec_s3_m3_title">Cách 3: Scan lịch sử chat cũ (cần Ollama)</h3>
+        <ol>
+          <li data-i18n="sec_s3_m3_1">Mở Facebook Messages hoặc Zalo Web trên Chrome</li>
+          <li data-i18n="sec_s3_m3_2">Click biểu tượng ShopReply > <strong>"Scan lịch sử"</strong></li>
+          <li data-i18n="sec_s3_m3_3">Chọn những cuộc hội thoại là <strong>khách hàng</strong> (bỏ qua bạn bè, nhóm chat...)</li>
+          <li data-i18n="sec_s3_m3_4">ShopReply sẽ tự động trích xuất các cặp câu hỏi - trả lời</li>
+          <li data-i18n="sec_s3_m3_5">Review và xác nhận</li>
+        </ol>
+      </div>
+
+      <!-- Cách 4 -->
+      <div class="card" id="tu-hoc">
+        <h3 style="margin-top:0;" data-i18n="sec_s3_m4_title">Cách 4: Không cần import — bot tự học</h3>
+        <p data-i18n="sec_s3_m4_desc">Nếu bạn không có data sẵn:</p>
+        <ol>
+          <li data-i18n="sec_s3_m4_1">Để bot chạy ở chế độ <strong>"Suggest only"</strong> (gợi ý, không tự động gửi)</li>
+          <li data-i18n="sec_s3_m4_2">Mỗi khi khách hỏi, bạn tự viết câu trả lời, bot tự lưu vào database</li>
+          <li data-i18n="sec_s3_m4_3">Lần sau gặp câu tương tự, bot tự động trả lời luôn</li>
+          <li data-i18n="sec_s3_m4_4">Sau 1-2 tuần, bot đã học đủ để tự động 80-90% câu hỏi</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Bước 4 -->
+    <section class="section" id="buoc-4">
+      <div class="step-header">
+        <span class="step-badge">4</span>
+        <h2 data-i18n="sec_s4_title">Bắt đầu sử dụng</h2>
+      </div>
+
+      <div class="card">
+        <ol>
+          <li data-i18n="sec_s4_1">Đảm bảo ShopReply Backend đang chạy (biểu tượng xanh ở khay hệ thống)</li>
+          <li data-i18n="sec_s4_2">Mở <strong>Facebook Messages</strong> (<code>facebook.com/messages</code>) hoặc <strong>Zalo Web</strong> (<code>chat.zalo.me</code>)</li>
+          <li data-i18n="sec_s4_3">Khi có tin nhắn khách hàng:
+            <ul>
+              <li data-i18n="sec_s4_3a"><strong>Câu đã có sẵn trong DB</strong> (độ chính xác &ge; 85%) — ShopReply <strong>tự động trả lời luôn</strong></li>
+              <li data-i18n="sec_s4_3b"><strong>Câu tương tự</strong> (50-84%) — Hiện bảng đề xuất, bạn chọn/sửa rồi gửi</li>
+              <li data-i18n="sec_s4_3c"><strong>Câu hoàn toàn mới</strong> — Hiện gợi ý từ AI (nếu có Ollama), bạn tự viết rồi gửi</li>
+            </ul>
+          </li>
+          <li data-i18n="sec_s4_4">Mỗi lần bạn trả lời câu mới, ShopReply tự động học, lần sau gặp câu tương tự sẽ tự trả lời</li>
+        </ol>
+      </div>
+
+      <div class="tip tip-green" data-i18n="sec_s4_tip">
+        <strong>Càng dùng nhiều, bot càng thông minh.</strong> Sau 1-2 tuần, bot có thể tự động trả lời 80-90% câu hỏi.
+      </div>
+
+      <figure class="screenshot">
+        <img src="images/auto-reply-log.png" alt="Auto-Reply Log - Nhật ký tự động trả lời">
+        <figcaption data-i18n="sec_s4_cap">Tab Auto-Reply Log — xem lại các câu bot đã tự trả lời, đánh giá OK/Sai để bot học hỏi</figcaption>
+      </figure>
+    </section>
+
+    <!-- Settings screenshot -->
+    <section class="section" id="cai-dat">
+      <h2 data-i18n="sec_settings_title">Tùy chỉnh cài đặt</h2>
+      <p data-i18n="sec_settings_desc">Mở cài đặt ShopReply để điều chỉnh ngưỡng tự động trả lời, giọng văn, và các nền tảng:</p>
+      <figure class="screenshot">
+        <img src="images/settings.png" alt="Settings - Cài đặt ShopReply">
+        <figcaption data-i18n="sec_settings_cap">Tab Settings — điều chỉnh ngưỡng auto-reply (0.85), suggest (0.50), giọng văn, bật/tắt FB/Zalo</figcaption>
+      </figure>
+    </section>
+
+    <!-- Khởi động cùng Windows -->
+    <section class="section" id="auto-start">
+      <h2 data-i18n="sec_autostart_title">Khởi động cùng Windows (tùy chọn)</h2>
+      <p data-i18n="sec_autostart_desc">Để ShopReply tự động chạy mỗi khi bật máy:</p>
+      <div class="card">
+        <ol>
+          <li data-i18n="sec_autostart_1">Click phải biểu tượng ShopReply ở khay hệ thống</li>
+          <li data-i18n="sec_autostart_2">Chọn <strong>"Start with Windows"</strong> (sẽ hiện dấu check khi đã bật)</li>
+          <li data-i18n="sec_autostart_3">Để tắt: click lại <strong>"Start with Windows"</strong> lần nữa</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <h2 data-i18n="sec_faq_title">Câu hỏi thường gặp</h2>
+
+      <div class="faq-item">
+        <h3 data-i18n="faq_q1">ShopReply có gửi dữ liệu lên cloud không?</h3>
+        <p data-i18n="faq_a1"><strong>Không.</strong> Toàn bộ dữ liệu (câu hỏi, câu trả lời, lịch sử chat) đều được lưu và xử lý <strong>trên máy của bạn</strong>. Không gì bị gửi ra ngoài.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3 data-i18n="faq_q2">Tại sao lần đầu chạy bị chậm?</h3>
+        <p data-i18n="faq_a2">Lần đầu tiên, ShopReply cần tải model embedding (khoảng 100MB) để hiểu nội dung câu hỏi. Chỉ cần đợi 1 lần, các lần sau sẽ nhanh.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3 data-i18n="faq_q3">Làm sao biết bot đang chạy?</h3>
+        <p data-i18n="faq_a3">Nhìn góc dưới phải màn hình (khay hệ thống) — có biểu tượng hình tròn xanh chữ "S" là đang chạy.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3 data-i18n="faq_q4">Bot trả lời sai thì sao?</h3>
+        <p data-i18n="faq_a4">Mở cài đặt ShopReply > tab <strong>"Nhật ký"</strong> (Auto-Reply Log) > Tìm câu trả lời sai > click <strong>"Sai"</strong> (Wrong) > Sửa lại câu trả lời đúng > Lưu. Bot sẽ học từ bản sửa và không lặp lại lỗi đó.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3 data-i18n="faq_q5">Có thể dùng trên nhiều máy không?</h3>
+        <p data-i18n="faq_a5">Có thể, nhưng mỗi máy cần cài riêng. Dữ liệu không đồng bộ giữa các máy (vì là local).</p>
+      </div>
+
+      <div class="faq-item">
+        <h3 data-i18n="faq_q6">Tôi muốn đổi port (không dùng 3000)?</h3>
+        <p data-i18n="faq_a6">Tạo file <code>.env</code> cạnh file <code>ShopReply-Backend.exe</code>, ghi nội dung: <code>SHOPREPLY_PORT=8080</code> (thay 8080 bằng port mong muốn), rồi khởi động lại ShopReply.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3 data-i18n="faq_q7">Tôi tắt máy mà không tắt ShopReply trước?</h3>
+        <p data-i18n="faq_a7">Không sao. Lần sau bật máy, chỉ cần chạy lại <code>ShopReply-Backend.exe</code> (hoặc bật "Start with Windows" để tự động).</p>
+      </div>
+
+      <div class="faq-item">
+        <h3 data-i18n="faq_q8">Không cài Ollama có sao không?</h3>
+        <p data-i18n="faq_a8">Không sao. ShopReply vẫn trả lời tự động bằng Q&A database. Ollama chỉ cần khi bạn muốn AI gợi ý câu trả lời cho những câu hỏi hoàn toàn mới chưa có trong database.</p>
+      </div>
+    </section>
+
+    <!-- Liên hệ -->
+    <section class="section" id="lien-he">
+      <h2 data-i18n="sec_contact_title">Liên hệ hỗ trợ</h2>
+      <div class="card">
+        <p data-i18n="sec_contact_desc">Nếu bạn gặp vấn đề hoặc cần hỗ trợ, liên hệ qua:</p>
+        <ul style="list-style:none;padding:0;margin-top:12px;">
+          <li style="padding:8px 0;border-bottom:1px solid var(--gray-100);">
+            <strong>Email:</strong> <a href="mailto:nhamingroup@gmail.com">nhamingroup@gmail.com</a>
+          </li>
+          <li style="padding:8px 0;border-bottom:1px solid var(--gray-100);" data-i18n="sec_contact_zalo">
+            <strong>Zalo:</strong> (sẽ cập nhật)
+          </li>
+          <li style="padding:8px 0;" data-i18n="sec_contact_fb">
+            <strong>Facebook:</strong> (sẽ cập nhật)
+          </li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ===== Footer ===== -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">S</div>
+      <strong style="color:#fff;font-size:16px;">ShopReply</strong>
+    </div>
+    <h3 data-i18n="footer_support">Hỗ trợ</h3>
+    <p data-i18n="footer_zalo_fb_full">
+      Email: <a href="mailto:nhamingroup@gmail.com">nhamingroup@gmail.com</a><br>
+      Zalo: (sẽ cập nhật) &bull; Facebook: (sẽ cập nhật)
+    </p>
+    <hr class="footer-divider">
+    <p class="footer-copy" data-i18n="footer_copy">&copy; 2026 ShopReply. All rights reserved. | Dữ liệu của bạn luôn ở trên máy bạn.</p>
+  </div>
+</footer>
+
+<script>
+  // ===== i18n Translation System =====
+  var currentLang = 'vi';
+
+  var translations = {
+    en: {
+      // Header
+      header_subtitle: 'Setup & User Guide',
+      toc_toggle: 'Contents',
+      // TOC
+      toc_title: 'CONTENTS',
+      toc_req: 'System Requirements',
+      toc_ollama: 'Install Ollama (optional)',
+      toc_step1: 'Step 1: Install Backend',
+      toc_verify: 'Verify installation',
+      toc_step2: 'Step 2: Install Chrome Extension',
+      toc_step3: 'Step 3: Import Q&A',
+      toc_import_file: 'Import from file',
+      toc_add_one: 'Add one by one',
+      toc_scan: 'Scan chat history',
+      toc_selflearn: 'Bot self-learning',
+      toc_step4: 'Step 4: Start using',
+      toc_settings: 'Customize settings',
+      toc_autostart: 'Start with Windows',
+      toc_faq: 'FAQ',
+      toc_contact: 'Contact support',
+      // Hero
+      hero_title: 'ShopReply Setup Guide',
+      hero_desc: 'Auto-reply software for shop owners on Facebook & Zalo.<br>All data is processed <strong>on your computer</strong> — nothing is sent to the cloud.',
+      hero_privacy: '100% private — your data never leaves your machine',
+      // Sections — using data-i18n-section on parent containers
+      sec_req_title: 'System Requirements',
+      sec_req_th1: 'Component',
+      sec_req_th2: 'Minimum Requirement',
+      sec_req_os: 'Operating System',
+      sec_req_os_val: 'Windows 10 or later (64-bit)',
+      sec_req_ram: 'RAM',
+      sec_req_ram_val: '8 GB (16 GB recommended if using AI suggestions)',
+      sec_req_disk: 'Disk Space',
+      sec_req_disk_val: '~2 GB free (for backend + embedding model)',
+      sec_req_browser: 'Browser',
+      sec_req_browser_val: 'Google Chrome version 120+',
+      sec_req_net: 'Network',
+      sec_req_net_val: 'No internet needed for auto-reply. Internet required to install Chrome Extension',
+      sec_ollama_title: 'Optional: Install Ollama (for AI suggestions)',
+      sec_ollama_desc: 'If you want ShopReply to <strong>suggest AI-generated answers</strong> for new questions:',
+      sec_ollama_1: 'Download Ollama at: <a href="https://ollama.com/download" target="_blank">ollama.com/download</a>',
+      sec_ollama_2: 'Install normally (Next > Next > Install)',
+      sec_ollama_3: 'Open Command Prompt, run: <code>ollama pull qwen2.5:7b</code>',
+      sec_ollama_4: 'Wait for download (about 4-5 GB)',
+      sec_ollama_tip: '<strong>Note:</strong> Without Ollama, ShopReply still works normally — you just won\'t have AI suggestions for new questions.',
+      // Step 1
+      sec_s1_title: 'Install Backend (one-time only)',
+      sec_s1_1: 'Download <code>ShopReply-Backend.exe</code>',
+      sec_s1_2: 'Create a folder, e.g.: <code>C:\\ShopReply\\</code>',
+      sec_s1_3: 'Place the .exe file in that folder',
+      sec_s1_4: 'Double-click to run',
+      sec_s1_5: '<strong>First run takes 30-60 seconds</strong> to download the embedding model (first time only)',
+      sec_s1_6: 'The ShopReply icon (green circle with "S") will appear in the <strong>system tray</strong> (bottom-right corner)',
+      sec_s1_tip: '<strong>Tip:</strong> If you don\'t see the icon, click the <strong>^</strong> arrow in the system tray to show hidden icons.',
+      sec_s1_verify_title: 'Verify successful installation',
+      sec_s1_verify_1: 'Right-click the ShopReply icon in the system tray',
+      sec_s1_verify_2: 'Select <strong>"Open Health Check"</strong>',
+      sec_s1_verify_3: 'The browser will open showing <code>"status": "ok"</code> — you\'re all set!',
+      // Step 2
+      sec_s2_title: 'Install Chrome Extension',
+      sec_s2_1: 'Open Chrome Web Store (link will be provided later)',
+      sec_s2_2: 'Click <strong>"Add to Chrome"</strong>',
+      sec_s2_3: 'Click <strong>"Add extension"</strong>',
+      sec_s2_4: 'Pin ShopReply to the toolbar:<ul><li data-i18n="sec_s2_4a">Click the puzzle icon (extensions) in the top-right of Chrome</li><li data-i18n="sec_s2_4b">Find <strong>ShopReply</strong> > click the pin icon</li></ul>',
+      sec_s2_4a: 'Click the puzzle icon (extensions) in the top-right of Chrome',
+      sec_s2_4b: 'Find <strong>ShopReply</strong> > click the pin icon',
+      sec_s2_cap: 'ShopReply popup — shows Q&A count, auto-reply stats, quick toggles',
+      // Step 3
+      sec_s3_title: 'Import Q&A pairs',
+      sec_s3_desc: 'This is the most important step — you need to "teach" the bot how to reply to customers.',
+      sec_s3_m1_title: 'Method 1: Import from file (recommended)',
+      sec_s3_m1_1: 'Prepare a CSV file with 2 columns: <code>question</code> and <code>answer</code>',
+      sec_s3_m1_example: 'Example:',
+      sec_s3_m1_2: 'Click the ShopReply icon on Chrome > <strong>"Settings"</strong>',
+      sec_s3_m1_3: 'Go to the <strong>"Import"</strong> tab',
+      sec_s3_m1_4: 'Drag & drop the CSV file or click to browse',
+      sec_s3_m1_5: 'Confirm import',
+      sec_s3_qa_cap: 'Q&A Database tab — manage all questions/answers, search, edit, delete',
+      sec_s3_m2_title: 'Method 2: Add one by one',
+      sec_s3_m2_1: 'Open ShopReply settings > <strong>"Q&A"</strong> tab',
+      sec_s3_m2_2: 'Click <strong>"Add New"</strong>',
+      sec_s3_m2_3: 'Enter the question and answer',
+      sec_s3_m2_4: 'Save',
+      sec_s3_m3_title: 'Method 3: Scan old chat history (requires Ollama)',
+      sec_s3_m3_1: 'Open Facebook Messages or Zalo Web on Chrome',
+      sec_s3_m3_2: 'Click the ShopReply icon > <strong>"Scan History"</strong>',
+      sec_s3_m3_3: 'Select conversations that are <strong>customers</strong> (skip friends, group chats...)',
+      sec_s3_m3_4: 'ShopReply will automatically extract Q&A pairs',
+      sec_s3_m3_5: 'Review and confirm',
+      sec_s3_m4_title: 'Method 4: No import needed — bot self-learns',
+      sec_s3_m4_desc: 'If you don\'t have existing data:',
+      sec_s3_m4_1: 'Run the bot in <strong>"Suggest only"</strong> mode (suggests, doesn\'t auto-send)',
+      sec_s3_m4_2: 'When customers ask, you type the reply — the bot saves it to the database',
+      sec_s3_m4_3: 'Next time a similar question appears, the bot auto-replies',
+      sec_s3_m4_4: 'After 1-2 weeks, the bot can handle 80-90% of questions automatically',
+      // Step 4
+      sec_s4_title: 'Start using',
+      sec_s4_1: 'Make sure ShopReply Backend is running (green icon in system tray)',
+      sec_s4_2: 'Open <strong>Facebook Messages</strong> (<code>facebook.com/messages</code>) or <strong>Zalo Web</strong> (<code>chat.zalo.me</code>)',
+      sec_s4_3: 'When a customer message arrives:<ul><li data-i18n="sec_s4_3a"><strong>Known question in DB</strong> (accuracy &ge; 85%) — ShopReply <strong>auto-replies instantly</strong></li><li data-i18n="sec_s4_3b"><strong>Similar question</strong> (50-84%) — Shows suggestion panel, you pick/edit then send</li><li data-i18n="sec_s4_3c"><strong>Completely new question</strong> — Shows AI suggestion (if Ollama installed), you write and send</li></ul>',
+      sec_s4_3a: '<strong>Known question in DB</strong> (accuracy &ge; 85%) — ShopReply <strong>auto-replies instantly</strong>',
+      sec_s4_3b: '<strong>Similar question</strong> (50-84%) — Shows suggestion panel, you pick/edit then send',
+      sec_s4_3c: '<strong>Completely new question</strong> — Shows AI suggestion (if Ollama installed), you write and send',
+      sec_s4_4: 'Every time you reply to a new question, ShopReply learns it for next time',
+      sec_s4_tip: '<strong>The more you use it, the smarter it gets.</strong> After 1-2 weeks, the bot can auto-reply to 80-90% of questions.',
+      sec_s4_cap: 'Auto-Reply Log tab — review bot\'s auto-replies, mark OK/Wrong to help it learn',
+      // Settings
+      sec_settings_title: 'Customize settings',
+      sec_settings_desc: 'Open ShopReply settings to adjust auto-reply threshold, tone, and platforms:',
+      sec_settings_cap: 'Settings tab — adjust auto-reply threshold (0.85), suggest (0.50), tone, toggle FB/Zalo',
+      // Auto-start
+      sec_autostart_title: 'Start with Windows (optional)',
+      sec_autostart_desc: 'To have ShopReply start automatically when you turn on your computer:',
+      sec_autostart_1: 'Right-click the ShopReply icon in the system tray',
+      sec_autostart_2: 'Select <strong>"Start with Windows"</strong> (a checkmark will appear when enabled)',
+      sec_autostart_3: 'To disable: click <strong>"Start with Windows"</strong> again',
+      // FAQ
+      sec_faq_title: 'Frequently Asked Questions',
+      faq_q1: 'Does ShopReply send data to the cloud?',
+      faq_a1: '<strong>No.</strong> All data (questions, answers, chat history) is stored and processed <strong>on your computer</strong>. Nothing is sent externally.',
+      faq_q2: 'Why is the first run slow?',
+      faq_a2: 'The first time, ShopReply needs to download the embedding model (~100MB) to understand questions. Only needs to wait once, subsequent runs are fast.',
+      faq_q3: 'How do I know the bot is running?',
+      faq_a3: 'Look at the bottom-right corner of your screen (system tray) — a green circle with "S" means it\'s running.',
+      faq_q4: 'What if the bot replies incorrectly?',
+      faq_a4: 'Open ShopReply settings > <strong>"Auto-Reply Log"</strong> tab > Find the wrong reply > click <strong>"Wrong"</strong> > Edit the correct answer > Save. The bot will learn from the correction.',
+      faq_q5: 'Can I use it on multiple computers?',
+      faq_a5: 'Yes, but each computer needs its own installation. Data doesn\'t sync between machines (since it\'s local).',
+      faq_q6: 'How do I change the port (not using 3000)?',
+      faq_a6: 'Create a <code>.env</code> file next to <code>ShopReply-Backend.exe</code>, write: <code>SHOPREPLY_PORT=8080</code> (replace 8080 with your desired port), then restart ShopReply.',
+      faq_q7: 'I shut down my PC without closing ShopReply first?',
+      faq_a7: 'No problem. Next time you start your PC, just run <code>ShopReply-Backend.exe</code> again (or enable "Start with Windows" for auto-start).',
+      faq_q8: 'Is Ollama required?',
+      faq_a8: 'No. ShopReply works fine with just the Q&A database. Ollama is only needed if you want AI suggestions for completely new questions not in the database.',
+      // Contact
+      sec_contact_title: 'Contact Support',
+      sec_contact_desc: 'If you encounter any issues or need help, contact us via:',
+      sec_contact_zalo: '<strong>Zalo:</strong> (coming soon)',
+      sec_contact_fb: '<strong>Facebook:</strong> (coming soon)',
+      // Footer
+      footer_support: 'Support',
+      footer_zalo_fb: 'Zalo: (coming soon) &bull; Facebook: (coming soon)',
+      footer_zalo_fb_full: 'Email: <a href="mailto:nhamingroup@gmail.com">nhamingroup@gmail.com</a><br>Zalo: (coming soon) &bull; Facebook: (coming soon)',
+      footer_copy: '&copy; 2026 ShopReply. All rights reserved. | Your data always stays on your machine.',
+    }
+  };
+
+  // Store original VI text from DOM
+  var viTexts = {};
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    viTexts[el.getAttribute('data-i18n')] = el.innerHTML;
+  });
+
+  // All data-i18n attributes are now inline in HTML — no dynamic markers needed
+
+  function switchLang(lang) {
+    currentLang = lang;
+    document.getElementById('btn-vi').classList.toggle('active', lang === 'vi');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.documentElement.lang = lang;
+    document.title = lang === 'vi' ? 'Hướng dẫn cài đặt ShopReply' : 'ShopReply Setup Guide';
+
+    document.querySelectorAll('[data-i18n]').forEach(function(el) {
+      var key = el.getAttribute('data-i18n');
+      if (lang === 'en' && translations.en[key]) {
+        el.innerHTML = translations.en[key];
+      } else if (lang === 'vi' && viTexts[key]) {
+        el.innerHTML = viTexts[key];
+      }
+    });
+  }
+
+  // ===== Mobile TOC toggle =====
+  function toggleTOC() {
+    document.getElementById('sidebar').classList.toggle('open');
+  }
+
+  // Close sidebar on link click (mobile)
+  document.querySelectorAll('.toc-list a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      document.getElementById('sidebar').classList.remove('open');
+    });
+  });
+
+  // ===== Active TOC highlighting =====
+  (function() {
+    var sections = document.querySelectorAll('.section[id], div[id]');
+    var tocLinks = document.querySelectorAll('.toc-list a');
+    var linkMap = {};
+    tocLinks.forEach(function(l) {
+      var id = l.getAttribute('href').replace('#', '');
+      linkMap[id] = l;
+    });
+
+    function onScroll() {
+      var scrollY = window.scrollY + 120;
+      var current = '';
+      sections.forEach(function(sec) {
+        if (sec.offsetTop <= scrollY) {
+          current = sec.id;
+        }
+      });
+      tocLinks.forEach(function(l) { l.classList.remove('active'); });
+      if (current && linkMap[current]) {
+        linkMap[current].classList.add('active');
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+</script>
+
+</body>
+</html>
