@@ -203,7 +203,7 @@
 
 <script>
   var WORKER_URL = 'https://shopreply-payment.nhamingroup.workers.dev';
-  var PAY_URL = 'https://sungpv.github.io/shopReply/pay.html';
+  var GUIDE_URL = 'https://sungpv.github.io/shopReply/index.html';
 
   function showMsg(text, type) {
     var el = document.getElementById('message');
@@ -275,7 +275,7 @@
     document.querySelector('.divider').style.display = 'none';
     document.getElementById('dashboard').classList.add('show');
 
-    var link = PAY_URL + '?ref=' + refCode;
+    var link = GUIDE_URL + '?ref=' + refCode;
     document.getElementById('refLinkText').textContent = link;
 
     loadStats(refCode);
@@ -303,7 +303,7 @@
     document.querySelector('.divider').style.display = 'none';
     document.getElementById('dashboard').classList.add('show');
 
-    var link = PAY_URL + '?ref=' + refCode;
+    var link = GUIDE_URL + '?ref=' + refCode;
     document.getElementById('refLinkText').textContent = link;
 
     document.getElementById('statTotal').textContent = data.totalReferrals;
@@ -317,8 +317,15 @@
       data.referrals.forEach(function(r) {
         var tr = document.createElement('tr');
         var date = new Date(r.createdAt).toLocaleDateString('vi-VN');
-        var badge = r.status === 'paid' ? '<span class="badge badge-paid">Da tra</span>' : '<span class="badge badge-pending">Cho tra</span>';
-        tr.innerHTML = '<td>' + r.orderCode + '</td><td>' + formatMoney(r.commission) + '</td><td>' + badge + '</td><td>' + date + '</td>';
+        var td1 = document.createElement('td'); td1.textContent = r.orderCode;
+        var td2 = document.createElement('td'); td2.textContent = formatMoney(r.commission);
+        var td3 = document.createElement('td');
+        var badge = document.createElement('span');
+        badge.className = r.status === 'paid' ? 'badge badge-paid' : 'badge badge-pending';
+        badge.textContent = r.status === 'paid' ? 'Da tra' : 'Cho tra';
+        td3.appendChild(badge);
+        var td4 = document.createElement('td'); td4.textContent = date;
+        tr.appendChild(td1); tr.appendChild(td2); tr.appendChild(td3); tr.appendChild(td4);
         tbody.appendChild(tr);
       });
     }

@@ -146,10 +146,28 @@
     var secret = document.getElementById('secretInput').value.trim();
     if (!secret) return;
     adminSecret = secret;
-    sessionStorage.setItem('admin_secret', secret);
-    document.getElementById('loginCard').style.display = 'none';
-    document.getElementById('adminDashboard').style.display = 'block';
-    loadData();
+
+    // Verify auth before showing dashboard
+    fetch(WORKER_URL + '/api/affiliate/list', {
+      headers: { 'Authorization': 'Bearer ' + secret }
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      if (!data.success) {
+        document.getElementById('loginMsg').textContent = 'Sai mat khau';
+        document.getElementById('loginMsg').className = 'msg error';
+        adminSecret = '';
+        return;
+      }
+      sessionStorage.setItem('admin_secret', secret);
+      document.getElementById('loginCard').style.display = 'none';
+      document.getElementById('adminDashboard').style.display = 'block';
+      renderData(data.affiliates);
+    })
+    .catch(function() {
+      document.getElementById('loginMsg').textContent = 'Loi ket noi';
+      document.getElementById('loginMsg').className = 'msg error';
+    });
   }
 
   function loadData() {
@@ -200,18 +218,34 @@
     tbody.innerHTML = '';
     affiliates.forEach(function(a) {
       var tr = document.createElement('tr');
+      var cells = [a.refCode, a.name, a.bankAccount, a.bankName, a.totalReferrals, formatMoney(a.pendingCommission), formatMoney(a.paidCommission)];
+      cells.forEach(function(text, i) {
+        var td = document.createElement('td');
+        if (i === 0) { var b = document.createElement('strong'); b.textContent = text; td.appendChild(b); }
+        else { td.textContent = text; }
+        tr.appendChild(td);
+      });
+      var actionTd = document.createElement('td');
       var payable = a.pendingCommission >= 200000;
-      var payBtnHtml = payable
-        ? '<button class="pay-btn" onclick="markPaid(\'' + a.refCode + '\', this)">Da tra</button>'
-        : (a.pendingCommission > 0 ? '<span class="badge badge-pending">< 200K</span>' : '<span class="badge badge-ok">OK</span>');
-      tr.innerHTML = '<td><strong>' + a.refCode + '</strong></td>'
-        + '<td>' + a.name + '</td>'
-        + '<td>' + a.bankAccount + '</td>'
-        + '<td>' + a.bankName + '</td>'
-        + '<td>' + a.totalReferrals + '</td>'
-        + '<td>' + formatMoney(a.pendingCommission) + '</td>'
-        + '<td>' + formatMoney(a.paidCommission) + '</td>'
-        + '<td>' + payBtnHtml + '</td>';
+      if (payable) {
+        var btn = document.createElement('button');
+        btn.className = 'pay-btn';
+        btn.textContent = 'Da tra';
+        btn.setAttribute('data-ref', a.refCode);
+        btn.onclick = function() { markPaid(a.refCode, btn); };
+        actionTd.appendChild(btn);
+      } else if (a.pendingCommission > 0) {
+        var badge = document.createElement('span');
+        badge.className = 'badge badge-pending';
+        badge.textContent = '< 200K';
+        actionTd.appendChild(badge);
+      } else {
+        var badge = document.createElement('span');
+        badge.className = 'badge badge-ok';
+        badge.textContent = 'OK';
+        actionTd.appendChild(badge);
+      }
+      tr.appendChild(actionTd);
       tbody.appendChild(tr);
     });
   }
@@ -236,7 +270,20 @@
         msg.textContent = 'Da danh dau ' + refCode + ' thanh toan (' + data.markedCount + ' luot)';
         msg.className = 'msg success';
         loadData();
+      } else {
+        btn.disabled = false;
+        btn.textContent = 'Da tra';
+        var msg = document.getElementById('dashMsg');
+        msg.textContent = data.error || 'Co loi xay ra';
+        msg.className = 'msg error';
       }
+    })
+    .catch(function() {
+      btn.disabled = false;
+      btn.textContent = 'Da tra';
+      var msg = document.getElementById('dashMsg');
+      msg.textContent = 'Loi ket noi';
+      msg.className = 'msg error';
     });
   }
 
