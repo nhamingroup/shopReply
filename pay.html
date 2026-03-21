@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShopReply — Thanh toán / Payment</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue-50: #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-200: #bfdbfe;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+      --blue-800: #1e40af;
+      --purple-50: #f5f3ff;
+      --purple-100: #ede9fe;
+      --purple-500: #8b5cf6;
+      --purple-600: #7c3aed;
+      --purple-700: #6d28d9;
+      --green-50: #f0fdf4;
+      --green-500: #22c55e;
+      --green-600: #16a34a;
+      --green-700: #15803d;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-300: #d1d5db;
+      --gray-400: #9ca3af;
+      --gray-500: #6b7280;
+      --gray-600: #4b5563;
+      --gray-700: #374151;
+      --gray-800: #1f2937;
+      --gray-900: #111827;
+      --radius: 12px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      color: var(--gray-800);
+      background: linear-gradient(135deg, var(--blue-50) 0%, var(--purple-50) 100%);
+      line-height: 1.6;
+      font-size: 16px;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--blue-700);
+    }
+
+    .logo span {
+      color: var(--purple-600);
+    }
+
+    .lang-toggle {
+      display: flex;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--gray-200);
+    }
+
+    .lang-btn {
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      background: white;
+      color: var(--gray-500);
+      transition: all 0.2s;
+    }
+
+    .lang-btn.active {
+      background: var(--blue-600);
+      color: white;
+    }
+
+    /* Card */
+    .card {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+
+    .card-header {
+      background: linear-gradient(135deg, var(--blue-600), var(--purple-600));
+      color: white;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .card-header h1 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .plan-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-top: 8px;
+      backdrop-filter: blur(4px);
+    }
+
+    .plan-amount {
+      font-size: 28px;
+      font-weight: 700;
+      margin-top: 8px;
+    }
+
+    .plan-period {
+      font-size: 14px;
+      opacity: 0.85;
+    }
+
+    .card-body {
+      padding: 24px;
+    }
+
+    /* QR Section */
+    .qr-section {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .qr-wrapper {
+      display: inline-block;
+      background: white;
+      border: 2px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+
+    .qr-wrapper img {
+      width: 240px;
+      height: 240px;
+      display: block;
+    }
+
+    .qr-hint {
+      font-size: 13px;
+      color: var(--gray-500);
+    }
+
+    /* Transfer Info */
+    .transfer-info {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 24px;
+    }
+
+    .transfer-info h3 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--gray-700);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .info-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--gray-200);
+      gap: 8px;
+    }
+
+    .info-row:last-child {
+      border-bottom: none;
+    }
+
+    .info-label {
+      font-size: 13px;
+      color: var(--gray-500);
+      flex-shrink: 0;
+      min-width: 80px;
+    }
+
+    .info-value {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--gray-900);
+      word-break: break-all;
+      text-align: right;
+      flex: 1;
+    }
+
+    .copy-btn {
+      background: var(--blue-50);
+      border: 1px solid var(--blue-200);
+      color: var(--blue-600);
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+      flex-shrink: 0;
+      margin-left: 8px;
+    }
+
+    .copy-btn:hover {
+      background: var(--blue-100);
+    }
+
+    .copy-btn.copied {
+      background: var(--green-50);
+      border-color: var(--green-500);
+      color: var(--green-700);
+    }
+
+    /* Email */
+    .email-section {
+      margin-bottom: 20px;
+    }
+
+    .email-section label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--gray-700);
+      margin-bottom: 6px;
+    }
+
+    .email-input-wrap {
+      position: relative;
+    }
+
+    .email-input-wrap .icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px;
+      pointer-events: none;
+    }
+
+    .email-input {
+      width: 100%;
+      padding: 12px 12px 12px 40px;
+      border: 2px solid var(--gray-200);
+      border-radius: var(--radius);
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .email-input:focus {
+      border-color: var(--blue-500);
+    }
+
+    .email-input.error {
+      border-color: #ef4444;
+    }
+
+    .email-error {
+      color: #ef4444;
+      font-size: 13px;
+      margin-top: 4px;
+      display: none;
+    }
+
+    .email-error.show {
+      display: block;
+    }
+
+    /* Submit Button */
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--blue-600), var(--purple-600));
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .submit-btn:hover {
+      opacity: 0.92;
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .submit-btn:active {
+      transform: translateY(0);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Confirmation */
+    .confirmation {
+      display: none;
+      background: var(--green-50);
+      border: 1px solid var(--green-500);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-top: 16px;
+      text-align: center;
+    }
+
+    .confirmation.show {
+      display: block;
+    }
+
+    .confirmation .icon-check {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    .confirmation h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--green-700);
+      margin-bottom: 4px;
+    }
+
+    .confirmation p {
+      font-size: 14px;
+      color: var(--gray-600);
+    }
+
+    .confirmation .email-highlight {
+      font-weight: 600;
+      color: var(--blue-700);
+    }
+
+    /* Wait notice */
+    .wait-notice {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: var(--blue-50);
+      border: 1px solid var(--blue-200);
+      border-radius: var(--radius);
+      padding: 14px;
+      margin-top: 20px;
+      font-size: 13px;
+      color: var(--gray-700);
+      line-height: 1.5;
+    }
+
+    .wait-notice .wait-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    /* Divider */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 24px 0;
+      color: var(--gray-400);
+      font-size: 13px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--gray-200);
+    }
+
+    /* Alt payment */
+    .alt-payment {
+      text-align: center;
+      font-size: 14px;
+      color: var(--gray-600);
+      padding-bottom: 8px;
+    }
+
+    .alt-payment a {
+      color: var(--purple-600);
+      font-weight: 600;
+    }
+
+    .alt-payment a:hover {
+      text-decoration: underline;
+    }
+
+    /* Error page */
+    .error-page {
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .error-page .error-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    .error-page h2 {
+      font-size: 20px;
+      color: var(--gray-800);
+      margin-bottom: 8px;
+    }
+
+    .error-page p {
+      color: var(--gray-500);
+      font-size: 14px;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      padding: 16px;
+      font-size: 12px;
+      color: var(--gray-400);
+    }
+
+    .footer a {
+      color: var(--gray-500);
+    }
+
+    /* Responsive */
+    @media (max-width: 560px) {
+      body {
+        padding: 12px;
+      }
+
+      .card-header {
+        padding: 20px 16px;
+      }
+
+      .card-body {
+        padding: 16px;
+      }
+
+      .plan-amount {
+        font-size: 24px;
+      }
+
+      .qr-wrapper img {
+        width: 200px;
+        height: 200px;
+      }
+
+      .info-row {
+        flex-wrap: wrap;
+      }
+
+      .info-label {
+        min-width: 100%;
+        margin-bottom: 2px;
+      }
+
+      .info-value {
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Header -->
+  <div class="header">
+    <div class="logo">Shop<span>Reply</span></div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="vi" onclick="setLang('vi')">VI</button>
+      <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+
+  <!-- Error state -->
+  <div id="errorPage" class="card" style="display:none;">
+    <div class="error-page">
+      <div class="error-icon">&#9888;&#65039;</div>
+      <h2 data-t="error_title">Link thanh toan khong hop le</h2>
+      <p data-t="error_desc">Vui long quay lai extension de chon goi va thanh toan.</p>
+    </div>
+  </div>
+
+  <!-- Payment card -->
+  <div id="paymentCard" class="card" style="display:none;">
+    <div class="card-header">
+      <h1 data-t="page_title">Thanh toan</h1>
+      <div class="plan-badge" id="planBadge"></div>
+      <div class="plan-amount" id="planAmount"></div>
+      <div class="plan-period" data-t="per_month">/thang</div>
+    </div>
+
+    <div class="card-body">
+      <!-- QR Code -->
+      <div class="qr-section">
+        <div class="qr-wrapper">
+          <img id="qrImage" alt="VietQR" />
+        </div>
+        <div class="qr-hint" data-t="qr_hint">Quet ma QR bang ung dung ngan hang</div>
+      </div>
+
+      <!-- Transfer Info -->
+      <div class="transfer-info">
+        <h3 data-t="transfer_title">Thong tin chuyen khoan</h3>
+
+        <div class="info-row">
+          <span class="info-label" data-t="bank_label">Ngan hang</span>
+          <span class="info-value">TPBank</span>
+        </div>
+
+        <div class="info-row">
+          <span class="info-label" data-t="account_label">So TK</span>
+          <span class="info-value" id="accountNumber">19036693579018</span>
+          <button class="copy-btn" onclick="copyText('19036693579018', this)" data-t="copy">Sao chep</button>
+        </div>
+
+        <div class="info-row">
+          <span class="info-label" data-t="holder_label">Chu TK</span>
+          <span class="info-value">PHAM VAN SUNG</span>
+        </div>
+
+        <div class="info-row">
+          <span class="info-label" data-t="amount_label">So tien</span>
+          <span class="info-value" id="displayAmount"></span>
+        </div>
+
+        <div class="info-row">
+          <span class="info-label" data-t="content_label">Noi dung</span>
+          <span class="info-value" id="transferContent"></span>
+          <button class="copy-btn" id="copyContentBtn" data-t="copy">Sao chep</button>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="email-section">
+        <label data-t="email_label">Email nhan license key</label>
+        <div class="email-input-wrap">
+          <span class="icon">&#9993;&#65039;</span>
+          <input type="email" class="email-input" id="emailInput" placeholder="your@email.com" />
+        </div>
+        <div class="email-error" id="emailError" data-t="email_error">Vui long nhap email hop le</div>
+      </div>
+
+      <!-- Submit -->
+      <button class="submit-btn" id="submitBtn" onclick="handleSubmit()">
+        <span data-t="submit_btn">Toi da chuyen khoan — Gui xac nhan</span>
+      </button>
+
+      <!-- Confirmation -->
+      <div class="confirmation" id="confirmation">
+        <div class="icon-check">&#9989;</div>
+        <h3 data-t="confirm_title">Da ghi nhan!</h3>
+        <p><span data-t="confirm_msg">Chung toi dang kiem tra giao dich. License key se duoc gui den</span> <span class="email-highlight" id="confirmEmail"></span> <span data-t="confirm_time">trong 1-5 phut.</span></p>
+      </div>
+
+      <!-- Wait notice -->
+      <div class="wait-notice">
+        <span class="wait-icon">&#9203;</span>
+        <span data-t="wait_notice">Sau khi chuyen khoan, he thong se tu dong gui license key qua email trong vong 1-5 phut.</span>
+      </div>
+
+      <!-- Divider -->
+      <div class="divider" data-t="divider_or">hoac</div>
+
+      <!-- Alt payment -->
+      <div class="alt-payment">
+        <p data-t="alt_text">Chua co tai khoan ngan hang VN?</p>
+        <a href="#" id="altPayLink" data-t="alt_link">Thanh toan bang Visa/PayPal</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    ShopReply &copy; 2026 &mdash; <a href="https://sungpv.github.io/shopReply/">sungpv.github.io/shopReply</a>
+  </div>
+</div>
+
+<script>
+  // ===== Translations =====
+  const T = {
+    vi: {
+      page_title: 'Thanh to\u00e1n',
+      per_month: '/th\u00e1ng',
+      qr_hint: 'Qu\u00e9t m\u00e3 QR b\u1eb1ng \u1ee9ng d\u1ee5ng ng\u00e2n h\u00e0ng',
+      transfer_title: 'Th\u00f4ng tin chuy\u1ec3n kho\u1ea3n',
+      bank_label: 'Ng\u00e2n h\u00e0ng',
+      account_label: 'S\u1ed1 TK',
+      holder_label: 'Ch\u1ee7 TK',
+      amount_label: 'S\u1ed1 ti\u1ec1n',
+      content_label: 'N\u1ed9i dung',
+      copy: 'Sao ch\u00e9p',
+      email_label: '\u2709\uFE0F Email nh\u1eadn license key',
+      email_error: 'Vui l\u00f2ng nh\u1eadp email h\u1ee3p l\u1ec7',
+      submit_btn: 'T\u00f4i \u0111\u00e3 chuy\u1ec3n kho\u1ea3n \u2014 G\u1eedi x\u00e1c nh\u1eadn',
+      confirm_title: '\u0110\u00e3 ghi nh\u1eadn!',
+      confirm_msg: 'Ch\u00fang t\u00f4i \u0111ang ki\u1ec3m tra giao d\u1ecbch. License key s\u1ebd \u0111\u01b0\u1ee3c g\u1eedi \u0111\u1ebfn',
+      confirm_time: 'trong 1-5 ph\u00fat.',
+      wait_notice: 'Sau khi chuy\u1ec3n kho\u1ea3n, h\u1ec7 th\u1ed1ng s\u1ebd t\u1ef1 \u0111\u1ed9ng g\u1eedi license key qua email trong v\u00f2ng 1-5 ph\u00fat.',
+      divider_or: 'ho\u1eb7c',
+      alt_text: 'Ch\u01b0a c\u00f3 t\u00e0i kho\u1ea3n ng\u00e2n h\u00e0ng VN?',
+      alt_link: '\u2192 Thanh to\u00e1n b\u1eb1ng Visa/PayPal',
+      error_title: 'Link thanh to\u00e1n kh\u00f4ng h\u1ee3p l\u1ec7',
+      error_desc: 'Vui l\u00f2ng quay l\u1ea1i extension \u0111\u1ec3 ch\u1ecdn g\u00f3i v\u00e0 thanh to\u00e1n.',
+      copied: '\u0110\u00e3 sao ch\u00e9p!'
+    },
+    en: {
+      page_title: 'Payment',
+      per_month: '/month',
+      qr_hint: 'Scan QR code with your banking app',
+      transfer_title: 'Transfer information',
+      bank_label: 'Bank',
+      account_label: 'Account #',
+      holder_label: 'Account name',
+      amount_label: 'Amount',
+      content_label: 'Message',
+      copy: 'Copy',
+      email_label: '\u2709\uFE0F Email to receive license key',
+      email_error: 'Please enter a valid email',
+      submit_btn: 'I have transferred \u2014 Send confirmation',
+      confirm_title: 'Noted!',
+      confirm_msg: 'We are verifying your transfer. License key will be sent to',
+      confirm_time: 'within 1-5 minutes.',
+      wait_notice: 'After transferring, the system will automatically send the license key to your email within 1-5 minutes.',
+      divider_or: 'or',
+      alt_text: "Don't have a Vietnamese bank account?",
+      alt_link: '\u2192 Pay with Visa/PayPal',
+      error_title: 'Invalid payment link',
+      error_desc: 'Please go back to the extension to select a plan and pay.',
+      copied: 'Copied!'
+    }
+  };
+
+  let currentLang = 'vi';
+
+  function setLang(lang) {
+    currentLang = lang;
+    document.querySelectorAll('.lang-btn').forEach(function(btn) {
+      btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+    document.querySelectorAll('[data-t]').forEach(function(el) {
+      var key = el.dataset.t;
+      if (T[lang][key]) {
+        el.textContent = T[lang][key];
+      }
+    });
+  }
+
+  // ===== Config =====
+  var BANK_CODE = 'TPB';
+  var ACCOUNT_NUMBER = '19036693579018';
+  var ACCOUNT_NAME = 'PHAM VAN SUNG';
+
+  // ===== URL Params =====
+  var params = new URLSearchParams(window.location.search);
+  var plan = params.get('plan');
+  var amount = parseInt(params.get('amount'), 10);
+
+  if (!plan || !amount || isNaN(amount)) {
+    document.getElementById('errorPage').style.display = '';
+  } else {
+    init(plan, amount);
+  }
+
+  function generateOrderCode() {
+    var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    var code = '';
+    for (var i = 0; i < 6; i++) {
+      code += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return 'SR-' + code;
+  }
+
+  function formatAmount(num) {
+    return num.toLocaleString('vi-VN') + '\u20AB';
+  }
+
+  function init(plan, amount) {
+    document.getElementById('paymentCard').style.display = '';
+
+    var orderCode = generateOrderCode();
+    var planUpper = plan.charAt(0).toUpperCase() + plan.slice(1);
+    var transferContent = 'SHOPREPLY ' + planUpper.toUpperCase() + ' ' + orderCode;
+
+    // Plan info
+    document.getElementById('planBadge').textContent = 'G\u00f3i / Plan: ' + planUpper;
+    document.getElementById('planAmount').textContent = formatAmount(amount);
+    document.getElementById('displayAmount').textContent = formatAmount(amount);
+    document.getElementById('transferContent').textContent = transferContent;
+
+    // QR image
+    var qrUrl = 'https://img.vietqr.io/image/' + BANK_CODE + '-' + ACCOUNT_NUMBER + '-compact.png'
+      + '?amount=' + amount
+      + '&addInfo=' + encodeURIComponent(transferContent)
+      + '&accountName=' + encodeURIComponent(ACCOUNT_NAME);
+    document.getElementById('qrImage').src = qrUrl;
+
+    // Copy content button
+    document.getElementById('copyContentBtn').onclick = function() {
+      copyText(transferContent, this);
+    };
+
+    // Alt payment link (LemonSqueezy)
+    var lsSlug = planUpper.toLowerCase();
+    document.getElementById('altPayLink').href = 'https://gmail-followup.lemonsqueezy.com/buy/' + lsSlug;
+
+    // Store order code for reference
+    window._orderCode = orderCode;
+    window._plan = planUpper;
+    window._amount = amount;
+    window._transferContent = transferContent;
+  }
+
+  // ===== Copy =====
+  function copyText(text, btn) {
+    navigator.clipboard.writeText(text).then(function() {
+      var original = btn.textContent;
+      btn.textContent = T[currentLang].copied;
+      btn.classList.add('copied');
+      setTimeout(function() {
+        btn.textContent = T[currentLang].copy;
+        btn.classList.remove('copied');
+      }, 2000);
+    }).catch(function() {
+      // Fallback
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      var original = btn.textContent;
+      btn.textContent = T[currentLang].copied;
+      btn.classList.add('copied');
+      setTimeout(function() {
+        btn.textContent = T[currentLang].copy;
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+
+  // ===== Submit =====
+  function handleSubmit() {
+    var emailInput = document.getElementById('emailInput');
+    var emailError = document.getElementById('emailError');
+    var email = emailInput.value.trim();
+
+    // Validate email
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRegex.test(email)) {
+      emailInput.classList.add('error');
+      emailError.classList.add('show');
+      emailInput.focus();
+      return;
+    }
+
+    emailInput.classList.remove('error');
+    emailError.classList.remove('show');
+
+    // Save to localStorage
+    var order = {
+      orderCode: window._orderCode,
+      plan: window._plan,
+      amount: window._amount,
+      transferContent: window._transferContent,
+      email: email,
+      timestamp: new Date().toISOString(),
+      status: 'pending'
+    };
+
+    var orders = JSON.parse(localStorage.getItem('shopreply_orders') || '[]');
+    orders.push(order);
+    localStorage.setItem('shopreply_orders', JSON.stringify(orders));
+
+    // Show confirmation
+    document.getElementById('confirmEmail').textContent = email;
+    document.getElementById('confirmation').classList.add('show');
+    document.getElementById('submitBtn').disabled = true;
+    document.getElementById('submitBtn').innerHTML = '<span>\u2713 ' + (currentLang === 'vi' ? '\u0110\u00e3 g\u1eedi x\u00e1c nh\u1eadn' : 'Confirmation sent') + '</span>';
+  }
+
+  // Clear email error on input
+  document.getElementById('emailInput').addEventListener('input', function() {
+    this.classList.remove('error');
+    document.getElementById('emailError').classList.remove('show');
+  });
+</script>
+
+</body>
+</html>

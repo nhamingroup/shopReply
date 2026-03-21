@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShopReply — Thanh toan thanh cong / Payment Received</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue-50: #eff6ff;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+      --purple-50: #f5f3ff;
+      --purple-600: #7c3aed;
+      --green-50: #f0fdf4;
+      --green-100: #dcfce7;
+      --green-500: #22c55e;
+      --green-600: #16a34a;
+      --green-700: #15803d;
+      --gray-50: #f9fafb;
+      --gray-200: #e5e7eb;
+      --gray-400: #9ca3af;
+      --gray-500: #6b7280;
+      --gray-600: #4b5563;
+      --gray-700: #374151;
+      --gray-800: #1f2937;
+      --radius: 12px;
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      color: var(--gray-800);
+      background: linear-gradient(135deg, var(--blue-50) 0%, var(--purple-50) 100%);
+      line-height: 1.6;
+      font-size: 16px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 480px;
+      width: 100%;
+    }
+
+    .logo {
+      text-align: center;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--blue-700);
+      margin-bottom: 20px;
+    }
+
+    .logo span {
+      color: var(--purple-600);
+    }
+
+    .card {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .card-top {
+      background: linear-gradient(135deg, var(--green-500), var(--green-600));
+      padding: 32px 24px;
+      color: white;
+    }
+
+    .check-circle {
+      width: 72px;
+      height: 72px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .check-circle svg {
+      width: 40px;
+      height: 40px;
+      fill: none;
+      stroke: white;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .card-top h1 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .card-top .subtitle {
+      font-size: 15px;
+      opacity: 0.9;
+    }
+
+    .card-body {
+      padding: 32px 24px;
+    }
+
+    .info-block {
+      background: var(--green-50);
+      border: 1px solid var(--green-100);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    .info-block .icon-mail {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    .info-block p {
+      font-size: 15px;
+      color: var(--gray-700);
+      margin-bottom: 4px;
+    }
+
+    .info-block .strong-text {
+      font-weight: 600;
+      color: var(--gray-800);
+    }
+
+    .steps {
+      text-align: left;
+      margin-bottom: 24px;
+    }
+
+    .steps h3 {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--gray-500);
+      margin-bottom: 12px;
+    }
+
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+    }
+
+    .step-num {
+      width: 28px;
+      height: 28px;
+      background: var(--blue-50);
+      color: var(--blue-600);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .step p {
+      font-size: 14px;
+      color: var(--gray-700);
+      padding-top: 3px;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, var(--blue-600), var(--purple-600));
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .back-btn:hover {
+      opacity: 0.92;
+      transform: translateY(-1px);
+      text-decoration: none;
+      color: white;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 12px;
+      color: var(--gray-400);
+    }
+
+    .footer a {
+      color: var(--gray-500);
+      text-decoration: none;
+    }
+
+    .lang-toggle {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .lang-toggle button {
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid var(--gray-200);
+      cursor: pointer;
+      background: white;
+      color: var(--gray-500);
+      transition: all 0.2s;
+    }
+
+    .lang-toggle button:first-child {
+      border-radius: 6px 0 0 6px;
+    }
+
+    .lang-toggle button:last-child {
+      border-radius: 0 6px 6px 0;
+    }
+
+    .lang-toggle button.active {
+      background: var(--blue-600);
+      color: white;
+      border-color: var(--blue-600);
+    }
+
+    @media (max-width: 480px) {
+      .card-top {
+        padding: 24px 16px;
+      }
+
+      .card-body {
+        padding: 24px 16px;
+      }
+
+      .card-top h1 {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="lang-toggle">
+    <button class="active" data-lang="vi" onclick="setLang('vi')">VI</button>
+    <button data-lang="en" onclick="setLang('en')">EN</button>
+  </div>
+
+  <div class="logo">Shop<span>Reply</span></div>
+
+  <div class="card">
+    <div class="card-top">
+      <div class="check-circle">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </div>
+      <h1 data-t="title">C&#7843;m &#417;n b&#7841;n! / Thank you!</h1>
+      <div class="subtitle" data-t="subtitle">Thanh to&#225;n &#273;&#227; &#273;&#432;&#7907;c ghi nh&#7853;n</div>
+    </div>
+
+    <div class="card-body">
+      <div class="info-block">
+        <div class="icon-mail">&#9993;&#65039;</div>
+        <p data-t="email_sent">License key &#273;&#227; &#273;&#432;&#7907;c g&#7917;i &#273;&#7871;n email c&#7911;a b&#7841;n.</p>
+        <p class="strong-text" data-t="check_inbox">Vui l&#242;ng ki&#7875;m tra h&#7897;p th&#432; (v&#224; th&#432; m&#7909;c spam).</p>
+      </div>
+
+      <div class="steps">
+        <h3 data-t="next_steps">B&#432;&#7899;c ti&#7871;p theo</h3>
+        <div class="step">
+          <div class="step-num">1</div>
+          <p data-t="step1">M&#7903; email v&#224; sao ch&#233;p license key</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <p data-t="step2">Quay l&#7841;i ShopReply extension</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <p data-t="step3">V&#224;o Settings &#8594; Nh&#7853;p license key &#8594; K&#237;ch ho&#7841;t</p>
+        </div>
+      </div>
+
+      <a href="https://sungpv.github.io/shopReply/" class="back-btn">
+        <span data-t="back_btn">&#8592; Quay l&#7841;i h&#432;&#7899;ng d&#7851;n</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="footer">
+    ShopReply &copy; 2026 &mdash; <a href="https://sungpv.github.io/shopReply/">sungpv.github.io/shopReply</a>
+  </div>
+</div>
+
+<script>
+  var T = {
+    vi: {
+      title: 'C\u1ea3m \u01a1n b\u1ea1n!',
+      subtitle: 'Thanh to\u00e1n \u0111\u00e3 \u0111\u01b0\u1ee3c ghi nh\u1eadn',
+      email_sent: 'License key \u0111\u00e3 \u0111\u01b0\u1ee3c g\u1eedi \u0111\u1ebfn email c\u1ee7a b\u1ea1n.',
+      check_inbox: 'Vui l\u00f2ng ki\u1ec3m tra h\u1ed9p th\u01b0 (v\u00e0 th\u01b0 m\u1ee5c spam).',
+      next_steps: 'B\u01b0\u1edbc ti\u1ebfp theo',
+      step1: 'M\u1edf email v\u00e0 sao ch\u00e9p license key',
+      step2: 'Quay l\u1ea1i ShopReply extension',
+      step3: 'V\u00e0o Settings \u2192 Nh\u1eadp license key \u2192 K\u00edch ho\u1ea1t',
+      back_btn: '\u2190 Quay l\u1ea1i h\u01b0\u1edbng d\u1eabn'
+    },
+    en: {
+      title: 'Thank you!',
+      subtitle: 'Payment has been confirmed',
+      email_sent: 'License key has been sent to your email.',
+      check_inbox: 'Please check your inbox (and spam folder).',
+      next_steps: 'Next steps',
+      step1: 'Open your email and copy the license key',
+      step2: 'Go back to the ShopReply extension',
+      step3: 'Go to Settings \u2192 Enter license key \u2192 Activate',
+      back_btn: '\u2190 Back to guide'
+    }
+  };
+
+  function setLang(lang) {
+    document.querySelectorAll('.lang-toggle button').forEach(function(btn) {
+      btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+    document.querySelectorAll('[data-t]').forEach(function(el) {
+      var key = el.dataset.t;
+      if (T[lang] && T[lang][key]) {
+        el.textContent = T[lang][key];
+      }
+    });
+  }
+</script>
+
+</body>
+</html>
