@@ -699,6 +699,7 @@
       <li><a href="#auto-start" data-i18n="toc_autostart">Khởi động cùng Windows</a></li>
       <li><a href="#faq" data-i18n="toc_faq">Câu hỏi thường gặp</a></li>
       <li><a href="#lien-he" data-i18n="toc_contact">Liên hệ hỗ trợ</a></li>
+      <li><a href="#ung-ho" data-i18n="toc_donate">Ung ho tac gia</a></li>
     </ul>
   </nav>
 
@@ -1017,6 +1018,26 @@
       </div>
     </section>
 
+    <section class="section" id="ung-ho">
+      <h2 data-i18n="sec_donate_title">Ung ho tac gia</h2>
+      <div class="card" style="text-align:center;">
+        <p data-i18n="sec_donate_desc" style="margin-bottom:16px;">
+          Neu ShopReply giup ich cho ban, hay mua cho tac gia mot ly ca phe nhe!<br>
+          Moi su ung ho deu giup toi tiep tuc phat trien va cai thien san pham.
+        </p>
+        <div style="display:inline-block;background:var(--blue-50);border:2px solid var(--blue-200);border-radius:12px;padding:20px;">
+          <img id="donateQr" alt="Donate QR" style="width:220px;height:220px;border-radius:8px;" />
+          <p style="margin-top:12px;font-size:14px;color:var(--gray-600);">
+            <strong>PHAM VAN SUNG</strong><br>
+            TPBank — 67319051997
+          </p>
+        </div>
+        <p style="margin-top:16px;font-size:13px;color:var(--gray-400);" data-i18n="sec_donate_note">
+          Scan QR bang ung dung ngan hang bat ky. So tien tuy tam.
+        </p>
+      </div>
+    </section>
+
   </main>
 </div>
 
@@ -1182,6 +1203,11 @@
       sec_contact_desc: 'If you encounter any issues or need help, contact us via:',
       sec_contact_zalo: '<strong>Zalo:</strong> (coming soon)',
       sec_contact_fb: '<strong>Facebook:</strong> (coming soon)',
+      // Donate
+      toc_donate: 'Support the author',
+      sec_donate_title: 'Support the Author',
+      sec_donate_desc: 'If ShopReply is helpful for you, consider buying the author a coffee!<br>Every contribution helps me continue developing and improving the product.',
+      sec_donate_note: 'Scan QR with any banking app. Amount is up to you.',
       // Footer
       footer_support: 'Support',
       footer_zalo_fb: 'Zalo: (coming soon) &bull; Facebook: (coming soon)',
@@ -1253,6 +1279,27 @@
 
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
+  })();
+
+  // ===== Donate QR =====
+  (function() {
+    var qrImg = document.getElementById('donateQr');
+    if (qrImg) {
+      qrImg.src = 'https://img.vietqr.io/image/970423-67319051997-compact2.png?addInfo=SHOPREPLY%20DONATE';
+    }
+  })();
+
+  // ===== Pass ?ref= param to pay.html links =====
+  (function() {
+    var params = new URLSearchParams(window.location.search);
+    var ref = params.get('ref');
+    if (ref) {
+      document.querySelectorAll('a[href*="pay.html"]').forEach(function(a) {
+        var url = new URL(a.href, window.location.origin);
+        url.searchParams.set('ref', ref);
+        a.href = url.toString();
+      });
+    }
   })();
 </script>
 
