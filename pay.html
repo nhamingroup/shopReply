@@ -907,6 +907,9 @@
   var amount = parseInt(params.get('amount'), 10);
   var refCode = params.get('ref') || null;
 
+  // Apply Vietnamese translations on load
+  setLang('vi');
+
   if (!plan || !amount || isNaN(amount)) {
     document.getElementById('errorPage').style.display = '';
   } else {
