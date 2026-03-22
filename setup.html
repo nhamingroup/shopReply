@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hướng dẫn cài đặt ShopReply</title>
+  <style>
+    /* ===== Reset & Base ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue-50: #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-200: #bfdbfe;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+      --blue-800: #1e40af;
+      --blue-900: #1e3a5f;
+      --green-500: #22c55e;
+      --green-600: #16a34a;
+      --green-700: #15803d;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-300: #d1d5db;
+      --gray-400: #9ca3af;
+      --gray-500: #6b7280;
+      --gray-600: #4b5563;
+      --gray-700: #374151;
+      --gray-800: #1f2937;
+      --gray-900: #111827;
+      --amber-50: #fffbeb;
+      --amber-200: #fde68a;
+      --amber-600: #d97706;
+      --amber-700: #b45309;
+      --red-50: #fef2f2;
+      --red-200: #fecaca;
+      --red-600: #dc2626;
+      --sidebar-w: 260px;
+    }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      color: var(--gray-800);
+      background: var(--gray-50);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    a { color: var(--blue-600); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ===== Header ===== */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fff;
+      border-bottom: 1px solid var(--gray-200);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 40px;
+      height: 40px;
+      background: var(--blue-600);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 20px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .header-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--gray-900);
+    }
+
+    .header-subtitle {
+      font-size: 13px;
+      color: var(--gray-500);
+    }
+
+    .header-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      background: var(--blue-50);
+      color: var(--blue-700);
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 20px;
+      border: 1px solid var(--blue-200);
+    }
+
+    .toc-toggle {
+      display: none;
+      background: var(--blue-600);
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* ===== Layout ===== */
+    .layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      gap: 0;
+      min-height: calc(100vh - 64px);
+    }
+
+    /* ===== Sidebar / TOC ===== */
+    .sidebar {
+      width: var(--sidebar-w);
+      flex-shrink: 0;
+      position: sticky;
+      top: 64px;
+      height: calc(100vh - 64px);
+      overflow-y: auto;
+      padding: 24px 20px;
+      border-right: 1px solid var(--gray-200);
+      background: #fff;
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--gray-400);
+      margin-bottom: 12px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-list li { margin-bottom: 2px; }
+
+    .toc-list a {
+      display: block;
+      padding: 6px 12px;
+      font-size: 14px;
+      color: var(--gray-600);
+      border-radius: 6px;
+      transition: all 0.15s;
+    }
+
+    .toc-list a:hover {
+      background: var(--blue-50);
+      color: var(--blue-700);
+      text-decoration: none;
+    }
+
+    .toc-list a.active {
+      background: var(--blue-50);
+      color: var(--blue-700);
+      font-weight: 600;
+    }
+
+    .toc-list .toc-sub {
+      padding-left: 24px;
+      font-size: 13px;
+    }
+
+    /* ===== Main Content ===== */
+    .main {
+      flex: 1;
+      min-width: 0;
+      padding: 40px 48px 80px;
+      background: #fff;
+    }
+
+    /* ===== Hero Section ===== */
+    .hero {
+      background: linear-gradient(135deg, var(--blue-600), var(--blue-800));
+      color: #fff;
+      border-radius: 16px;
+      padding: 40px 36px;
+      margin-bottom: 40px;
+    }
+
+    .hero h1 {
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      font-size: 17px;
+      opacity: 0.9;
+      line-height: 1.6;
+    }
+
+    .hero .badge-row {
+      margin-top: 16px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .hero .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    /* ===== Section Headings ===== */
+    .section {
+      margin-bottom: 48px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--blue-100);
+    }
+
+    .section-number {
+      width: 44px;
+      height: 44px;
+      background: var(--blue-600);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .section-header h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--gray-900);
+    }
+
+    .section-header-plain {
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--blue-100);
+    }
+
+    .section-header-plain h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--gray-900);
+    }
+
+    h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--gray-800);
+      margin: 28px 0 12px;
+    }
+
+    p { margin-bottom: 12px; }
+
+    /* ===== Requirements Table ===== */
+    .req-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 15px;
+    }
+
+    .req-table th {
+      background: var(--blue-600);
+      color: #fff;
+      text-align: left;
+      padding: 12px 16px;
+      font-weight: 600;
+    }
+
+    .req-table th:first-child { border-radius: 8px 0 0 0; }
+    .req-table th:last-child { border-radius: 0 8px 0 0; }
+
+    .req-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .req-table tr:last-child td:first-child { border-radius: 0 0 0 8px; }
+    .req-table tr:last-child td:last-child { border-radius: 0 0 8px 0; }
+
+    .req-table tr:nth-child(even) td {
+      background: var(--gray-50);
+    }
+
+    .req-table tr:hover td {
+      background: var(--blue-50);
+    }
+
+    /* ===== Ordered Steps ===== */
+    .steps {
+      counter-reset: step-counter;
+      list-style: none;
+      padding: 0;
+    }
+
+    .steps > li {
+      counter-increment: step-counter;
+      position: relative;
+      padding: 12px 0 12px 44px;
+      margin-bottom: 4px;
+    }
+
+    .steps > li::before {
+      content: counter(step-counter);
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 30px;
+      height: 30px;
+      background: var(--blue-50);
+      color: var(--blue-700);
+      border: 2px solid var(--blue-200);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    /* ===== Callout Boxes ===== */
+    .callout {
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      font-size: 15px;
+      line-height: 1.6;
+      display: flex;
+      gap: 12px;
+    }
+
+    .callout-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+      line-height: 1.5;
+    }
+
+    .callout-tip {
+      background: var(--blue-50);
+      border: 1px solid var(--blue-200);
+      color: var(--blue-800);
+    }
+
+    .callout-warning {
+      background: var(--amber-50);
+      border: 1px solid var(--amber-200);
+      color: var(--amber-700);
+    }
+
+    .callout-info {
+      background: var(--gray-100);
+      border: 1px solid var(--gray-300);
+      color: var(--gray-700);
+    }
+
+    .callout-success {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: var(--green-700);
+    }
+
+    /* ===== Code Blocks ===== */
+    code {
+      background: var(--gray-100);
+      border: 1px solid var(--gray-200);
+      padding: 2px 7px;
+      border-radius: 5px;
+      font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+      font-size: 14px;
+      color: var(--blue-700);
+    }
+
+    pre {
+      background: var(--gray-900);
+      color: #e2e8f0;
+      border-radius: 10px;
+      padding: 20px 24px;
+      overflow-x: auto;
+      margin: 16px 0;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    pre code {
+      background: none;
+      border: none;
+      padding: 0;
+      color: inherit;
+      font-size: inherit;
+    }
+
+    /* ===== Sub-method Cards ===== */
+    .method-card {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      padding: 24px;
+      margin: 16px 0;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+
+    .method-card h4 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--blue-700);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .method-badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .method-badge-rec {
+      background: #dcfce7;
+      color: var(--green-700);
+    }
+
+    .method-badge-opt {
+      background: var(--blue-50);
+      color: var(--blue-700);
+    }
+
+    .method-badge-ai {
+      background: #faf5ff;
+      color: #7c3aed;
+      border: 1px solid #e9d5ff;
+    }
+
+    /* ===== FAQ Accordion ===== */
+    .faq-item {
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      margin-bottom: 10px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .faq-question {
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      padding: 16px 20px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--gray-800);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-family: inherit;
+      line-height: 1.5;
+      transition: background 0.15s;
+    }
+
+    .faq-question:hover {
+      background: var(--gray-50);
+    }
+
+    .faq-question::after {
+      content: '+';
+      font-size: 22px;
+      font-weight: 300;
+      color: var(--gray-400);
+      flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+
+    .faq-item.open .faq-question::after {
+      content: '-';
+    }
+
+    .faq-answer {
+      display: none;
+      padding: 0 20px 16px;
+      font-size: 15px;
+      color: var(--gray-600);
+      line-height: 1.7;
+    }
+
+    .faq-item.open .faq-answer {
+      display: block;
+    }
+
+    .faq-answer code {
+      font-size: 13px;
+    }
+
+    /* ===== Usage Flow ===== */
+    .flow-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin: 20px 0;
+    }
+
+    .flow-card {
+      background: var(--blue-50);
+      border: 1px solid var(--blue-200);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .flow-icon {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .flow-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--blue-700);
+      margin-bottom: 4px;
+    }
+
+    .flow-desc {
+      font-size: 13px;
+      color: var(--gray-600);
+      line-height: 1.5;
+    }
+
+    /* ===== Footer ===== */
+    .footer {
+      background: var(--gray-900);
+      color: var(--gray-400);
+      text-align: center;
+      padding: 32px 24px;
+      font-size: 14px;
+    }
+
+    .footer a {
+      color: var(--blue-200);
+    }
+
+    .footer-brand {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 860px) {
+      .sidebar {
+        display: none;
+        position: fixed;
+        top: 64px;
+        left: 0;
+        width: 100%;
+        height: calc(100vh - 64px);
+        z-index: 99;
+        border-right: none;
+        border-bottom: 1px solid var(--gray-200);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      }
+
+      .sidebar.open {
+        display: block;
+      }
+
+      .toc-toggle {
+        display: block;
+      }
+
+      .main {
+        padding: 24px 20px 60px;
+      }
+
+      .hero {
+        padding: 28px 24px;
+      }
+
+      .hero h1 {
+        font-size: 24px;
+      }
+
+      .section-header h2,
+      .section-header-plain h2 {
+        font-size: 20px;
+      }
+
+      .flow-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .hero .badge-row { flex-direction: column; }
+      .flow-grid { grid-template-columns: 1fr; }
+      .header-badge { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== Header ===== -->
+<header class="header">
+  <div class="header-inner">
+    <div class="header-brand">
+      <div class="logo">S</div>
+      <div>
+        <div class="header-title">ShopReply</div>
+        <div class="header-subtitle">H&#432;&#7899;ng d&#7851;n c&agrave;i &#273;&#7863;t</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span class="header-badge">Setup Guide</span>
+      <button class="toc-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">Menu</button>
+    </div>
+  </div>
+</header>
+
+<!-- ===== Layout ===== -->
+<div class="layout">
+
+  <!-- Sidebar / TOC -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-title">M&#7909;c l&#7909;c</div>
+    <ul class="toc-list">
+      <li><a href="#yeu-cau">Y&ecirc;u c&#7847;u h&#7879; th&#7889;ng</a></li>
+      <li class="toc-sub"><a href="#ollama">T&#249;y ch&#7885;n: C&agrave;i Ollama</a></li>
+      <li><a href="#buoc-1">B&#432;&#7899;c 1: C&agrave;i Backend</a></li>
+      <li><a href="#buoc-2">B&#432;&#7899;c 2: C&agrave;i Chrome Extension</a></li>
+      <li><a href="#buoc-3">B&#432;&#7899;c 3: Import Q&amp;A</a></li>
+      <li class="toc-sub"><a href="#import-csv">C&aacute;ch 1: Import CSV</a></li>
+      <li class="toc-sub"><a href="#them-tung-cau">C&aacute;ch 2: Th&ecirc;m t&#7915;ng c&acirc;u</a></li>
+      <li class="toc-sub"><a href="#scan-lich-su">C&aacute;ch 3: Scan l&#7883;ch s&#7917;</a></li>
+      <li class="toc-sub"><a href="#tu-hoc">C&aacute;ch 4: Bot t&#7921; h&#7885;c</a></li>
+      <li><a href="#buoc-4">B&#432;&#7899;c 4: B&#7855;t &#273;&#7847;u s&#7917; d&#7909;ng</a></li>
+      <li><a href="#khoi-dong">Kh&#7903;i &#273;&#7897;ng c&ugrave;ng Windows</a></li>
+      <li><a href="#faq">C&acirc;u h&#7887;i th&#432;&#7901;ng g&#7863;p</a></li>
+      <li><a href="#lien-he">Li&ecirc;n h&#7879; h&#7895; tr&#7907;</a></li>
+    </ul>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main">
+
+    <!-- Hero -->
+    <div class="hero">
+      <h1>H&#432;&#7899;ng d&#7851;n c&agrave;i &#273;&#7863;t ShopReply</h1>
+      <p>Ph&#7847;n m&#7873;m t&#7921; &#273;&#7897;ng tr&#7843; l&#7901;i tin nh&#7855;n cho shop b&aacute;n h&agrave;ng tr&ecirc;n Facebook &amp; Zalo.<br>
+      M&#7885;i d&#7919; li&#7879;u &#273;&#7873;u &#273;&#432;&#7907;c x&#7917; l&yacute; <strong>tr&ecirc;n m&aacute;y c&#7911;a b&#7841;n</strong> &mdash; kh&ocirc;ng g&igrave; b&#7883; g&#7917;i l&ecirc;n cloud.</p>
+      <div class="badge-row">
+        <span class="badge">&#128274; 100% Local &amp; Private</span>
+        <span class="badge">&#9889; C&agrave;i &#273;&#7863;t trong 5 ph&uacute;t</span>
+        <span class="badge">&#128640; T&#7921; &#273;&#7897;ng h&#7885;c c&agrave;ng d&ugrave;ng</span>
+      </div>
+    </div>
+
+    <!-- ===== Yeu cau he thong ===== -->
+    <section class="section" id="yeu-cau">
+      <div class="section-header-plain">
+        <h2>Y&ecirc;u c&#7847;u h&#7879; th&#7889;ng</h2>
+      </div>
+
+      <table class="req-table">
+        <thead>
+          <tr>
+            <th>H&#7841;ng m&#7909;c</th>
+            <th>Y&ecirc;u c&#7847;u t&#7889;i thi&#7875;u</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>H&#7879; &#273;i&#7873;u h&agrave;nh</td><td>Windows 10 tr&#7903; l&ecirc;n (64-bit)</td></tr>
+          <tr><td>RAM</td><td>8 GB (khuy&#7871;n ngh&#7883; 16 GB n&#7871;u d&ugrave;ng AI g&#7907;i &yacute;)</td></tr>
+          <tr><td>&#7892; c&#7913;ng</td><td>~2 GB tr&#7889;ng (cho backend + model embedding)</td></tr>
+          <tr><td>Tr&igrave;nh duy&#7879;t</td><td>Google Chrome phi&ecirc;n b&#7843;n 120+</td></tr>
+          <tr><td>M&#7841;ng</td><td>Kh&ocirc;ng c&#7847;n internet &#273;&#7875; tr&#7843; l&#7901;i t&#7921; &#273;&#7897;ng. C&#7847;n internet &#273;&#7875; c&agrave;i Chrome Extension</td></tr>
+        </tbody>
+      </table>
+
+      <h3 id="ollama">T&ugrave;y ch&#7885;n: C&agrave;i Ollama (&#273;&#7875; c&oacute; AI g&#7907;i &yacute;)</h3>
+      <p>N&#7871;u b&#7841;n mu&#7889;n ShopReply <strong>g&#7907;i &yacute; c&acirc;u tr&#7843; l&#7901;i b&#7857;ng AI</strong> cho nh&#7919;ng c&acirc;u h&#7887;i m&#7899;i:</p>
+
+      <ol class="steps">
+        <li>T&#7843;i Ollama t&#7841;i: <a href="https://ollama.com/download" target="_blank">https://ollama.com/download</a></li>
+        <li>C&agrave;i &#273;&#7863;t b&igrave;nh th&#432;&#7901;ng (Next &gt; Next &gt; Install)</li>
+        <li>M&#7903; Command Prompt, ch&#7841;y: <code>ollama pull qwen2.5:7b</code></li>
+        <li>&#272;&#7907;i t&#7843;i xong (kho&#7843;ng 4-5 GB)</li>
+      </ol>
+
+      <div class="callout callout-info">
+        <span class="callout-icon">&#8505;&#65039;</span>
+        <div>N&#7871;u kh&ocirc;ng c&agrave;i Ollama, ShopReply v&#7851;n ho&#7841;t &#273;&#7897;ng b&igrave;nh th&#432;&#7901;ng &mdash; ch&#7881; l&agrave; kh&ocirc;ng c&oacute; AI g&#7907;i &yacute; cho c&acirc;u h&#7887;i m&#7899;i.</div>
+      </div>
+    </section>
+
+    <!-- ===== Buoc 1 ===== -->
+    <section class="section" id="buoc-1">
+      <div class="section-header">
+        <div class="section-number">1</div>
+        <h2>C&agrave;i Backend (1 l&#7847;n duy nh&#7845;t)</h2>
+      </div>
+
+      <ol class="steps">
+        <li>Download file <code>ShopReply-Backend.exe</code></li>
+        <li>T&#7841;o 1 th&#432; m&#7909;c ri&ecirc;ng, v&iacute; d&#7909;: <code>C:\ShopReply\</code></li>
+        <li>B&#7887; file .exe v&agrave;o th&#432; m&#7909;c &#273;&oacute;</li>
+        <li>Double-click &#273;&#7875; ch&#7841;y</li>
+        <li><strong>L&#7847;n &#273;&#7847;u ch&#7841;y s&#7869; m&#7845;t 30-60 gi&acirc;y</strong> &#273;&#7875; t&#7843;i model embedding (ch&#7881; l&#7847;n &#273;&#7847;u)</li>
+        <li>Bi&#7875;u t&#432;&#7907;ng ShopReply (h&igrave;nh tr&ograve;n xanh ch&#7919; &ldquo;S&rdquo;) s&#7869; hi&#7879;n &#7903; <strong>khay h&#7879; th&#7889;ng</strong> (g&oacute;c d&#432;&#7899;i ph&#7843;i m&agrave;n h&igrave;nh)</li>
+      </ol>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">&#128161;</span>
+        <div><strong>M&#7865;o:</strong> N&#7871;u kh&ocirc;ng th&#7845;y bi&#7875;u t&#432;&#7907;ng, click m&#361;i t&ecirc;n <strong>^</strong> &#7903; khay h&#7879; th&#7889;ng &#273;&#7875; hi&#7879;n c&aacute;c bi&#7875;u t&#432;&#7907;ng &#7849;n.</div>
+      </div>
+
+      <h3>Ki&#7875;m tra &#273;&atilde; ch&#7841;y th&agrave;nh c&ocirc;ng</h3>
+      <ol class="steps">
+        <li>Click ph&#7843;i bi&#7875;u t&#432;&#7907;ng ShopReply &#7903; khay h&#7879; th&#7889;ng</li>
+        <li>Ch&#7885;n <strong>&ldquo;Open Health Check&rdquo;</strong></li>
+        <li>Tr&igrave;nh duy&#7879;t s&#7869; m&#7903; v&agrave; hi&#7879;n tr&#7841;ng th&aacute;i <code>"status": "ok"</code> &mdash; v&#7853;y l&agrave; th&agrave;nh c&ocirc;ng!</li>
+      </ol>
+    </section>
+
+    <!-- ===== Buoc 2 ===== -->
+    <section class="section" id="buoc-2">
+      <div class="section-header">
+        <div class="section-number">2</div>
+        <h2>C&agrave;i Chrome Extension</h2>
+      </div>
+
+      <ol class="steps">
+        <li>M&#7903; Chrome Web Store (link s&#7869; &#273;&#432;&#7907;c cung c&#7845;p sau)</li>
+        <li>Nh&#7845;n <strong>&ldquo;Th&ecirc;m v&agrave;o Chrome&rdquo;</strong> (Add to Chrome)</li>
+        <li>Nh&#7845;n <strong>&ldquo;Th&ecirc;m ti&#7879;n &iacute;ch m&#7903; r&#7897;ng&rdquo;</strong> (Add extension)</li>
+        <li>Ghim bi&#7875;u t&#432;&#7907;ng ShopReply v&agrave;o thanh c&ocirc;ng c&#7909;:
+          <ul style="margin-top:8px;padding-left:20px;list-style:disc;color:var(--gray-600);font-size:15px;">
+            <li>Click bi&#7875;u t&#432;&#7907;ng puzzle (ti&#7879;n &iacute;ch m&#7903; r&#7897;ng) &#7903; g&oacute;c ph&#7843;i Chrome</li>
+            <li>T&igrave;m <strong>ShopReply</strong> &gt; click bi&#7875;u t&#432;&#7907;ng ghim</li>
+          </ul>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ===== Buoc 3 ===== -->
+    <section class="section" id="buoc-3">
+      <div class="section-header">
+        <div class="section-number">3</div>
+        <h2>Import b&#7897; c&acirc;u h&#7887;i - tr&#7843; l&#7901;i</h2>
+      </div>
+
+      <p>&#272;&acirc;y l&agrave; b&#432;&#7899;c quan tr&#7885;ng nh&#7845;t &mdash; b&#7841;n c&#7847;n &ldquo;d&#7841;y&rdquo; cho bot bi&#7871;t c&aacute;ch tr&#7843; l&#7901;i kh&aacute;ch h&agrave;ng.</p>
+
+      <!-- Cach 1 -->
+      <div class="method-card" id="import-csv">
+        <h4>C&aacute;ch 1: Import t&#7915; file <span class="method-badge method-badge-rec">Khuy&#7871;n ngh&#7883;</span></h4>
+        <ol class="steps">
+          <li>Chu&#7849;n b&#7883; file CSV v&#7899;i 2 c&#7897;t: <code>question</code> v&agrave; <code>answer</code></li>
+        </ol>
+        <p style="margin-top:4px;margin-bottom:4px;">V&iacute; d&#7909;:</p>
+<pre><code>question,answer
+"Gi&aacute; &aacute;o hoodie?","&Aacute;o hoodie gi&aacute; 350k, size S-XL &#7841;"
+"Ship bao l&acirc;u?","Ship n&#7897;i th&agrave;nh 1-2 ng&agrave;y, ngo&#7841;i th&agrave;nh 3-5 ng&agrave;y &#7841;"
+"C&oacute; COD kh&ocirc;ng?","C&oacute; COD nha b&#7841;n, nh&#7853;n h&agrave;ng r&#7891;i tr&#7843; ti&#7873;n &#7841;"</code></pre>
+        <ol class="steps" style="counter-reset: step-counter 1;">
+          <li>Click bi&#7875;u t&#432;&#7907;ng ShopReply tr&ecirc;n Chrome &gt; <strong>&ldquo;C&agrave;i &#273;&#7863;t&rdquo;</strong></li>
+          <li>Ch&#7885;n tab <strong>&ldquo;Import&rdquo;</strong></li>
+          <li>K&eacute;o th&#7843; file CSV v&agrave;o ho&#7863;c click &#273;&#7875; ch&#7885;n file</li>
+          <li>X&aacute;c nh&#7853;n import</li>
+        </ol>
+      </div>
+
+      <!-- Cach 2 -->
+      <div class="method-card" id="them-tung-cau">
+        <h4>C&aacute;ch 2: Th&ecirc;m t&#7915;ng c&acirc;u <span class="method-badge method-badge-opt">T&ugrave;y ch&#7885;n</span></h4>
+        <ol class="steps">
+          <li>M&#7903; c&agrave;i &#273;&#7863;t ShopReply &gt; tab <strong>&ldquo;Q&amp;A&rdquo;</strong></li>
+          <li>Click <strong>&ldquo;Th&ecirc;m m&#7899;i&rdquo;</strong></li>
+          <li>Nh&#7853;p c&acirc;u h&#7887;i v&agrave; c&acirc;u tr&#7843; l&#7901;i</li>
+          <li>L&#432;u l&#7841;i</li>
+        </ol>
+      </div>
+
+      <!-- Cach 3 -->
+      <div class="method-card" id="scan-lich-su">
+        <h4>C&aacute;ch 3: Scan l&#7883;ch s&#7917; chat c&#361; <span class="method-badge method-badge-ai">C&#7847;n Ollama</span></h4>
+        <ol class="steps">
+          <li>M&#7903; Facebook Messages ho&#7863;c Zalo Web tr&ecirc;n Chrome</li>
+          <li>Click bi&#7875;u t&#432;&#7907;ng ShopReply &gt; <strong>&ldquo;Scan l&#7883;ch s&#7917;&rdquo;</strong></li>
+          <li>Ch&#7885;n nh&#7919;ng cu&#7897;c h&#7897;i tho&#7841;i l&agrave; <strong>kh&aacute;ch h&agrave;ng</strong> (b&#7887; qua b&#7841;n b&egrave;, nh&oacute;m chat...)</li>
+          <li>ShopReply s&#7869; t&#7921; &#273;&#7897;ng tr&iacute;ch xu&#7845;t c&aacute;c c&#7863;p c&acirc;u h&#7887;i - tr&#7843; l&#7901;i</li>
+          <li>Review v&agrave; x&aacute;c nh&#7853;n</li>
+        </ol>
+      </div>
+
+      <!-- Cach 4 -->
+      <div class="method-card" id="tu-hoc">
+        <h4>C&aacute;ch 4: Kh&ocirc;ng c&#7847;n import &mdash; bot t&#7921; h&#7885;c <span class="method-badge method-badge-opt">T&ugrave;y ch&#7885;n</span></h4>
+        <p>N&#7871;u b&#7841;n kh&ocirc;ng c&oacute; data s&#7861;n:</p>
+        <ol class="steps">
+          <li>&#272;&#7875; bot ch&#7841;y &#7903; ch&#7871; &#273;&#7897; <strong>&ldquo;Suggest only&rdquo;</strong> (g&#7907;i &yacute;, kh&ocirc;ng t&#7921; &#273;&#7897;ng g&#7917;i)</li>
+          <li>M&#7895;i khi kh&aacute;ch h&#7887;i &rarr; b&#7841;n t&#7921; vi&#7871;t c&acirc;u tr&#7843; l&#7901;i &rarr; bot t&#7921; l&#432;u v&agrave;o database</li>
+          <li>L&#7847;n sau g&#7863;p c&acirc;u t&#432;&#417;ng t&#7921; &rarr; bot t&#7921; &#273;&#7897;ng tr&#7843; l&#7901;i lu&ocirc;n</li>
+          <li>Sau 1-2 tu&#7847;n &rarr; bot &#273;&atilde; h&#7885;c &#273;&#7911; &#273;&#7875; t&#7921; &#273;&#7897;ng 80-90% c&acirc;u h&#7887;i</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== Buoc 4 ===== -->
+    <section class="section" id="buoc-4">
+      <div class="section-header">
+        <div class="section-number">4</div>
+        <h2>B&#7855;t &#273;&#7847;u s&#7917; d&#7909;ng</h2>
+      </div>
+
+      <ol class="steps">
+        <li>&#272;&#7843;m b&#7843;o ShopReply Backend &#273;ang ch&#7841;y (bi&#7875;u t&#432;&#7907;ng xanh &#7903; khay h&#7879; th&#7889;ng)</li>
+        <li>M&#7903; <strong>Facebook Messages</strong> (<code>facebook.com/messages</code>) ho&#7863;c <strong>Zalo Web</strong> (<code>chat.zalo.me</code>)</li>
+        <li>Khi c&oacute; tin nh&#7855;n kh&aacute;ch h&agrave;ng, ShopReply s&#7869; x&#7917; l&yacute; nh&#432; sau:</li>
+      </ol>
+
+      <div class="flow-grid">
+        <div class="flow-card">
+          <div class="flow-icon">&#9989;</div>
+          <div class="flow-label">&#272;&#7897; ch&iacute;nh x&aacute;c &ge; 85%</div>
+          <div class="flow-desc">ShopReply <strong>t&#7921; &#273;&#7897;ng tr&#7843; l&#7901;i lu&ocirc;n</strong></div>
+        </div>
+        <div class="flow-card">
+          <div class="flow-icon">&#128172;</div>
+          <div class="flow-label">&#272;&#7897; ch&iacute;nh x&aacute;c 50-84%</div>
+          <div class="flow-desc">Hi&#7879;n b&#7843;ng &#273;&#7873; xu&#7845;t, b&#7841;n ch&#7885;n/s&#7917;a r&#7891;i g&#7917;i</div>
+        </div>
+        <div class="flow-card">
+          <div class="flow-icon">&#10024;</div>
+          <div class="flow-label">C&acirc;u ho&agrave;n to&agrave;n m&#7899;i</div>
+          <div class="flow-desc">G&#7907;i &yacute; t&#7915; AI (n&#7871;u c&oacute; Ollama), b&#7841;n t&#7921; vi&#7871;t r&#7891;i g&#7917;i</div>
+        </div>
+      </div>
+
+      <p>M&#7895;i l&#7847;n b&#7841;n tr&#7843; l&#7901;i c&acirc;u m&#7899;i &rarr; ShopReply t&#7921; &#273;&#7897;ng h&#7885;c, l&#7847;n sau g&#7863;p c&acirc;u t&#432;&#417;ng t&#7921; s&#7869; t&#7921; tr&#7843; l&#7901;i.</p>
+
+      <div class="callout callout-success">
+        <span class="callout-icon">&#128640;</span>
+        <div><strong>C&agrave;ng d&ugrave;ng nhi&#7873;u, bot c&agrave;ng th&ocirc;ng minh.</strong> Sau 1-2 tu&#7847;n, bot c&oacute; th&#7875; t&#7921; &#273;&#7897;ng tr&#7843; l&#7901;i 80-90% c&acirc;u h&#7887;i.</div>
+      </div>
+    </section>
+
+    <!-- ===== Khoi dong cung Windows ===== -->
+    <section class="section" id="khoi-dong">
+      <div class="section-header-plain">
+        <h2>Kh&#7903;i &#273;&#7897;ng c&ugrave;ng Windows (t&ugrave;y ch&#7885;n)</h2>
+      </div>
+
+      <p>&#272;&#7875; ShopReply t&#7921; &#273;&#7897;ng ch&#7841;y m&#7895;i khi b&#7853;t m&aacute;y:</p>
+
+      <ol class="steps">
+        <li>Click ph&#7843;i bi&#7875;u t&#432;&#7907;ng ShopReply &#7903; khay h&#7879; th&#7889;ng</li>
+        <li>Ch&#7885;n <strong>&ldquo;Start with Windows&rdquo;</strong> (s&#7869; hi&#7879;n d&#7845;u check khi &#273;&atilde; b&#7853;t)</li>
+        <li>&#272;&#7875; t&#7855;t: click l&#7841;i <strong>&ldquo;Start with Windows&rdquo;</strong> l&#7847;n n&#7919;a</li>
+      </ol>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="section" id="faq">
+      <div class="section-header-plain">
+        <h2>C&acirc;u h&#7887;i th&#432;&#7901;ng g&#7863;p</h2>
+      </div>
+
+      <div class="faq-item open">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          ShopReply c&oacute; g&#7917;i d&#7919; li&#7879;u l&ecirc;n cloud kh&ocirc;ng?
+        </button>
+        <div class="faq-answer">
+          <strong>Kh&ocirc;ng.</strong> To&agrave;n b&#7897; d&#7919; li&#7879;u (c&acirc;u h&#7887;i, c&acirc;u tr&#7843; l&#7901;i, l&#7883;ch s&#7917; chat) &#273;&#7873;u &#273;&#432;&#7907;c l&#432;u v&agrave; x&#7917; l&yacute; <strong>tr&ecirc;n m&aacute;y c&#7911;a b&#7841;n</strong>. Kh&ocirc;ng g&igrave; b&#7883; g&#7917;i ra ngo&agrave;i.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          T&#7841;i sao l&#7847;n &#273;&#7847;u ch&#7841;y b&#7883; ch&#7853;m?
+        </button>
+        <div class="faq-answer">
+          L&#7847;n &#273;&#7847;u ti&ecirc;n, ShopReply c&#7847;n t&#7843;i model embedding (kho&#7843;ng 100MB) &#273;&#7875; hi&#7875;u n&#7897;i dung c&acirc;u h&#7887;i. Ch&#7881; c&#7847;n &#273;&#7907;i 1 l&#7847;n, c&aacute;c l&#7847;n sau s&#7869; nhanh.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          L&agrave;m sao bi&#7871;t bot &#273;ang ch&#7841;y?
+        </button>
+        <div class="faq-answer">
+          Nh&igrave;n g&oacute;c d&#432;&#7899;i ph&#7843;i m&agrave;n h&igrave;nh (khay h&#7879; th&#7889;ng) &mdash; c&oacute; bi&#7875;u t&#432;&#7907;ng h&igrave;nh tr&ograve;n xanh ch&#7919; &ldquo;S&rdquo; l&agrave; &#273;ang ch&#7841;y.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          Bot tr&#7843; l&#7901;i sai th&igrave; sao?
+        </button>
+        <div class="faq-answer">
+          <ol style="padding-left:20px;margin:0;">
+            <li>M&#7903; c&agrave;i &#273;&#7863;t ShopReply &gt; tab <strong>&ldquo;Nh&#7853;t k&yacute;&rdquo;</strong> (Auto-Reply Log)</li>
+            <li>T&igrave;m c&acirc;u tr&#7843; l&#7901;i sai &gt; click <strong>&ldquo;Sai&rdquo;</strong> (Wrong)</li>
+            <li>S&#7917;a l&#7841;i c&acirc;u tr&#7843; l&#7901;i &#273;&uacute;ng &gt; L&#432;u</li>
+            <li>Bot s&#7869; h&#7885;c t&#7915; b&#7843;n s&#7917;a v&agrave; kh&ocirc;ng l&#7863;p l&#7841;i l&#7895;i &#273;&oacute;</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          C&oacute; th&#7875; d&ugrave;ng tr&ecirc;n nhi&#7873;u m&aacute;y kh&ocirc;ng?
+        </button>
+        <div class="faq-answer">
+          C&oacute; th&#7875;, nh&#432;ng m&#7895;i m&aacute;y c&#7847;n c&agrave;i ri&ecirc;ng. D&#7919; li&#7879;u kh&ocirc;ng &#273;&#7891;ng b&#7897; gi&#7919;a c&aacute;c m&aacute;y (v&igrave; l&agrave; local).
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          T&ocirc;i mu&#7889;n &#273;&#7893;i port (kh&ocirc;ng d&ugrave;ng 3000)?
+        </button>
+        <div class="faq-answer">
+          <ol style="padding-left:20px;margin:0;">
+            <li>T&#7841;o file <code>.env</code> c&#7841;nh file <code>ShopReply-Backend.exe</code></li>
+            <li>Ghi n&#7897;i dung: <code>SHOPREPLY_PORT=8080</code> (thay 8080 b&#7857;ng port mong mu&#7889;n)</li>
+            <li>Kh&#7903;i &#273;&#7897;ng l&#7841;i ShopReply</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          T&ocirc;i d&ugrave;ng t&#7855;t m&aacute;y m&agrave; kh&ocirc;ng t&#7855;t ShopReply tr&#432;&#7899;c?
+        </button>
+        <div class="faq-answer">
+          Kh&ocirc;ng sao. L&#7847;n sau b&#7853;t m&aacute;y, ch&#7881; c&#7847;n ch&#7841;y l&#7841;i <code>ShopReply-Backend.exe</code> (ho&#7863;c b&#7853;t &ldquo;Start with Windows&rdquo; &#273;&#7875; t&#7921; &#273;&#7897;ng).
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          Kh&ocirc;ng c&agrave;i Ollama c&oacute; sao kh&ocirc;ng?
+        </button>
+        <div class="faq-answer">
+          Kh&ocirc;ng sao. ShopReply v&#7851;n tr&#7843; l&#7901;i t&#7921; &#273;&#7897;ng b&#7857;ng Q&amp;A database. Ollama ch&#7881; c&#7847;n khi b&#7841;n mu&#7889;n AI g&#7907;i &yacute; c&acirc;u tr&#7843; l&#7901;i cho nh&#7919;ng c&acirc;u h&#7887;i ho&agrave;n to&agrave;n m&#7899;i ch&#432;a c&oacute; trong database.
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Lien he ===== -->
+    <section class="section" id="lien-he">
+      <div class="section-header-plain">
+        <h2>Li&ecirc;n h&#7879; h&#7895; tr&#7907;</h2>
+      </div>
+      <p>N&#7871;u b&#7841;n c&#7847;n h&#7895; tr&#7907; th&ecirc;m, vui l&ograve;ng li&ecirc;n h&#7879;:</p>
+      <ul style="list-style:none;padding:0;">
+        <li style="padding:8px 0;font-size:15px;">&#128231; <strong>Email:</strong> <a href="mailto:nhamingroup@gmail.com">nhamingroup@gmail.com</a></li>
+        <li style="padding:8px 0;font-size:15px;">&#128172; <strong>Zalo:</strong> (s&#7869; c&#7853;p nh&#7853;t)</li>
+        <li style="padding:8px 0;font-size:15px;">&#127760; <strong>Facebook:</strong> (s&#7869; c&#7853;p nh&#7853;t)</li>
+      </ul>
+    </section>
+
+  </main>
+</div>
+
+<!-- ===== Footer ===== -->
+<footer class="footer">
+  <div class="footer-brand">ShopReply</div>
+  <p>T&#7921; &#273;&#7897;ng tr&#7843; l&#7901;i tin nh&#7855;n &mdash; 100% local &amp; private</p>
+  <p style="margin-top:8px;">H&#7895; tr&#7907;: <a href="mailto:nhamingroup@gmail.com">nhamingroup@gmail.com</a></p>
+  <p style="margin-top:12px;font-size:12px;color:var(--gray-500);">&copy; 2026 ShopReply. All rights reserved.</p>
+</footer>
+
+<!-- ===== TOC Active Highlight ===== -->
+<script>
+(function() {
+  const tocLinks = document.querySelectorAll('.toc-list a');
+  const sections = [];
+
+  tocLinks.forEach(function(link) {
+    const id = link.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if (el) sections.push({ id: id, el: el, link: link });
+  });
+
+  function onScroll() {
+    let current = '';
+    const scrollY = window.scrollY + 120;
+    for (let i = sections.length - 1; i >= 0; i--) {
+      if (sections[i].el.offsetTop <= scrollY) {
+        current = sections[i].id;
+        break;
+      }
+    }
+    tocLinks.forEach(function(l) { l.classList.remove('active'); });
+    if (current) {
+      const activeLink = document.querySelector('.toc-list a[href="#' + current + '"]');
+      if (activeLink) activeLink.classList.add('active');
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Close mobile sidebar on link click
+  tocLinks.forEach(function(link) {
+    link.addEventListener('click', function() {
+      document.querySelector('.sidebar').classList.remove('open');
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

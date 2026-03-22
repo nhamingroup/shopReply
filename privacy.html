@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — ShopReply</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue-50: #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+      --blue-800: #1e40af;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-300: #d1d5db;
+      --gray-500: #6b7280;
+      --gray-600: #4b5563;
+      --gray-700: #374151;
+      --gray-800: #1f2937;
+      --gray-900: #111827;
+    }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      color: var(--gray-800);
+      background: var(--gray-50);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    a { color: var(--blue-600); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ===== Header ===== */
+    .header {
+      background: linear-gradient(135deg, var(--blue-700), var(--blue-600));
+      color: #fff;
+      padding: 48px 24px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.08) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      position: relative;
+    }
+
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      backdrop-filter: blur(4px);
+    }
+
+    .logo-text {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .header h1 {
+      font-size: 22px;
+      font-weight: 500;
+      opacity: 0.95;
+      margin-bottom: 8px;
+      position: relative;
+    }
+
+    .header .updated {
+      font-size: 14px;
+      opacity: 0.75;
+      position: relative;
+    }
+
+    /* ===== Container ===== */
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ===== Table of Contents ===== */
+    .toc {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin: 32px auto;
+      max-width: 800px;
+    }
+
+    .toc h2 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--gray-700);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .toc ol {
+      padding-left: 20px;
+    }
+
+    .toc li {
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+
+    .toc a {
+      color: var(--gray-600);
+    }
+
+    .toc a:hover {
+      color: var(--blue-600);
+    }
+
+    /* ===== Content ===== */
+    .content {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      padding: 40px 40px 48px;
+      margin: 0 auto 32px;
+      max-width: 800px;
+    }
+
+    .content h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--gray-900);
+      margin: 40px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--blue-100);
+      scroll-margin-top: 80px;
+    }
+
+    .content h2:first-of-type {
+      margin-top: 0;
+    }
+
+    .content h3 {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--gray-800);
+      margin: 24px 0 10px;
+    }
+
+    .content p {
+      margin-bottom: 14px;
+      color: var(--gray-700);
+    }
+
+    .content ul, .content ol {
+      margin-bottom: 14px;
+      padding-left: 24px;
+    }
+
+    .content li {
+      margin-bottom: 8px;
+      color: var(--gray-700);
+    }
+
+    .content li strong {
+      color: var(--gray-800);
+    }
+
+    /* Highlight box */
+    .highlight {
+      background: var(--blue-50);
+      border-left: 4px solid var(--blue-600);
+      border-radius: 0 8px 8px 0;
+      padding: 16px 20px;
+      margin: 20px 0;
+    }
+
+    .highlight p {
+      margin-bottom: 0;
+      color: var(--blue-800);
+      font-weight: 500;
+    }
+
+    .highlight.green {
+      background: #f0fdf4;
+      border-left-color: #22c55e;
+    }
+
+    .highlight.green p {
+      color: #166534;
+    }
+
+    /* Permission table */
+    .perm-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 15px;
+    }
+
+    .perm-table th {
+      background: var(--blue-50);
+      color: var(--blue-800);
+      font-weight: 600;
+      text-align: left;
+      padding: 12px 16px;
+      border-bottom: 2px solid var(--blue-200);
+    }
+
+    .perm-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--gray-200);
+      vertical-align: top;
+      color: var(--gray-700);
+    }
+
+    .perm-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .perm-table code {
+      background: var(--gray-100);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13px;
+      color: var(--gray-800);
+    }
+
+    /* Divider */
+    .lang-divider {
+      text-align: center;
+      margin: 48px 0 32px;
+      position: relative;
+    }
+
+    .lang-divider::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      height: 1px;
+      background: var(--gray-300);
+    }
+
+    .lang-divider span {
+      background: #fff;
+      padding: 0 20px;
+      position: relative;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 32px 24px 48px;
+      color: var(--gray-500);
+      font-size: 14px;
+    }
+
+    .footer a {
+      color: var(--gray-500);
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .header { padding: 36px 16px 32px; }
+      .logo-text { font-size: 24px; }
+      .header h1 { font-size: 18px; }
+      .content { padding: 24px 20px 32px; }
+      .toc { padding: 20px 24px; }
+      .perm-table { font-size: 14px; }
+      .perm-table th, .perm-table td { padding: 10px 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="logo">
+      <div class="logo-icon">S</div>
+      <span class="logo-text">ShopReply</span>
+    </div>
+    <h1>Chinh Sach Bao Mat / Privacy Policy</h1>
+    <div class="updated">Cap nhat lan cuoi / Last updated: March 2026</div>
+  </div>
+
+  <!-- Table of Contents -->
+  <div class="container">
+    <div class="toc">
+      <h2>Muc luc / Table of Contents</h2>
+      <ol>
+        <li><a href="#vi-intro">Gioi thieu</a></li>
+        <li><a href="#vi-collection">Du lieu chung toi truy cap</a></li>
+        <li><a href="#vi-storage">Luu tru du lieu — 100% tai may cua ban</a></li>
+        <li><a href="#vi-sharing">Chia se du lieu</a></li>
+        <li><a href="#vi-thirdparty">Dich vu ben thu ba</a></li>
+        <li><a href="#vi-permissions">Giai thich quyen truy cap</a></li>
+        <li><a href="#vi-children">Quyen rieng tu tre em</a></li>
+        <li><a href="#vi-changes">Thay doi chinh sach</a></li>
+        <li><a href="#vi-contact">Lien he</a></li>
+        <li><a href="#en">English Version</a></li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ===================== VIETNAMESE ===================== -->
+  <div class="container">
+    <div class="content">
+
+      <h2 id="vi-intro">1. Gioi thieu</h2>
+      <p>
+        <strong>ShopReply</strong> la mot Chrome Extension giup cac chu shop online tu dong tra loi tin nhan khach hang
+        tren Facebook Messenger va Zalo. Extension su dung tri tue nhan tao (AI) chay <strong>hoan toan tren may tinh cua ban</strong>
+        de goi y cau tra loi dua tren co so du lieu hoi-dap ma ban tu tao.
+      </p>
+      <p>
+        Chung toi cam ket bao ve quyen rieng tu cua ban. Chinh sach nay giai thich cach ShopReply xu ly du lieu cua ban.
+      </p>
+
+      <div class="highlight green">
+        <p>Nguyen tac cot loi: Moi du lieu cua ban deu duoc xu ly va luu tru TAI MAY TINH CUA BAN. Khong co du lieu nao duoc gui den may chu ben ngoai.</p>
+      </div>
+
+      <h2 id="vi-collection">2. Du lieu chung toi truy cap</h2>
+      <p>ShopReply truy cap cac du lieu sau <strong>chi tren trinh duyet cua ban</strong>:</p>
+      <ul>
+        <li><strong>Tin nhan chat:</strong> Doc noi dung tin nhan tren Facebook Messenger va Zalo de hieu cau hoi cua khach hang.</li>
+        <li><strong>Co so du lieu hoi-dap:</strong> Cac cap cau hoi-tra loi ma ban tu tao va nhap vao extension.</li>
+        <li><strong>License key:</strong> Ma kich hoat ban quyen duoc luu tai may.</li>
+      </ul>
+
+      <div class="highlight">
+        <p>Quan trong: ShopReply KHONG thu thap bat ky du lieu phan tich (analytics), do luong su dung (telemetry), hay bat ky du lieu theo doi nao.</p>
+      </div>
+
+      <h2 id="vi-storage">3. Luu tru du lieu — 100% tai may cua ban</h2>
+      <p>Toan bo du lieu duoc xu ly va luu tru <strong>tai may tinh cua ban</strong>:</p>
+      <ul>
+        <li><strong>Co so du lieu Q&A:</strong> Luu trong file SQLite tai may cua ban.</li>
+        <li><strong>Xu ly tin nhan:</strong> Thuc hien boi backend server chay tai <code>localhost:3000</code> tren may cua ban.</li>
+        <li><strong>AI/LLM:</strong> Neu ban su dung Ollama, mo hinh AI cung chay hoan toan tai may (local).</li>
+        <li><strong>License key:</strong> Luu tru trong bo nho cuc bo cua extension (Chrome storage).</li>
+      </ul>
+      <p>Khong co du lieu nao duoc truyen den bat ky may chu ben ngoai nao.</p>
+
+      <h2 id="vi-sharing">4. Chia se du lieu</h2>
+      <p>
+        <strong>Chung toi KHONG chia se, ban, cho thue, hay chuyen giao bat ky du lieu ca nhan nao cua ban cho bat ky ben thu ba nao.</strong>
+      </p>
+      <p>ShopReply khong su dung cookie hoac bat ky cong nghe theo doi nao.</p>
+
+      <h2 id="vi-thirdparty">5. Dich vu ben thu ba</h2>
+      <p>ShopReply chi tuong tac voi hai dich vu ben ngoai:</p>
+
+      <h3>a) Xac thuc ban quyen (License Validation)</h3>
+      <p>
+        Khi kich hoat license, extension gui <strong>chi license key va device ID</strong> den mot Cloudflare Worker de xac minh.
+        Khong co du lieu ca nhan hay du lieu chat nao duoc gui.
+      </p>
+
+      <h3>b) Thanh toan (Payment Processing)</h3>
+      <p>Viec thanh toan duoc xu ly boi:</p>
+      <ul>
+        <li><strong>LemonSqueezy</strong> — cho thanh toan quoc te (the tin dung, PayPal, v.v.)</li>
+        <li><strong>SePay / VietQR</strong> — cho chuyen khoan ngan hang tai Viet Nam</li>
+      </ul>
+      <p>
+        Extension <strong>khong bao gio</strong> tiep can thong tin thanh toan cua ban. Moi giao dich duoc xu ly truc tiep boi
+        cac nen tang thanh toan noi tren theo chinh sach bao mat rieng cua ho.
+      </p>
+
+      <h2 id="vi-permissions">6. Giai thich quyen truy cap</h2>
+      <p>Duoi day la cac quyen ma ShopReply yeu cau va ly do:</p>
+
+      <table class="perm-table">
+        <thead>
+          <tr>
+            <th>Quyen</th>
+            <th>Muc dich</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>storage</code></td>
+            <td>Luu tru cai dat extension va license key tai may cua ban.</td>
+          </tr>
+          <tr>
+            <td><code>tabs</code></td>
+            <td>Phat hien khi ban dang o trang Facebook Messenger hoac Zalo de kich hoat tinh nang tu dong tra loi.</td>
+          </tr>
+          <tr>
+            <td><code>notifications</code></td>
+            <td>Gui thong bao khi co tin nhan moi can tra loi hoac khi co cap nhat trang thai.</td>
+          </tr>
+          <tr>
+            <td><code>host_permissions</code></td>
+            <td>Truy cap noi dung trang Facebook Messenger va Zalo de doc tin nhan chat va chen cau tra loi goi y.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 id="vi-children">7. Quyen rieng tu tre em</h2>
+      <p>
+        ShopReply khong huong den tre em duoi 13 tuoi. Chung toi khong co chu dich thu thap du lieu ca nhan tu tre em.
+        Neu ban la phu huynh va phat hien con ban dang su dung extension nay, vui long lien he voi chung toi.
+      </p>
+
+      <h2 id="vi-changes">8. Thay doi chinh sach bao mat</h2>
+      <p>
+        Chung toi co the cap nhat chinh sach bao mat nay theo thoi gian. Moi thay doi se duoc dang tai trang nay
+        voi ngay cap nhat moi. Viec ban tiep tuc su dung extension sau khi thay doi co nghia la ban chap nhan
+        chinh sach moi.
+      </p>
+
+      <h2 id="vi-contact">9. Lien he</h2>
+      <p>Neu ban co bat ky cau hoi nao ve chinh sach bao mat nay, vui long lien he:</p>
+      <ul>
+        <li><strong>Email:</strong> <a href="mailto:nhamingroup@gmail.com">nhamingroup@gmail.com</a></li>
+      </ul>
+
+      <!-- ===================== ENGLISH ===================== -->
+      <div class="lang-divider" id="en">
+        <span>English Version</span>
+      </div>
+
+      <h2 id="en-intro">1. Introduction</h2>
+      <p>
+        <strong>ShopReply</strong> is a Chrome Extension that helps online shop owners automatically reply to customer
+        messages on Facebook Messenger and Zalo. The extension uses artificial intelligence (AI) running
+        <strong>entirely on your local computer</strong> to suggest replies based on a Q&A database you create yourself.
+      </p>
+      <p>
+        We are committed to protecting your privacy. This policy explains how ShopReply handles your data.
+      </p>
+
+      <div class="highlight green">
+        <p>Core principle: All your data is processed and stored ON YOUR COMPUTER. No data is ever sent to any external server.</p>
+      </div>
+
+      <h2 id="en-collection">2. Data We Access</h2>
+      <p>ShopReply accesses the following data <strong>only within your browser</strong>:</p>
+      <ul>
+        <li><strong>Chat messages:</strong> Reads message content on Facebook Messenger and Zalo to understand customer questions.</li>
+        <li><strong>Q&A database:</strong> Question-answer pairs that you create and import into the extension.</li>
+        <li><strong>License key:</strong> Your activation license key, stored locally.</li>
+      </ul>
+
+      <div class="highlight">
+        <p>Important: ShopReply does NOT collect any analytics, telemetry, or tracking data whatsoever.</p>
+      </div>
+
+      <h2 id="en-storage">3. Data Storage — 100% Local</h2>
+      <p>All data is processed and stored <strong>on your own computer</strong>:</p>
+      <ul>
+        <li><strong>Q&A database:</strong> Stored in a local SQLite file on your machine.</li>
+        <li><strong>Message processing:</strong> Handled by a local backend server running at <code>localhost:3000</code> on your computer.</li>
+        <li><strong>AI/LLM:</strong> If you use Ollama, the AI model also runs entirely on your machine (local).</li>
+        <li><strong>License key:</strong> Stored in the extension's local storage (Chrome storage).</li>
+      </ul>
+      <p>No data is ever transmitted to any external server.</p>
+
+      <h2 id="en-sharing">4. Data Sharing</h2>
+      <p>
+        <strong>We do NOT share, sell, rent, or transfer any of your personal data to any third party.</strong>
+      </p>
+      <p>ShopReply does not use cookies or any tracking technologies.</p>
+
+      <h2 id="en-thirdparty">5. Third-party Services</h2>
+      <p>ShopReply only interacts with two external services:</p>
+
+      <h3>a) License Validation</h3>
+      <p>
+        When activating your license, the extension sends <strong>only the license key and device ID</strong> to a
+        Cloudflare Worker for verification. No personal data or chat data is sent.
+      </p>
+
+      <h3>b) Payment Processing</h3>
+      <p>Payments are handled by:</p>
+      <ul>
+        <li><strong>LemonSqueezy</strong> — for international payments (credit card, PayPal, etc.)</li>
+        <li><strong>SePay / VietQR</strong> — for Vietnamese bank transfers</li>
+      </ul>
+      <p>
+        The extension <strong>never</strong> has access to your payment information. All transactions are processed
+        directly by the payment platforms above under their own privacy policies.
+      </p>
+
+      <h2 id="en-permissions">6. Permissions Explained</h2>
+      <p>Below are the permissions ShopReply requires and why:</p>
+
+      <table class="perm-table">
+        <thead>
+          <tr>
+            <th>Permission</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>storage</code></td>
+            <td>Save extension settings and license key locally on your device.</td>
+          </tr>
+          <tr>
+            <td><code>tabs</code></td>
+            <td>Detect when you are on a Facebook Messenger or Zalo page to activate auto-reply features.</td>
+          </tr>
+          <tr>
+            <td><code>notifications</code></td>
+            <td>Send notifications when new messages need replies or when there are status updates.</td>
+          </tr>
+          <tr>
+            <td><code>host_permissions</code></td>
+            <td>Access Facebook Messenger and Zalo page content to read chat messages and insert suggested replies.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 id="en-children">7. Children's Privacy</h2>
+      <p>
+        ShopReply is not directed at children under the age of 13. We do not intentionally collect personal data
+        from children. If you are a parent and discover that your child is using this extension, please contact us.
+      </p>
+
+      <h2 id="en-changes">8. Changes to This Privacy Policy</h2>
+      <p>
+        We may update this privacy policy from time to time. Any changes will be posted on this page with an updated
+        date. Your continued use of the extension after changes constitutes your acceptance of the updated policy.
+      </p>
+
+      <h2 id="en-contact">9. Contact</h2>
+      <p>If you have any questions about this privacy policy, please contact us:</p>
+      <ul>
+        <li><strong>Email:</strong> <a href="mailto:nhamingroup@gmail.com">nhamingroup@gmail.com</a></li>
+      </ul>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>&copy; 2026 ShopReply. All rights reserved.</p>
+    <p><a href="index.html">Installation Guide</a></p>
+  </div>
+
+</body>
+</html>
