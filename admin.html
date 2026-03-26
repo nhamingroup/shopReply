@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ShopReply — Admin Dashboard</title>
+  <title>ShopReply — Bảng điều khiển Admin</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -77,18 +77,24 @@
   <!-- Login -->
   <div id="loginCard" class="login-card card">
     <div class="card-body">
-      <h2>Admin Dashboard</h2>
+      <div style="text-align:center;margin-bottom:12px;">
+        <span style="font-size:20px;font-weight:700;color:var(--blue-700);">Shop<span style="color:var(--purple-600);">Reply</span></span>
+      </div>
+      <h2>Bảng điều khiển Admin</h2>
       <div id="loginMsg" class="msg"></div>
-      <input type="password" class="form-input" id="secretInput" placeholder="Admin secret key" onkeydown="if(event.key==='Enter')doLogin()" />
-      <button class="btn" onclick="doLogin()">Login</button>
+      <input type="password" class="form-input" id="secretInput" placeholder="Nhập mật khẩu admin" onkeydown="if(event.key==='Enter')doLogin()" />
+      <button class="btn" onclick="doLogin()">Đăng nhập</button>
     </div>
   </div>
 
   <!-- Dashboard -->
   <div id="adminDashboard">
     <div class="header">
-      <div class="logo">Admin — Affiliate</div>
-      <button class="refresh-btn" onclick="loadData()">Refresh</button>
+      <div class="logo">Admin — Đối tác liên kết</div>
+      <div style="display:flex;gap:8px;">
+        <button class="refresh-btn" onclick="loadData()">Làm mới</button>
+        <button class="refresh-btn" onclick="doLogout()" style="color:var(--red-500);border-color:var(--red-500);">Đăng xuất</button>
+      </div>
     </div>
 
     <div id="dashMsg" class="msg"></div>
@@ -96,15 +102,15 @@
     <div class="stats-row">
       <div class="stat-box blue">
         <div class="val" id="totalAffiliates">0</div>
-        <div class="lbl">Affiliates</div>
+        <div class="lbl">Đối tác</div>
       </div>
       <div class="stat-box orange">
         <div class="val" id="totalPending">0d</div>
-        <div class="lbl">Pending</div>
+        <div class="lbl">Chờ thanh toán</div>
       </div>
       <div class="stat-box green">
         <div class="val" id="totalPaid">0d</div>
-        <div class="lbl">Da tra</div>
+        <div class="lbl">Đã trả</div>
       </div>
     </div>
 
@@ -114,13 +120,13 @@
           <table>
             <thead>
               <tr>
-                <th>Ma REF</th>
-                <th>Ten</th>
+                <th>Mã REF</th>
+                <th>Tên</th>
                 <th>STK</th>
-                <th>NH</th>
-                <th>Luot</th>
-                <th>Pending</th>
-                <th>Da tra</th>
+                <th>Ngân hàng</th>
+                <th>Lượt</th>
+                <th>Chờ trả</th>
+                <th>Đã trả</th>
                 <th></th>
               </tr>
             </thead>
@@ -154,7 +160,7 @@
     .then(function(res) { return res.json(); })
     .then(function(data) {
       if (!data.success) {
-        document.getElementById('loginMsg').textContent = 'Sai mat khau';
+        document.getElementById('loginMsg').textContent = 'Sai mật khẩu';
         document.getElementById('loginMsg').className = 'msg error';
         adminSecret = '';
         return;
@@ -165,7 +171,7 @@
       renderData(data.affiliates);
     })
     .catch(function() {
-      document.getElementById('loginMsg').textContent = 'Loi ket noi';
+      document.getElementById('loginMsg').textContent = 'Lỗi kết nối';
       document.getElementById('loginMsg').className = 'msg error';
     });
   }
@@ -181,7 +187,7 @@
     .then(function(data) {
       if (!data.success) {
         if (data.error === 'Unauthorized') {
-          msg.textContent = 'Sai mat khau. Vui long reload va thu lai.';
+          msg.textContent = 'Sai mật khẩu. Vui lòng tải lại trang và thử lại.';
           msg.className = 'msg error';
           sessionStorage.removeItem('admin_secret');
           return;
@@ -193,7 +199,7 @@
       renderData(data.affiliates);
     })
     .catch(function() {
-      msg.textContent = 'Loi ket noi';
+      msg.textContent = 'Lỗi kết nối';
       msg.className = 'msg error';
     });
   }
@@ -211,7 +217,7 @@
 
     var tbody = document.getElementById('tableBody');
     if (affiliates.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="8" class="empty">Chua co affiliate nao</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="8" class="empty">Chưa có đối tác nào</td></tr>';
       return;
     }
 
@@ -230,7 +236,7 @@
       if (payable) {
         var btn = document.createElement('button');
         btn.className = 'pay-btn';
-        btn.textContent = 'Da tra';
+        btn.textContent = 'Đã trả';
         btn.setAttribute('data-ref', a.refCode);
         btn.onclick = function() { markPaid(a.refCode, btn); };
         actionTd.appendChild(btn);
@@ -251,7 +257,7 @@
   }
 
   function markPaid(refCode, btn) {
-    if (!confirm('Xac nhan da chuyen tien cho ' + refCode + '?')) return;
+    if (!confirm('Xác nhận đã chuyển tiền cho ' + refCode + '?')) return;
     btn.disabled = true;
     btn.textContent = '...';
 
@@ -267,24 +273,32 @@
     .then(function(data) {
       if (data.success) {
         var msg = document.getElementById('dashMsg');
-        msg.textContent = 'Da danh dau ' + refCode + ' thanh toan (' + data.markedCount + ' luot)';
+        msg.textContent = 'Đã đánh dấu ' + refCode + ' thanh toán (' + data.markedCount + ' lượt)';
         msg.className = 'msg success';
         loadData();
       } else {
         btn.disabled = false;
-        btn.textContent = 'Da tra';
+        btn.textContent = 'Đã trả';
         var msg = document.getElementById('dashMsg');
-        msg.textContent = data.error || 'Co loi xay ra';
+        msg.textContent = data.error || 'Có lỗi xảy ra';
         msg.className = 'msg error';
       }
     })
     .catch(function() {
       btn.disabled = false;
-      btn.textContent = 'Da tra';
+      btn.textContent = 'Đã trả';
       var msg = document.getElementById('dashMsg');
-      msg.textContent = 'Loi ket noi';
+      msg.textContent = 'Lỗi kết nối';
       msg.className = 'msg error';
     });
+  }
+
+  function doLogout() {
+    sessionStorage.removeItem('admin_secret');
+    adminSecret = '';
+    document.getElementById('loginCard').style.display = 'block';
+    document.getElementById('adminDashboard').style.display = 'none';
+    document.getElementById('secretInput').value = '';
   }
 
   // Auto-login from session

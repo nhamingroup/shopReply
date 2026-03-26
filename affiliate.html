@@ -102,9 +102,9 @@
 
   <div class="card">
     <div class="card-header">
-      <h1>Chuong trinh gioi thieu</h1>
-      <p>Gioi thieu ban be, nhan hoa hong moi luot thanh cong</p>
-      <div class="commission-badge">50,000d / luot</div>
+      <h1>Chương trình giới thiệu</h1>
+      <p>Giới thiệu bạn bè, nhận hoa hồng mỗi lượt thành công</p>
+      <div class="commission-badge">50,000đ / lượt</div>
     </div>
 
     <div class="card-body">
@@ -113,42 +113,43 @@
       <!-- Login existing affiliate -->
       <div id="loginSection" class="login-section">
         <div class="form-group">
-          <label>Da co ma gioi thieu? Nhap de xem dashboard</label>
+          <label>Đã có mã giới thiệu? Nhập để xem dashboard</label>
           <div style="display:flex;gap:8px;">
             <input type="text" class="form-input" id="loginRef" placeholder="REF-XXXXXX" style="text-transform:uppercase;" />
             <button class="btn btn-outline" style="width:auto;padding:12px 20px;" onclick="loginAffiliate()">Xem</button>
+
           </div>
         </div>
       </div>
 
-      <div class="divider">hoac dang ky moi</div>
+      <div class="divider">hoặc đăng ký mới</div>
 
       <!-- Register form -->
       <div id="registerForm" class="register-form">
         <div class="how-it-works">
-          <h3>Cach hoat dong</h3>
+          <h3>Cách hoạt động</h3>
           <ol>
-            <li>Dang ky nhan <strong>ma gioi thieu</strong> (REF-XXXXXX)</li>
-            <li>Chia se link co chua ma gioi thieu cho ban be</li>
-            <li>Ban be mua ShopReply qua link do</li>
-            <li>Ban nhan <strong>50,000d</strong> moi luot thanh toan thanh cong</li>
-            <li>Hoa hong duoc thanh toan <strong>moi Chu Nhat</strong> (toi thieu 200,000d)</li>
+            <li>Đăng ký nhận <strong>mã giới thiệu</strong> (REF-XXXXXX)</li>
+            <li>Chia sẻ link có chứa mã giới thiệu cho bạn bè</li>
+            <li>Bạn bè mua ShopReply qua link đó</li>
+            <li>Bạn nhận <strong>50,000đ</strong> mỗi lượt thanh toán thành công</li>
+            <li>Hoa hồng được thanh toán <strong>mỗi Chủ Nhật</strong> (tối thiểu 200,000đ)</li>
           </ol>
         </div>
 
         <div class="form-group">
-          <label>Ho ten</label>
-          <input type="text" class="form-input" id="regName" placeholder="Nguyen Van A" />
+          <label>Họ tên</label>
+          <input type="text" class="form-input" id="regName" placeholder="Nguyễn Văn A" />
         </div>
         <div class="form-group">
-          <label>So tai khoan ngan hang</label>
+          <label>Số tài khoản ngân hàng</label>
           <input type="text" class="form-input" id="regBank" placeholder="0123456789" />
         </div>
         <div class="form-group">
-          <label>Ten ngan hang</label>
+          <label>Tên ngân hàng</label>
           <input type="text" class="form-input" id="regBankName" placeholder="TPBank, Vietcombank, MBBank..." />
         </div>
-        <button class="btn" id="registerBtn" onclick="registerAffiliate()">Dang ky Affiliate</button>
+        <button class="btn" id="registerBtn" onclick="registerAffiliate()">Đăng ký Affiliate</button>
       </div>
 
       <!-- Dashboard (hidden by default) -->
@@ -161,34 +162,34 @@
         <div class="stats-grid">
           <div class="stat-card">
             <div class="stat-value" id="statTotal">0</div>
-            <div class="stat-label">Luot gioi thieu</div>
+            <div class="stat-label">Lượt giới thiệu</div>
           </div>
           <div class="stat-card green">
             <div class="stat-value" id="statTotalMoney">0d</div>
-            <div class="stat-label">Tong hoa hong</div>
+            <div class="stat-label">Tổng hoa hồng</div>
           </div>
           <div class="stat-card orange">
             <div class="stat-value" id="statPending">0d</div>
-            <div class="stat-label">Cho thanh toan</div>
+            <div class="stat-label">Chờ thanh toán</div>
           </div>
           <div class="stat-card green">
             <div class="stat-value" id="statPaid">0d</div>
-            <div class="stat-label">Da nhan</div>
+            <div class="stat-label">Đã nhận</div>
           </div>
         </div>
 
-        <h3 style="font-size:14px;color:var(--gray-700);margin-bottom:10px;">Chi tiet gioi thieu</h3>
+        <h3 style="font-size:14px;color:var(--gray-700);margin-bottom:10px;">Chi tiết giới thiệu</h3>
         <table class="ref-table">
           <thead>
             <tr>
-              <th>Ma don</th>
-              <th>Hoa hong</th>
-              <th>Trang thai</th>
-              <th>Ngay</th>
+              <th>Mã đơn</th>
+              <th>Hoa hồng</th>
+              <th>Trạng thái</th>
+              <th>Ngày</th>
             </tr>
           </thead>
           <tbody id="refTableBody">
-            <tr><td colspan="4" style="text-align:center;color:var(--gray-400);padding:20px;">Chua co luot gioi thieu nao</td></tr>
+            <tr><td colspan="4" style="text-align:center;color:var(--gray-400);padding:20px;">Chưa có lượt giới thiệu nào</td></tr>
           </tbody>
         </table>
       </div>
@@ -226,13 +227,13 @@
     var bankName = document.getElementById('regBankName').value.trim();
 
     if (!name || !bankAccount || !bankName) {
-      showMsg('Vui long dien day du thong tin', 'error');
+      showMsg('Vui lòng điền đầy đủ thông tin', 'error');
       return;
     }
 
     var btn = document.getElementById('registerBtn');
     btn.disabled = true;
-    btn.textContent = 'Dang xu ly...';
+    btn.textContent = 'Đang xử lý...';
 
     fetch(WORKER_URL + '/api/affiliate/register', {
       method: 'POST',
@@ -242,19 +243,19 @@
     .then(function(res) { return res.json(); })
     .then(function(data) {
       btn.disabled = false;
-      btn.textContent = 'Dang ky Affiliate';
+      btn.textContent = 'Đăng ký Affiliate';
       if (data.success) {
         localStorage.setItem('shopreply_ref', data.refCode);
-        showMsg('Dang ky thanh cong! Ma cua ban: ' + data.refCode, 'success');
+        showMsg('Đăng ký thành công! Mã của bạn: ' + data.refCode, 'success');
         showDashboard(data.refCode);
       } else {
-        showMsg(data.error || 'Co loi xay ra', 'error');
+        showMsg(data.error || 'Có lỗi xảy ra', 'error');
       }
     })
     .catch(function() {
       btn.disabled = false;
-      btn.textContent = 'Dang ky Affiliate';
-      showMsg('Loi ket noi. Vui long thu lai.', 'error');
+      btn.textContent = 'Đăng ký Affiliate';
+      showMsg('Lỗi kết nối. Vui lòng thử lại.', 'error');
     });
   }
 
@@ -262,7 +263,7 @@
     clearMsg();
     var ref = document.getElementById('loginRef').value.trim().toUpperCase();
     if (!ref) {
-      showMsg('Vui long nhap ma gioi thieu', 'error');
+      showMsg('Vui lòng nhập mã giới thiệu', 'error');
       return;
     }
     if (!ref.startsWith('REF-')) ref = 'REF-' + ref;
@@ -286,14 +287,14 @@
     .then(function(res) { return res.json(); })
     .then(function(data) {
       if (!data.success) {
-        showMsg('Ma gioi thieu khong ton tai', 'error');
+        showMsg('Mã giới thiệu không tồn tại', 'error');
         return;
       }
       localStorage.setItem('shopreply_ref', refCode);
       showDashboardData(refCode, data);
     })
     .catch(function() {
-      showMsg('Loi ket noi. Vui long thu lai.', 'error');
+      showMsg('Lỗi kết nối. Vui lòng thử lại.', 'error');
     });
   }
 
@@ -322,7 +323,7 @@
         var td3 = document.createElement('td');
         var badge = document.createElement('span');
         badge.className = r.status === 'paid' ? 'badge badge-paid' : 'badge badge-pending';
-        badge.textContent = r.status === 'paid' ? 'Da tra' : 'Cho tra';
+        badge.textContent = r.status === 'paid' ? 'Đã trả' : 'Chờ trả';
         td3.appendChild(badge);
         var td4 = document.createElement('td'); td4.textContent = date;
         tr.appendChild(td1); tr.appendChild(td2); tr.appendChild(td3); tr.appendChild(td4);
