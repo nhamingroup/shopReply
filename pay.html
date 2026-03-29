@@ -954,9 +954,13 @@
       copyText(transferContent, this);
     };
 
-    // Alt payment link (LemonSqueezy)
+    // Alt payment link (LemonSqueezy) — pass orderCode + plan as custom data for webhook
     var lsSlug = planUpper.toLowerCase();
-    document.getElementById('altPayLink').href = 'https://gmail-followup.lemonsqueezy.com/buy/' + lsSlug;
+    var lsUrl = 'https://gmail-followup.lemonsqueezy.com/buy/' + lsSlug
+      + '?checkout[custom][order_code]=' + encodeURIComponent(orderCode)
+      + '&checkout[custom][product]=SHOPREPLY'
+      + '&checkout[custom][plan]=' + encodeURIComponent(planUpper);
+    document.getElementById('altPayLink').href = lsUrl;
 
     // Store order code for reference
     window._orderCode = orderCode;
