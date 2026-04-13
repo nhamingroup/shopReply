@@ -962,12 +962,18 @@
       BASIC: 'eaf2f03a-45b7-464c-9028-e588393e3983',
       PRO:   'f900b81d-9380-439b-81be-c3570a3b1bb6'
     };
-    var variantId = LS_VARIANTS[planUpper];
-    var lsUrl = 'https://shopreply.lemonsqueezy.com/checkout/buy/' + variantId
-      + '?checkout[custom][order_code]=' + encodeURIComponent(orderCode)
-      + '&checkout[custom][product]=SHOPREPLY'
-      + '&checkout[custom][plan]=' + encodeURIComponent(planUpper);
-    document.getElementById('altPayLink').href = lsUrl;
+    var variantId = LS_VARIANTS[planUpper.toUpperCase()];
+    if (variantId) {
+      var lsUrl = 'https://shopreply.lemonsqueezy.com/checkout/buy/' + variantId
+        + '?checkout[custom][order_code]=' + encodeURIComponent(orderCode)
+        + '&checkout[custom][product]=SHOPREPLY'
+        + '&checkout[custom][plan]=' + encodeURIComponent(planUpper.toUpperCase());
+      document.getElementById('altPayLink').href = lsUrl;
+    } else {
+      // Unknown plan — hide LemonSqueezy option
+      var altLink = document.getElementById('altPayLink');
+      if (altLink) altLink.style.display = 'none';
+    }
 
     // Store order code for reference
     window._orderCode = orderCode;
