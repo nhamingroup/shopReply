@@ -955,8 +955,15 @@
     };
 
     // Alt payment link (LemonSqueezy) — pass orderCode + plan as custom data for webhook
-    var lsSlug = planUpper.toLowerCase();
-    var lsUrl = 'https://gmail-followup.lemonsqueezy.com/buy/' + lsSlug
+    // ShopReply store UUIDs (NOT gmail-followup or other extensions):
+    //   Basic: eaf2f03a-45b7-464c-9028-e588393e3983
+    //   Pro:   f900b81d-9380-439b-81be-c3570a3b1bb6
+    var LS_VARIANTS = {
+      BASIC: 'eaf2f03a-45b7-464c-9028-e588393e3983',
+      PRO:   'f900b81d-9380-439b-81be-c3570a3b1bb6'
+    };
+    var variantId = LS_VARIANTS[planUpper];
+    var lsUrl = 'https://shopreply.lemonsqueezy.com/checkout/buy/' + variantId
       + '?checkout[custom][order_code]=' + encodeURIComponent(orderCode)
       + '&checkout[custom][product]=SHOPREPLY'
       + '&checkout[custom][plan]=' + encodeURIComponent(planUpper);
