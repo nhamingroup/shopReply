@@ -33,6 +33,7 @@
       background: var(--gray-50);
       line-height: 1.7;
       font-size: 16px;
+      padding-left: 280px;
     }
 
     a { color: var(--blue-600); text-decoration: none; }
@@ -42,10 +43,16 @@
     .header {
       background: linear-gradient(135deg, var(--blue-700), var(--blue-600));
       color: #fff;
-      padding: 48px 24px 40px;
+      padding: 40px 32px 32px;
       text-align: center;
       position: relative;
       overflow: hidden;
+      border-radius: 0 0 16px 16px;
+      margin: 24px 32px 0;
+    }
+
+    @media (max-width: 900px) {
+      .header { margin: 0; border-radius: 0; }
     }
 
     .header::before {
@@ -99,47 +106,119 @@
       position: relative;
     }
 
-    /* ===== Container ===== */
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 0 24px;
+    /* ===== Fixed left sidebar ===== */
+    aside.sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 280px;
+      background: #fff;
+      border-right: 1px solid var(--gray-200);
+      padding: 24px 0;
+      overflow-y: auto;
+      z-index: 50;
     }
 
-    /* ===== Table of Contents ===== */
-    .toc {
-      background: #fff;
-      border: 1px solid var(--gray-200);
-      border-radius: 12px;
-      padding: 28px 32px;
+    .sidebar-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 24px 20px;
+      border-bottom: 1px solid var(--gray-200);
+      margin-bottom: 16px;
+    }
+
+    .sidebar-brand .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--blue-600), var(--blue-700));
+      color: #fff;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px -2px rgba(37, 99, 235, 0.35);
+    }
+
+    .sidebar-brand .logo-icon svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    .sidebar-brand .name {
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--gray-900);
+    }
+
+    /* ===== Layout: content area (to the right of sidebar) ===== */
+    .layout {
+      max-width: 920px;
       margin: 32px auto;
-      max-width: 800px;
+      padding: 0 32px;
+    }
+
+    .container {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* ===== Table of Contents (inside sidebar) ===== */
+    .toc {
+      padding: 0 20px;
     }
 
     .toc h2 {
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--gray-700);
-      margin-bottom: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--gray-500);
+      margin-bottom: 10px;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.8px;
+      padding: 0 4px;
     }
 
     .toc ol {
-      padding-left: 20px;
+      list-style: none;
+      padding-left: 0;
+      counter-reset: toc;
     }
 
     .toc li {
-      margin-bottom: 6px;
-      font-size: 15px;
+      margin: 0;
+      font-size: 14px;
+      counter-increment: toc;
     }
 
     .toc a {
+      display: block;
+      padding: 8px 12px;
+      border-radius: 6px;
       color: var(--gray-600);
+      transition: all 0.15s;
+      text-decoration: none;
+      border-left: 3px solid transparent;
+    }
+
+    .toc a::before {
+      content: counter(toc) ". ";
+      color: var(--gray-400);
+      font-weight: 500;
     }
 
     .toc a:hover {
+      background: var(--gray-50);
       color: var(--blue-600);
+      text-decoration: none;
+    }
+
+    .toc a.active {
+      background: var(--blue-50);
+      color: var(--blue-700);
+      font-weight: 600;
+      border-left-color: var(--blue-600);
     }
 
     /* ===== Content ===== */
@@ -148,8 +227,6 @@
       border: 1px solid var(--gray-200);
       border-radius: 12px;
       padding: 40px 40px 48px;
-      margin: 0 auto 32px;
-      max-width: 800px;
     }
 
     .content h2 {
@@ -292,15 +369,80 @@
       color: var(--gray-500);
     }
 
+    /* ===== Language switcher ===== */
+    .lang-switcher {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 6px;
+      z-index: 10;
+    }
+
+    .lang-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+      backdrop-filter: blur(4px);
+    }
+
+    .lang-btn:hover {
+      background: rgba(255,255,255,0.25);
+    }
+
+    .lang-btn.active {
+      background: #fff;
+      color: var(--blue-700);
+      border-color: #fff;
+    }
+
+    .lang-btn .flag {
+      font-size: 15px;
+      line-height: 1;
+    }
+
+    /* Hide inactive language */
+    body[data-lang="vi"] .lang-en { display: none !important; }
+    body[data-lang="en"] .lang-vi { display: none !important; }
+
+    /* Hide the visual divider when showing single language */
+    .lang-divider { display: none; }
+
     /* Responsive */
+    @media (max-width: 900px) {
+      body { padding-left: 0; }
+      aside.sidebar {
+        position: static;
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--gray-200);
+        padding: 16px 0;
+      }
+      .sidebar-brand { display: none; }
+      .toc { padding: 0 16px; }
+      .layout, .container { padding: 0 20px; }
+    }
+
     @media (max-width: 640px) {
-      .header { padding: 36px 16px 32px; }
+      .header { padding: 48px 16px 32px; }
       .logo-text { font-size: 24px; }
       .header h1 { font-size: 18px; }
       .content { padding: 24px 20px 32px; }
-      .toc { padding: 20px 24px; }
       .perm-table { font-size: 14px; }
       .perm-table th, .perm-table td { padding: 10px 12px; }
+      .lang-switcher { top: 12px; right: 12px; }
+      .lang-btn { padding: 4px 10px; font-size: 12px; }
+      .layout, .container { padding: 0 16px; }
     }
   </style>
 </head>
@@ -308,152 +450,198 @@
 
   <!-- Header -->
   <div class="header">
-    <div class="logo">
-      <div class="logo-icon">S</div>
-      <span class="logo-text">ShopReply</span>
+    <div class="lang-switcher">
+      <button class="lang-btn" data-lang-set="vi" aria-label="Tiếng Việt">
+        <span>VI</span>
+      </button>
+      <button class="lang-btn" data-lang-set="en" aria-label="English">
+        <span>EN</span>
+      </button>
     </div>
-    <h1>Chinh Sach Bao Mat / Privacy Policy</h1>
-    <div class="updated">Cap nhat lan cuoi / Last updated: March 2026</div>
+    <h1>
+      <span class="lang-vi">Chính Sách Bảo Mật</span>
+      <span class="lang-en">Privacy Policy</span>
+    </h1>
+    <div class="updated">
+      <span class="lang-vi">Cập nhật lần cuối: April 2026</span>
+      <span class="lang-en">Last updated: April 2026</span>
+    </div>
   </div>
 
-  <!-- Table of Contents -->
-  <div class="container">
-    <div class="toc">
-      <h2>Muc luc / Table of Contents</h2>
+  <!-- Fixed left sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="logo-icon" aria-label="ShopReply">
+        <!-- Chat bubble with lightning bolt inside = fast auto-reply -->
+        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+          <!-- Customer bubble (back, smaller, faded) -->
+          <path d="M4 7a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v3a3 3 0 0 1-3 3h-2l-3 3v-3H7a3 3 0 0 1-3-3V7z"
+                fill="#fff" fill-opacity="0.4" stroke="none"/>
+          <!-- Shop reply bubble (front, bigger) -->
+          <path d="M11 14a3 3 0 0 1 3-3h11a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3h-4l-4 4v-4h-3a3 3 0 0 1-3-3v-6z"
+                fill="#fff" stroke="none"/>
+          <!-- Lightning bolt inside shop bubble (auto-reply speed) -->
+          <path d="M20 14.5l-3 4.5h2.5l-1 3.5 3.5-5h-2.5l0.5-3z"
+                fill="#2563eb" stroke="none"/>
+        </svg>
+      </div>
+      <span class="name">ShopReply</span>
+    </div>
+    <nav class="toc lang-vi">
+      <h2>Mục lục</h2>
       <ol>
-        <li><a href="#vi-intro">Gioi thieu</a></li>
-        <li><a href="#vi-collection">Du lieu chung toi truy cap</a></li>
-        <li><a href="#vi-storage">Luu tru du lieu — 100% tai may cua ban</a></li>
-        <li><a href="#vi-sharing">Chia se du lieu</a></li>
-        <li><a href="#vi-thirdparty">Dich vu ben thu ba</a></li>
-        <li><a href="#vi-permissions">Giai thich quyen truy cap</a></li>
-        <li><a href="#vi-children">Quyen rieng tu tre em</a></li>
-        <li><a href="#vi-changes">Thay doi chinh sach</a></li>
-        <li><a href="#vi-contact">Lien he</a></li>
-        <li><a href="#en">English Version</a></li>
+        <li><a href="#vi-intro">Giới thiệu</a></li>
+        <li><a href="#vi-collection">Dữ liệu truy cập</a></li>
+        <li><a href="#vi-storage">Lưu trữ dữ liệu</a></li>
+        <li><a href="#vi-sharing">Chia sẻ dữ liệu</a></li>
+        <li><a href="#vi-thirdparty">Dịch vụ bên thứ ba</a></li>
+        <li><a href="#vi-permissions">Quyền truy cập</a></li>
+        <li><a href="#vi-children">Quyền riêng tư trẻ em</a></li>
+        <li><a href="#vi-changes">Thay đổi chính sách</a></li>
+        <li><a href="#vi-contact">Liên hệ</a></li>
       </ol>
-    </div>
-  </div>
+    </nav>
+    <nav class="toc lang-en">
+      <h2>Contents</h2>
+      <ol>
+        <li><a href="#en-intro">Introduction</a></li>
+        <li><a href="#en-collection">Data We Access</a></li>
+        <li><a href="#en-storage">Data Storage</a></li>
+        <li><a href="#en-sharing">Data Sharing</a></li>
+        <li><a href="#en-thirdparty">Third-party Services</a></li>
+        <li><a href="#en-permissions">Permissions</a></li>
+        <li><a href="#en-children">Children's Privacy</a></li>
+        <li><a href="#en-changes">Changes</a></li>
+        <li><a href="#en-contact">Contact</a></li>
+      </ol>
+    </nav>
+  </aside>
 
-  <!-- ===================== VIETNAMESE ===================== -->
-  <div class="container">
-    <div class="content">
+  <!-- Main content area -->
+  <div class="layout">
+    <main>
 
-      <h2 id="vi-intro">1. Gioi thieu</h2>
+    <!-- ===================== VIETNAMESE ===================== -->
+    <div class="lang-vi">
+      <div class="content">
+
+      <h2 id="vi-intro">1. Giới thiệu</h2>
       <p>
-        <strong>ShopReply</strong> la mot Chrome Extension giup cac chu shop online tu dong tra loi tin nhan khach hang
-        tren Facebook Messenger va Zalo. Extension su dung tri tue nhan tao (AI) chay <strong>hoan toan tren may tinh cua ban</strong>
-        de goi y cau tra loi dua tren co so du lieu hoi-dap ma ban tu tao.
+        <strong>ShopReply</strong> là một Chrome Extension giúp các chủ shop online tự động trả lời tin nhắn khách hàng
+        trên Facebook Messenger và Zalo. Extension sử dụng trí tuệ nhân tạo (AI) chạy <strong>hoàn toàn trên máy tính của bạn</strong>
+        để gợi ý câu trả lời dựa trên cơ sở dữ liệu hỏi-đáp mà bạn tự tạo.
       </p>
       <p>
-        Chung toi cam ket bao ve quyen rieng tu cua ban. Chinh sach nay giai thich cach ShopReply xu ly du lieu cua ban.
+        Chúng tôi cam kết bảo vệ quyền riêng tư của bạn. Chính sách này giải thích cách ShopReply xử lý dữ liệu của bạn.
       </p>
 
       <div class="highlight green">
-        <p>Nguyen tac cot loi: Moi du lieu cua ban deu duoc xu ly va luu tru TAI MAY TINH CUA BAN. Khong co du lieu nao duoc gui den may chu ben ngoai.</p>
+        <p>Nguyên tắc cốt lõi: Mọi dữ liệu của bạn đều được xử lý và lưu trữ TẠI MÁY TÍNH CỦA BẠN. Không có dữ liệu nào được gửi đến máy chủ bên ngoài.</p>
       </div>
 
-      <h2 id="vi-collection">2. Du lieu chung toi truy cap</h2>
-      <p>ShopReply truy cap cac du lieu sau <strong>chi tren trinh duyet cua ban</strong>:</p>
+      <h2 id="vi-collection">2. Dữ liệu chúng tôi truy cập</h2>
+      <p>ShopReply truy cập các dữ liệu sau <strong>chỉ trên trình duyệt của bạn</strong>:</p>
       <ul>
-        <li><strong>Tin nhan chat:</strong> Doc noi dung tin nhan tren Facebook Messenger va Zalo de hieu cau hoi cua khach hang.</li>
-        <li><strong>Co so du lieu hoi-dap:</strong> Cac cap cau hoi-tra loi ma ban tu tao va nhap vao extension.</li>
-        <li><strong>License key:</strong> Ma kich hoat ban quyen duoc luu tai may.</li>
+        <li><strong>Tin nhắn chat:</strong> Đọc nội dung tin nhắn trên Facebook Messenger và Zalo để hiểu câu hỏi của khách hàng.</li>
+        <li><strong>Cơ sở dữ liệu hỏi-đáp:</strong> Các cặp câu hỏi-trả lời mà bạn tự tạo và nhập vào extension.</li>
+        <li><strong>License key:</strong> Mã kích hoạt bản quyền được lưu tại máy.</li>
       </ul>
 
       <div class="highlight">
-        <p>Quan trong: ShopReply KHONG thu thap bat ky du lieu phan tich (analytics), do luong su dung (telemetry), hay bat ky du lieu theo doi nao.</p>
+        <p>Quan trọng: ShopReply KHÔNG thu thập bất kỳ dữ liệu phân tích (analytics), đo lường sử dụng (telemetry), hay bất kỳ dữ liệu theo dõi nào.</p>
       </div>
 
-      <h2 id="vi-storage">3. Luu tru du lieu — 100% tai may cua ban</h2>
-      <p>Toan bo du lieu duoc xu ly va luu tru <strong>tai may tinh cua ban</strong>:</p>
+      <h2 id="vi-storage">3. Lưu trữ dữ liệu — 100% tại máy của bạn</h2>
+      <p>Toàn bộ dữ liệu được xử lý và lưu trữ <strong>tại máy tính của bạn</strong>:</p>
       <ul>
-        <li><strong>Co so du lieu Q&A:</strong> Luu trong file SQLite tai may cua ban.</li>
-        <li><strong>Xu ly tin nhan:</strong> Thuc hien boi backend server chay tai <code>localhost:3000</code> tren may cua ban.</li>
-        <li><strong>AI/LLM:</strong> Neu ban su dung Ollama, mo hinh AI cung chay hoan toan tai may (local).</li>
-        <li><strong>License key:</strong> Luu tru trong bo nho cuc bo cua extension (Chrome storage).</li>
+        <li><strong>Cơ sở dữ liệu Q&A:</strong> Lưu trong file SQLite tại máy của bạn.</li>
+        <li><strong>Xử lý tin nhắn:</strong> Thực hiện bởi backend server chạy tại <code>localhost:3939</code> trên máy của bạn.</li>
+        <li><strong>AI/LLM:</strong> Nếu bạn sử dụng Ollama, mô hình AI cũng chạy hoàn toàn tại máy (local).</li>
+        <li><strong>License key:</strong> Lưu trữ trong bộ nhớ cục bộ của extension (Chrome storage).</li>
       </ul>
-      <p>Khong co du lieu nao duoc truyen den bat ky may chu ben ngoai nao.</p>
+      <p>Không có dữ liệu nào được truyền đến bất kỳ máy chủ bên ngoài nào.</p>
 
-      <h2 id="vi-sharing">4. Chia se du lieu</h2>
+      <h2 id="vi-sharing">4. Chia sẻ dữ liệu</h2>
       <p>
-        <strong>Chung toi KHONG chia se, ban, cho thue, hay chuyen giao bat ky du lieu ca nhan nao cua ban cho bat ky ben thu ba nao.</strong>
+        <strong>Chúng tôi KHÔNG chia sẻ, bán, cho thuê, hay chuyển giao bất kỳ dữ liệu cá nhân nào của bạn cho bất kỳ bên thứ ba nào.</strong>
       </p>
-      <p>ShopReply khong su dung cookie hoac bat ky cong nghe theo doi nao.</p>
+      <p>ShopReply không sử dụng cookie hoặc bất kỳ công nghệ theo dõi nào.</p>
 
-      <h2 id="vi-thirdparty">5. Dich vu ben thu ba</h2>
-      <p>ShopReply chi tuong tac voi hai dich vu ben ngoai:</p>
+      <h2 id="vi-thirdparty">5. Dịch vụ bên thứ ba</h2>
+      <p>ShopReply chỉ tương tác với hai dịch vụ bên ngoài:</p>
 
-      <h3>a) Xac thuc ban quyen (License Validation)</h3>
+      <h3>a) Xác thực bản quyền (License Validation)</h3>
       <p>
-        Khi kich hoat license, extension gui <strong>chi license key va device ID</strong> den mot Cloudflare Worker de xac minh.
-        Khong co du lieu ca nhan hay du lieu chat nao duoc gui.
+        Khi kích hoạt license, extension gửi <strong>chỉ license key và device ID</strong> đến một Cloudflare Worker để xác minh.
+        Không có dữ liệu cá nhân hay dữ liệu chat nào được gửi.
       </p>
 
-      <h3>b) Thanh toan (Payment Processing)</h3>
-      <p>Viec thanh toan duoc xu ly boi:</p>
+      <h3>b) Thanh toán (Payment Processing)</h3>
+      <p>Việc thanh toán được xử lý bởi:</p>
       <ul>
-        <li><strong>LemonSqueezy</strong> — cho thanh toan quoc te (the tin dung, PayPal, v.v.)</li>
-        <li><strong>SePay / VietQR</strong> — cho chuyen khoan ngan hang tai Viet Nam</li>
+        <li><strong>LemonSqueezy</strong> — cho thanh toán quốc tế (thẻ tín dụng, PayPal, v.v.)</li>
+        <li><strong>SePay / VietQR</strong> — cho chuyển khoản ngân hàng tại Việt Nam</li>
       </ul>
       <p>
-        Extension <strong>khong bao gio</strong> tiep can thong tin thanh toan cua ban. Moi giao dich duoc xu ly truc tiep boi
-        cac nen tang thanh toan noi tren theo chinh sach bao mat rieng cua ho.
+        Extension <strong>không bao giờ</strong> tiếp cận thông tin thanh toán của bạn. Mọi giao dịch được xử lý trực tiếp bởi
+        các nền tảng thanh toán nói trên theo chính sách bảo mật riêng của họ.
       </p>
 
-      <h2 id="vi-permissions">6. Giai thich quyen truy cap</h2>
-      <p>Duoi day la cac quyen ma ShopReply yeu cau va ly do:</p>
+      <h2 id="vi-permissions">6. Giải thích quyền truy cập</h2>
+      <p>Dưới đây là các quyền mà ShopReply yêu cầu và lý do:</p>
 
       <table class="perm-table">
         <thead>
           <tr>
-            <th>Quyen</th>
-            <th>Muc dich</th>
+            <th>Quyền</th>
+            <th>Mục đích</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><code>storage</code></td>
-            <td>Luu tru cai dat extension va license key tai may cua ban.</td>
-          </tr>
-          <tr>
-            <td><code>tabs</code></td>
-            <td>Phat hien khi ban dang o trang Facebook Messenger hoac Zalo de kich hoat tinh nang tu dong tra loi.</td>
+            <td>Lưu trữ cài đặt extension và license key tại máy của bạn.</td>
           </tr>
           <tr>
             <td><code>notifications</code></td>
-            <td>Gui thong bao khi co tin nhan moi can tra loi hoac khi co cap nhat trang thai.</td>
+            <td>Gửi thông báo khi có tin nhắn mới cần trả lời hoặc khi có cập nhật trạng thái.</td>
+          </tr>
+          <tr>
+            <td><code>alarms</code></td>
+            <td>Lên lịch kiểm tra định kỳ trạng thái kết nối với backend cục bộ (health-check).</td>
           </tr>
           <tr>
             <td><code>host_permissions</code></td>
-            <td>Truy cap noi dung trang Facebook Messenger va Zalo de doc tin nhan chat va chen cau tra loi goi y.</td>
+            <td>Truy cập nội dung trang Facebook Messenger và Zalo để đọc tin nhắn chat và chèn câu trả lời gợi ý.</td>
           </tr>
         </tbody>
       </table>
 
-      <h2 id="vi-children">7. Quyen rieng tu tre em</h2>
+      <h2 id="vi-children">7. Quyền riêng tư trẻ em</h2>
       <p>
-        ShopReply khong huong den tre em duoi 13 tuoi. Chung toi khong co chu dich thu thap du lieu ca nhan tu tre em.
-        Neu ban la phu huynh va phat hien con ban dang su dung extension nay, vui long lien he voi chung toi.
+        ShopReply không hướng đến trẻ em dưới 13 tuổi. Chúng tôi không có chủ đích thu thập dữ liệu cá nhân từ trẻ em.
+        Nếu bạn là phụ huynh và phát hiện con bạn đang sử dụng extension này, vui lòng liên hệ với chúng tôi.
       </p>
 
-      <h2 id="vi-changes">8. Thay doi chinh sach bao mat</h2>
+      <h2 id="vi-changes">8. Thay đổi chính sách bảo mật</h2>
       <p>
-        Chung toi co the cap nhat chinh sach bao mat nay theo thoi gian. Moi thay doi se duoc dang tai trang nay
-        voi ngay cap nhat moi. Viec ban tiep tuc su dung extension sau khi thay doi co nghia la ban chap nhan
-        chinh sach moi.
+        Chúng tôi có thể cập nhật chính sách bảo mật này theo thời gian. Mọi thay đổi sẽ được đăng tại trang này
+        với ngày cập nhật mới. Việc bạn tiếp tục sử dụng extension sau khi thay đổi có nghĩa là bạn chấp nhận
+        chính sách mới.
       </p>
 
-      <h2 id="vi-contact">9. Lien he</h2>
-      <p>Neu ban co bat ky cau hoi nao ve chinh sach bao mat nay, vui long lien he:</p>
+      <h2 id="vi-contact">9. Liên hệ</h2>
+      <p>Nếu bạn có bất kỳ câu hỏi nào về chính sách bảo mật này, vui lòng liên hệ:</p>
       <ul>
         <li><strong>Email:</strong> <a href="mailto:nhamingroup@gmail.com">nhamingroup@gmail.com</a></li>
       </ul>
 
-      <!-- ===================== ENGLISH ===================== -->
-      <div class="lang-divider" id="en">
-        <span>English Version</span>
       </div>
+    </div>
+
+    <!-- ===================== ENGLISH ===================== -->
+    <div class="lang-en">
+      <div class="content">
 
       <h2 id="en-intro">1. Introduction</h2>
       <p>
@@ -485,7 +673,7 @@
       <p>All data is processed and stored <strong>on your own computer</strong>:</p>
       <ul>
         <li><strong>Q&A database:</strong> Stored in a local SQLite file on your machine.</li>
-        <li><strong>Message processing:</strong> Handled by a local backend server running at <code>localhost:3000</code> on your computer.</li>
+        <li><strong>Message processing:</strong> Handled by a local backend server running at <code>localhost:3939</code> on your computer.</li>
         <li><strong>AI/LLM:</strong> If you use Ollama, the AI model also runs entirely on your machine (local).</li>
         <li><strong>License key:</strong> Stored in the extension's local storage (Chrome storage).</li>
       </ul>
@@ -533,12 +721,12 @@
             <td>Save extension settings and license key locally on your device.</td>
           </tr>
           <tr>
-            <td><code>tabs</code></td>
-            <td>Detect when you are on a Facebook Messenger or Zalo page to activate auto-reply features.</td>
-          </tr>
-          <tr>
             <td><code>notifications</code></td>
             <td>Send notifications when new messages need replies or when there are status updates.</td>
+          </tr>
+          <tr>
+            <td><code>alarms</code></td>
+            <td>Schedule periodic health-checks for the local backend connection.</td>
           </tr>
           <tr>
             <td><code>host_permissions</code></td>
@@ -565,14 +753,80 @@
         <li><strong>Email:</strong> <a href="mailto:nhamingroup@gmail.com">nhamingroup@gmail.com</a></li>
       </ul>
 
+      </div>
     </div>
+
+    </main>
   </div>
 
   <!-- Footer -->
   <div class="footer">
     <p>&copy; 2026 ShopReply. All rights reserved.</p>
-    <p><a href="index.html">Installation Guide</a></p>
+    <p>
+      <a href="index.html">
+        <span class="lang-vi">Hướng dẫn cài đặt</span>
+        <span class="lang-en">Installation Guide</span>
+      </a>
+    </p>
   </div>
+
+  <script>
+    (function () {
+      const STORAGE_KEY = 'shopreply_privacy_lang';
+      const body = document.body;
+      const buttons = document.querySelectorAll('.lang-btn');
+
+      function setLang(lang) {
+        if (lang !== 'vi' && lang !== 'en') lang = 'vi';
+        body.setAttribute('data-lang', lang);
+        document.documentElement.setAttribute('lang', lang);
+        buttons.forEach(b => b.classList.toggle('active', b.getAttribute('data-lang-set') === lang));
+        try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) { /* ignore */ }
+      }
+
+      // Detect initial language: URL hash > saved preference > browser language > default VI
+      function detectInitial() {
+        const hash = (window.location.hash || '').toLowerCase();
+        if (hash.startsWith('#en')) return 'en';
+        if (hash.startsWith('#vi')) return 'vi';
+        try {
+          const saved = localStorage.getItem(STORAGE_KEY);
+          if (saved === 'vi' || saved === 'en') return saved;
+        } catch (e) { /* ignore */ }
+        const nav = (navigator.language || '').toLowerCase();
+        if (nav.startsWith('vi')) return 'vi';
+        return 'en';
+      }
+
+      setLang(detectInitial());
+
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => setLang(btn.getAttribute('data-lang-set')));
+      });
+
+      // Highlight current TOC item based on scroll position
+      const tocLinks = document.querySelectorAll('.toc a');
+      const headings = Array.from(document.querySelectorAll('.content h2[id]'));
+
+      function updateActiveTocLink() {
+        const lang = body.getAttribute('data-lang');
+        const prefix = lang === 'en' ? 'en-' : 'vi-';
+        let activeId = null;
+        const scrollY = window.scrollY + 100;
+        for (const h of headings) {
+          if (!h.id.startsWith(prefix)) continue;
+          if (h.offsetTop <= scrollY) activeId = h.id;
+        }
+        tocLinks.forEach(a => {
+          const href = a.getAttribute('href') || '';
+          a.classList.toggle('active', href === '#' + activeId);
+        });
+      }
+
+      window.addEventListener('scroll', updateActiveTocLink, { passive: true });
+      updateActiveTocLink();
+    })();
+  </script>
 
 </body>
 </html>

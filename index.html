@@ -91,18 +91,17 @@
     }
 
     .logo {
-      width: 40px;
-      height: 40px;
-      background: var(--green-600);
-      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #fff;
-      font-size: 20px;
-      font-weight: 800;
       flex-shrink: 0;
+      box-shadow: 0 4px 10px -2px rgba(37, 99, 235, 0.35);
     }
+    .logo svg { width: 30px; height: 30px; }
 
     .header-title {
       font-size: 20px;
@@ -651,7 +650,13 @@
 <header class="header">
   <div class="header-inner">
     <div class="header-brand">
-      <div class="logo">S</div>
+      <div class="logo" aria-label="ShopReply">
+        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 7a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v3a3 3 0 0 1-3 3h-2l-3 3v-3H7a3 3 0 0 1-3-3V7z" fill="#fff" fill-opacity="0.4"/>
+          <path d="M11 14a3 3 0 0 1 3-3h11a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3h-4l-4 4v-4h-3a3 3 0 0 1-3-3v-6z" fill="#fff"/>
+          <path d="M20 14.5l-3 4.5h2.5l-1 3.5 3.5-5h-2.5l0.5-3z" fill="#2563eb"/>
+        </svg>
+      </div>
       <div>
         <div class="header-title">ShopReply</div>
         <div class="header-subtitle" data-i18n="header_subtitle">Hướng dẫn cài đặt & sử dụng</div>
