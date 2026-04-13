@@ -357,6 +357,7 @@
   };
 
   var _currentLang = 'vi';
+  var _licenseData = null; // cache license data for re-render on lang change
 
   function setLang(lang) {
     _currentLang = lang;
@@ -369,6 +370,16 @@
         el.textContent = T[lang][key];
       }
     });
+    // Re-render plan info if already loaded
+    if (_licenseData) renderPlanInfo();
+  }
+
+  function renderPlanInfo() {
+    if (!_licenseData || !_licenseData.plan || !_licenseData.expiresAt) return;
+    var d = new Date(_licenseData.expiresAt);
+    var dateStr = d.toLocaleDateString(_currentLang === 'vi' ? 'vi-VN' : 'en-US');
+    var tmpl = T[_currentLang].plan_info;
+    document.getElementById('planInfo').textContent = tmpl.replace('{plan}', _licenseData.plan).replace('{date}', dateStr);
   }
 
   // ===== Fetch license key from worker =====
@@ -383,16 +394,12 @@
   }
 
   function showLicense(data) {
+    _licenseData = data;
     document.getElementById('loadingBox').style.display = 'none';
     document.getElementById('licenseBox').style.display = '';
     document.getElementById('errorBox').style.display = 'none';
     document.getElementById('licenseKey').textContent = data.licenseKey;
-    if (data.plan && data.expiresAt) {
-      var d = new Date(data.expiresAt);
-      var dateStr = d.toLocaleDateString(_currentLang === 'vi' ? 'vi-VN' : 'en-US');
-      var tmpl = T[_currentLang].plan_info;
-      document.getElementById('planInfo').textContent = tmpl.replace('{plan}', data.plan).replace('{date}', dateStr);
-    }
+    renderPlanInfo();
   }
 
   function showError() {
