@@ -273,25 +273,41 @@
     </div>
 
     <div class="card-body">
-      <div class="info-block">
-        <div class="icon-mail">&#9993;&#65039;</div>
-        <p data-t="email_sent">License key &#273;&#227; &#273;&#432;&#7907;c g&#7917;i &#273;&#7871;n email c&#7911;a b&#7841;n.</p>
-        <p class="strong-text" data-t="check_inbox">Vui l&#242;ng ki&#7875;m tra h&#7897;p th&#432; (v&#224; th&#432; m&#7909;c spam).</p>
+      <!-- License key box (populated via API) -->
+      <div id="licenseBox" class="info-block" style="background:#f0fdf4;border:2px solid #22c55e;border-radius:12px;padding:20px;text-align:center;">
+        <div style="font-size:13px;color:#16a34a;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:10px;" data-t="license_label">License Key của bạn</div>
+        <div id="licenseKey" style="font-family:'Courier New',monospace;font-size:22px;font-weight:700;color:#14532d;background:#fff;padding:14px 16px;border-radius:8px;border:1px dashed #86efac;user-select:all;margin-bottom:12px;word-break:break-all;">—</div>
+        <button id="copyBtn" onclick="copyKey()" style="background:#22c55e;color:#fff;border:none;padding:10px 24px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;" data-t="copy_btn">Sao chép</button>
+        <div id="planInfo" style="font-size:13px;color:#166534;margin-top:14px;"></div>
+      </div>
+
+      <div id="loadingBox" class="info-block" style="text-align:center;padding:24px;">
+        <div style="display:inline-block;width:40px;height:40px;border:3px solid #dbeafe;border-top-color:#3b82f6;border-radius:50%;animation:spin 1s linear infinite;"></div>
+        <p style="margin-top:14px;color:#6b7280;" data-t="loading">Đang lấy license key...</p>
+      </div>
+
+      <div id="errorBox" class="info-block" style="display:none;background:#fef2f2;border:1px solid #fecaca;text-align:center;padding:20px;">
+        <div style="font-size:14px;color:#991b1b;" data-t="error_msg">
+          Chưa tìm thấy license. Có thể webhook đang xử lý. Refresh lại sau vài giây.
+        </div>
+        <p style="font-size:13px;color:#6b7280;margin-top:10px;">
+          Hoặc liên hệ: <a href="mailto:nhamingroup@gmail.com">nhamingroup@gmail.com</a>
+        </p>
       </div>
 
       <div class="steps">
-        <h3 data-t="next_steps">B&#432;&#7899;c ti&#7871;p theo</h3>
+        <h3 data-t="next_steps">Bước tiếp theo</h3>
         <div class="step">
           <div class="step-num">1</div>
-          <p data-t="step1">M&#7903; email v&#224; sao ch&#233;p license key</p>
+          <p data-t="step1">Sao chép license key phía trên</p>
         </div>
         <div class="step">
           <div class="step-num">2</div>
-          <p data-t="step2">Quay l&#7841;i ShopReply extension</p>
+          <p data-t="step2">Quay lại ShopReply extension</p>
         </div>
         <div class="step">
           <div class="step-num">3</div>
-          <p data-t="step3">V&#224;o Settings &#8594; Nh&#7853;p license key &#8594; K&#237;ch ho&#7841;t</p>
+          <p data-t="step3">Vào Settings → Nhập license key → Kích hoạt</p>
         </div>
       </div>
 
@@ -309,30 +325,41 @@
 <script>
   var T = {
     vi: {
-      title: 'C\u1ea3m \u01a1n b\u1ea1n!',
-      subtitle: 'Thanh to\u00e1n \u0111\u00e3 \u0111\u01b0\u1ee3c ghi nh\u1eadn',
-      email_sent: 'License key \u0111\u00e3 \u0111\u01b0\u1ee3c g\u1eedi \u0111\u1ebfn email c\u1ee7a b\u1ea1n.',
-      check_inbox: 'Vui l\u00f2ng ki\u1ec3m tra h\u1ed9p th\u01b0 (v\u00e0 th\u01b0 m\u1ee5c spam).',
-      next_steps: 'B\u01b0\u1edbc ti\u1ebfp theo',
-      step1: 'M\u1edf email v\u00e0 sao ch\u00e9p license key',
-      step2: 'Quay l\u1ea1i ShopReply extension',
-      step3: 'V\u00e0o Settings \u2192 Nh\u1eadp license key \u2192 K\u00edch ho\u1ea1t',
-      back_btn: '\u2190 Quay l\u1ea1i h\u01b0\u1edbng d\u1eabn'
+      title: 'Cảm ơn bạn!',
+      subtitle: 'Thanh toán đã được ghi nhận',
+      license_label: 'License Key của bạn',
+      copy_btn: 'Sao chép',
+      copied_btn: '✓ Đã sao chép',
+      loading: 'Đang lấy license key...',
+      error_msg: 'Chưa tìm thấy license. Có thể webhook đang xử lý. Refresh lại sau vài giây.',
+      next_steps: 'Bước tiếp theo',
+      step1: 'Sao chép license key phía trên',
+      step2: 'Quay lại ShopReply extension',
+      step3: 'Vào Settings → Nhập license key → Kích hoạt',
+      back_btn: '← Quay lại hướng dẫn',
+      plan_info: 'Gói {plan} · Hết hạn {date}'
     },
     en: {
       title: 'Thank you!',
       subtitle: 'Payment has been confirmed',
-      email_sent: 'License key has been sent to your email.',
-      check_inbox: 'Please check your inbox (and spam folder).',
+      license_label: 'Your License Key',
+      copy_btn: 'Copy',
+      copied_btn: '✓ Copied',
+      loading: 'Fetching license key...',
+      error_msg: 'License not found yet. Webhook may still be processing. Refresh in a few seconds.',
       next_steps: 'Next steps',
-      step1: 'Open your email and copy the license key',
-      step2: 'Go back to the ShopReply extension',
-      step3: 'Go to Settings \u2192 Enter license key \u2192 Activate',
-      back_btn: '\u2190 Back to guide'
+      step1: 'Copy the license key above',
+      step2: 'Open the ShopReply extension',
+      step3: 'Go to Settings → Enter license key → Activate',
+      back_btn: '← Back to guide',
+      plan_info: '{plan} plan · Expires {date}'
     }
   };
 
+  var _currentLang = 'vi';
+
   function setLang(lang) {
+    _currentLang = lang;
     document.querySelectorAll('.lang-toggle button').forEach(function(btn) {
       btn.classList.toggle('active', btn.dataset.lang === lang);
     });
@@ -343,7 +370,84 @@
       }
     });
   }
+
+  // ===== Fetch license key from worker =====
+  var WORKER_URL = 'https://shopreply-payment.nhamingroup.workers.dev';
+  var MAX_RETRIES = 8; // ~40s total — webhook usually arrives <10s
+  var RETRY_DELAY = 5000;
+
+  function getOrderId() {
+    var params = new URLSearchParams(window.location.search);
+    // LemonSqueezy passes order_id or order_number in thank-you URL
+    return params.get('order_id') || params.get('order') || params.get('order_number') || null;
+  }
+
+  function showLicense(data) {
+    document.getElementById('loadingBox').style.display = 'none';
+    document.getElementById('licenseBox').style.display = '';
+    document.getElementById('errorBox').style.display = 'none';
+    document.getElementById('licenseKey').textContent = data.licenseKey;
+    if (data.plan && data.expiresAt) {
+      var d = new Date(data.expiresAt);
+      var dateStr = d.toLocaleDateString(_currentLang === 'vi' ? 'vi-VN' : 'en-US');
+      var tmpl = T[_currentLang].plan_info;
+      document.getElementById('planInfo').textContent = tmpl.replace('{plan}', data.plan).replace('{date}', dateStr);
+    }
+  }
+
+  function showError() {
+    document.getElementById('loadingBox').style.display = 'none';
+    document.getElementById('licenseBox').style.display = 'none';
+    document.getElementById('errorBox').style.display = '';
+  }
+
+  function copyKey() {
+    var key = document.getElementById('licenseKey').textContent;
+    navigator.clipboard.writeText(key).then(function() {
+      var btn = document.getElementById('copyBtn');
+      btn.textContent = T[_currentLang].copied_btn;
+      setTimeout(function() { btn.textContent = T[_currentLang].copy_btn; }, 2000);
+    });
+  }
+
+  async function fetchLicense(orderId, retries) {
+    try {
+      var res = await fetch(WORKER_URL + '/api/license-by-order?order_id=' + encodeURIComponent(orderId));
+      var data = await res.json();
+      if (data.success && data.status === 'paid' && data.licenseKey) {
+        showLicense(data);
+        return;
+      }
+      // Pending — webhook not arrived yet
+      if (retries > 0) {
+        setTimeout(function() { fetchLicense(orderId, retries - 1); }, RETRY_DELAY);
+      } else {
+        showError();
+      }
+    } catch (e) {
+      if (retries > 0) {
+        setTimeout(function() { fetchLicense(orderId, retries - 1); }, RETRY_DELAY);
+      } else {
+        showError();
+      }
+    }
+  }
+
+  // Initial: hide license box, show loading
+  document.getElementById('licenseBox').style.display = 'none';
+
+  var orderId = getOrderId();
+  if (orderId) {
+    fetchLicense(orderId, MAX_RETRIES);
+  } else {
+    // No order_id in URL — show error with instructions
+    showError();
+  }
 </script>
+
+<style>
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
 
 </body>
 </html>
