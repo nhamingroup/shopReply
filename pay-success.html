@@ -389,8 +389,18 @@
 
   function getOrderId() {
     var params = new URLSearchParams(window.location.search);
-    // LemonSqueezy passes order_id or order_number in thank-you URL
-    return params.get('order_id') || params.get('order') || params.get('order_number') || null;
+    // LemonSqueezy passes order_id in thank-you URL (query string)
+    var id = params.get('order_id') || params.get('order') || params.get('order_number');
+    if (id) return id;
+    // Fallback: hash-based (if query with {order_id} failed LS URL validation)
+    var hash = (window.location.hash || '').replace(/^#/, '').trim();
+    if (hash && /^\d+$/.test(hash)) return hash;
+    // Try parsing hash as query: #order_id=XXX
+    if (hash) {
+      var hashParams = new URLSearchParams(hash);
+      return hashParams.get('order_id') || hashParams.get('order') || null;
+    }
+    return null;
   }
 
   function showLicense(data) {
