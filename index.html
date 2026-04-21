@@ -745,7 +745,7 @@
             </tr>
             <tr>
               <td data-i18n="sec_req_disk">Ổ cứng</td>
-              <td data-i18n="sec_req_disk_val">~2 GB trống (cho backend + model embedding)</td>
+              <td data-i18n="sec_req_disk_val">~5 GB trống (backend ~200MB + model gemma3:4b ~3.3GB + embedding ~120MB)</td>
             </tr>
             <tr>
               <td data-i18n="sec_req_browser">Trình duyệt</td>
@@ -765,8 +765,8 @@
         <ol>
           <li data-i18n="sec_ollama_1">Tải Ollama tại: <a href="https://ollama.com/download" target="_blank">ollama.com/download</a></li>
           <li data-i18n="sec_ollama_2">Cài đặt bình thường (Next > Next > Install)</li>
-          <li data-i18n="sec_ollama_3">Mở Command Prompt, chạy: <code>ollama pull qwen2.5:7b</code></li>
-          <li data-i18n="sec_ollama_4">Đợi tải xong (khoảng 4-5 GB)</li>
+          <li data-i18n="sec_ollama_3">Mở Command Prompt, chạy: <code>ollama pull gemma3:4b</code></li>
+          <li data-i18n="sec_ollama_4">Đợi tải xong (khoảng 3.3 GB)</li>
         </ol>
         <div class="tip" data-i18n="sec_ollama_tip">
           <strong>Lưu ý:</strong> Nếu không cài Ollama, ShopReply vẫn hoạt động bình thường — chỉ là không có AI gợi ý cho câu hỏi mới.
@@ -830,8 +830,8 @@
       </div>
 
       <figure class="screenshot">
-        <img src="images/popup.png" alt="ShopReply Popup - Giao diện chính sau khi cài đặt">
-        <figcaption data-i18n="sec_s2_cap">Popup ShopReply — hướng dẫn 3 bước cài đặt: chạy Backend, thêm Q&A, mở Facebook/Zalo</figcaption>
+        <img src="review-vi-popup.png" alt="ShopReply Popup - Giao diện chính sau khi cài đặt">
+        <figcaption data-i18n="sec_s2_cap">Popup chính của ShopReply — hiển thị số Q&A, thống kê auto-reply, nút bật/tắt nhanh</figcaption>
       </figure>
     </section>
 
@@ -864,7 +864,7 @@
       </div>
 
       <figure class="screenshot">
-        <img src="images/qa-database.png" alt="Q&A Database - Bảng câu hỏi và trả lời">
+        <img src="review-vi-qa.png" alt="Q&A Database - Bảng câu hỏi và trả lời">
         <figcaption data-i18n="sec_s3_qa_cap">Tab Q&A Database — quản lý tất cả câu hỏi/trả lời, tìm kiếm, sửa, xóa</figcaption>
       </figure>
 
@@ -932,7 +932,7 @@
       </div>
 
       <figure class="screenshot">
-        <img src="images/auto-reply-log.png" alt="Auto-Reply Log - Nhật ký tự động trả lời">
+        <img src="review-vi-log.png" alt="Auto-Reply Log - Nhật ký tự động trả lời">
         <figcaption data-i18n="sec_s4_cap">Tab Auto-Reply Log — xem lại các câu bot đã tự trả lời, đánh giá OK/Sai để bot học hỏi</figcaption>
       </figure>
     </section>
@@ -942,8 +942,8 @@
       <h2 data-i18n="sec_settings_title">Tùy chỉnh cài đặt</h2>
       <p data-i18n="sec_settings_desc">Mở cài đặt ShopReply để điều chỉnh ngưỡng tự động trả lời, giọng văn, và các nền tảng:</p>
       <figure class="screenshot">
-        <img src="images/settings.png" alt="Settings - Cài đặt ShopReply">
-        <figcaption data-i18n="sec_settings_cap">Tab Cài đặt — nền tảng, tự động trả lời, ngưỡng trả lời &amp; gợi ý, giọng văn, thông báo</figcaption>
+        <img src="review-vi-settings.png" alt="Settings - Cài đặt ShopReply">
+        <figcaption data-i18n="sec_settings_cap">Tab Settings — điều chỉnh ngưỡng auto-reply (mặc định 0.80), suggest (0.65), giọng văn, bật/tắt FB/Zalo</figcaption>
       </figure>
     </section>
 
@@ -1103,7 +1103,7 @@
       sec_req_ram: 'RAM',
       sec_req_ram_val: '8 GB (16 GB recommended if using AI suggestions)',
       sec_req_disk: 'Disk Space',
-      sec_req_disk_val: '~2 GB free (for backend + embedding model)',
+      sec_req_disk_val: '~5 GB free (backend ~200MB + gemma3:4b model ~3.3GB + embedding ~120MB)',
       sec_req_browser: 'Browser',
       sec_req_browser_val: 'Google Chrome version 120+',
       sec_req_net: 'Network',
@@ -1112,8 +1112,8 @@
       sec_ollama_desc: 'If you want ShopReply to <strong>suggest AI-generated answers</strong> for new questions:',
       sec_ollama_1: 'Download Ollama at: <a href="https://ollama.com/download" target="_blank">ollama.com/download</a>',
       sec_ollama_2: 'Install normally (Next > Next > Install)',
-      sec_ollama_3: 'Open Command Prompt, run: <code>ollama pull qwen2.5:7b</code>',
-      sec_ollama_4: 'Wait for download (about 4-5 GB)',
+      sec_ollama_3: 'Open Command Prompt, run: <code>ollama pull gemma3:4b</code>',
+      sec_ollama_4: 'Wait for download (about 3.3 GB)',
       sec_ollama_tip: '<strong>Note:</strong> Without Ollama, ShopReply still works normally — you just won\'t have AI suggestions for new questions.',
       // Step 1
       sec_s1_title: 'Install Backend (one-time only)',
@@ -1136,7 +1136,7 @@
       sec_s2_4: 'Pin ShopReply to the toolbar:<ul><li data-i18n="sec_s2_4a">Click the puzzle icon (extensions) in the top-right of Chrome</li><li data-i18n="sec_s2_4b">Find <strong>ShopReply</strong> > click the pin icon</li></ul>',
       sec_s2_4a: 'Click the puzzle icon (extensions) in the top-right of Chrome',
       sec_s2_4b: 'Find <strong>ShopReply</strong> > click the pin icon',
-      sec_s2_cap: 'ShopReply popup — 3-step setup guide: run Backend, add Q&A, open Facebook/Zalo',
+      sec_s2_cap: 'ShopReply popup — shows Q&A count, auto-reply stats, quick toggles',
       // Step 3
       sec_s3_title: 'Import Q&A pairs',
       sec_s3_desc: 'This is the most important step — you need to "teach" the bot how to reply to customers.',
@@ -1179,7 +1179,7 @@
       // Settings
       sec_settings_title: 'Customize settings',
       sec_settings_desc: 'Open ShopReply settings to adjust auto-reply threshold, tone, and platforms:',
-      sec_settings_cap: 'Settings tab — platforms, auto-reply, thresholds, reply tone, notifications',
+      sec_settings_cap: 'Settings tab — adjust auto-reply threshold (0.85), suggest (0.50), tone, toggle FB/Zalo',
       // Auto-start
       sec_autostart_title: 'Start with Windows (optional)',
       sec_autostart_desc: 'To have ShopReply start automatically when you turn on your computer:',
