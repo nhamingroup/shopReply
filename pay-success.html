@@ -389,7 +389,7 @@
 
   function getOrderId() {
     var params = new URLSearchParams(window.location.search);
-    // LemonSqueezy passes order_id in thank-you URL (query string)
+    // SePay/VietQR redirect passes order_id in thank-you URL (query string)
     var id = params.get('order_id') || params.get('order') || params.get('order_number');
     if (id) return id;
     // Fallback: hash-based (if query with {order_id} failed LS URL validation)

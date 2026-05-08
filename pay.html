@@ -559,23 +559,6 @@
       background: var(--gray-200);
     }
 
-    /* Alt payment */
-    .alt-payment {
-      text-align: center;
-      font-size: 14px;
-      color: var(--gray-600);
-      padding-bottom: 8px;
-    }
-
-    .alt-payment a {
-      color: var(--purple-600);
-      font-weight: 600;
-    }
-
-    .alt-payment a:hover {
-      text-decoration: underline;
-    }
-
     /* Error page */
     .error-page {
       text-align: center;
@@ -790,14 +773,6 @@
         <span data-t="wait_notice">Sau khi chuyen khoan, he thong se tu dong xac nhan va hien thi license key ngay tren trang nay.</span>
       </div>
 
-      <!-- Divider -->
-      <div class="divider" data-t="divider_or">hoac</div>
-
-      <!-- Alt payment -->
-      <div class="alt-payment">
-        <p data-t="alt_text">Chua co tai khoan ngan hang VN?</p>
-        <a href="#" id="altPayLink" data-t="alt_link">Thanh toan bang Visa/PayPal</a>
-      </div>
     </div>
   </div>
 
@@ -827,9 +802,6 @@
       confirm_title_polling: '\u0110ang ki\u1ec3m tra giao d\u1ecbch...',
       confirm_msg_polling: 'H\u1ec7 th\u1ed1ng \u0111ang \u0111\u1ee3i x\u00e1c nh\u1eadn t\u1eeb ng\u00e2n h\u00e0ng. Vui l\u00f2ng \u0111\u1ee3i...',
       wait_notice: 'Sau khi chuy\u1ec3n kho\u1ea3n, h\u1ec7 th\u1ed1ng s\u1ebd t\u1ef1 \u0111\u1ed9ng x\u00e1c nh\u1eadn v\u00e0 hi\u1ec3n th\u1ecb license key ngay tr\u00ean trang n\u00e0y.',
-      divider_or: 'ho\u1eb7c',
-      alt_text: 'Ch\u01b0a c\u00f3 t\u00e0i kho\u1ea3n ng\u00e2n h\u00e0ng VN?',
-      alt_link: '\u2192 Thanh to\u00e1n b\u1eb1ng Visa/PayPal',
       error_title: 'Link thanh to\u00e1n kh\u00f4ng h\u1ee3p l\u1ec7',
       error_desc: 'Vui l\u00f2ng quay l\u1ea1i extension \u0111\u1ec3 ch\u1ecdn g\u00f3i v\u00e0 thanh to\u00e1n.',
       copied: '\u0110\u00e3 sao ch\u00e9p!',
@@ -861,9 +833,6 @@
       confirm_title_polling: 'Checking transaction...',
       confirm_msg_polling: 'Waiting for bank confirmation. Please wait...',
       wait_notice: 'After transferring, the system will automatically confirm and show your license key right on this page.',
-      divider_or: 'or',
-      alt_text: "Don't have a Vietnamese bank account?",
-      alt_link: '\u2192 Pay with Visa/PayPal',
       error_title: 'Invalid payment link',
       error_desc: 'Please go back to the extension to select a plan and pay.',
       copied: 'Copied!',
@@ -953,27 +922,6 @@
     document.getElementById('copyContentBtn').onclick = function() {
       copyText(transferContent, this);
     };
-
-    // Alt payment link (LemonSqueezy) — pass orderCode + plan as custom data for webhook
-    // ShopReply store UUIDs (NOT gmail-followup or other extensions):
-    //   Basic: eaf2f03a-45b7-464c-9028-e588393e3983
-    //   Pro:   f900b81d-9380-439b-81be-c3570a3b1bb6
-    var LS_VARIANTS = {
-      BASIC: 'eaf2f03a-45b7-464c-9028-e588393e3983',
-      PRO:   'f900b81d-9380-439b-81be-c3570a3b1bb6'
-    };
-    var variantId = LS_VARIANTS[planUpper.toUpperCase()];
-    if (variantId) {
-      var lsUrl = 'https://shopreply.lemonsqueezy.com/checkout/buy/' + variantId
-        + '?checkout[custom][order_code]=' + encodeURIComponent(orderCode)
-        + '&checkout[custom][product]=SHOPREPLY'
-        + '&checkout[custom][plan]=' + encodeURIComponent(planUpper.toUpperCase());
-      document.getElementById('altPayLink').href = lsUrl;
-    } else {
-      // Unknown plan — hide LemonSqueezy option
-      var altLink = document.getElementById('altPayLink');
-      if (altLink) altLink.style.display = 'none';
-    }
 
     // Store order code for reference
     window._orderCode = orderCode;
