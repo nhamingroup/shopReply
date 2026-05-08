@@ -873,6 +873,7 @@
   // ===== URL Params =====
   var params = new URLSearchParams(window.location.search);
   var plan = params.get('plan');
+  var period = (params.get('period') || 'month').toLowerCase();
   var amount = parseInt(params.get('amount'), 10);
   var refCode = params.get('ref') || null;
 
@@ -882,7 +883,7 @@
   if (!plan || !amount || isNaN(amount)) {
     document.getElementById('errorPage').style.display = '';
   } else {
-    init(plan, amount);
+    init(plan, period, amount);
   }
 
   function generateOrderCode() {
@@ -898,15 +899,20 @@
     return num.toLocaleString('vi-VN') + '\u20AB';
   }
 
-  function init(plan, amount) {
+  function init(plan, period, amount) {
     document.getElementById('paymentCard').style.display = '';
 
     var orderCode = generateOrderCode();
     var planUpper = plan.charAt(0).toUpperCase() + plan.slice(1);
-    var transferContent = 'SHOPREPLY ' + planUpper.toUpperCase() + ' ' + orderCode;
+    var isYearly = period === 'year' || period === 'yearly';
+    var periodCode = isYearly ? '1Y' : '1M';
+    var periodLabel = isYearly
+      ? (currentLang === 'en' ? '1 year' : '1 n\u0103m')
+      : (currentLang === 'en' ? '1 month' : '1 th\u00e1ng');
+    var transferContent = 'SHOPREPLY ' + planUpper.toUpperCase() + periodCode + ' ' + orderCode;
 
     // Plan info
-    document.getElementById('planBadge').textContent = 'G\u00f3i / Plan: ' + planUpper;
+    document.getElementById('planBadge').textContent = 'G\u00f3i / Plan: ' + planUpper + ' \u2014 ' + periodLabel;
     document.getElementById('planAmount').textContent = formatAmount(amount);
     document.getElementById('displayAmount').textContent = formatAmount(amount);
     document.getElementById('transferContent').textContent = transferContent;
@@ -926,6 +932,7 @@
     // Store order code for reference
     window._orderCode = orderCode;
     window._plan = planUpper;
+    window._period = isYearly ? 'year' : 'month';
     window._amount = amount;
     window._transferContent = transferContent;
 
@@ -1080,6 +1087,7 @@
     var order = {
       orderCode: window._orderCode,
       plan: window._plan,
+      period: window._period || 'month',
       amount: window._amount,
       transferContent: window._transferContent,
       email: email,
