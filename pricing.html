@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bảng giá ShopReply — Auto Reply AI cho Facebook & Zalo</title>
+<meta name="description" content="Bảng giá ShopReply: Dùng thử 7 ngày miễn phí, Free 0đ, Basic 299K/tháng (400 khách), Pro 499K/tháng (1500 khách). FB + Zalo trên mọi gói.">
+<style>
+:root { --blue:#2563eb; --green:#10b981; --purple:#a855f7; --amber:#f59e0b; --gray:#6b7280; --text:#1f2937; --bg:#f9fafb; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; color: var(--text); background: var(--bg); line-height: 1.6; padding: 20px; }
+.container { max-width: 1200px; margin: 0 auto; }
+.nav { background: white; padding: 12px 20px; border-radius: 12px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.nav a { color: var(--blue); text-decoration: none; font-weight: 600; margin-right: 16px; }
+.hero { text-align: center; padding: 40px 20px; }
+.hero h1 { font-size: 36px; margin-bottom: 12px; color: #111; }
+.hero p { font-size: 18px; color: var(--gray); max-width: 700px; margin: 0 auto 20px; }
+.trial-banner { display: inline-block; background: #ecfdf5; border: 2px solid var(--green); color: #065f46; padding: 14px 22px; border-radius: 12px; font-weight: 700; font-size: 16px; }
+
+.tiers { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 40px 0; }
+@media (max-width: 1000px) { .tiers { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .tiers { grid-template-columns: 1fr; } }
+
+.tier { background: white; border-radius: 16px; padding: 24px; border: 2px solid #e5e7eb; position: relative; }
+.tier.trial { border-color: var(--green); }
+.tier.basic { border-color: var(--blue); }
+.tier.pro { border-color: var(--purple); }
+.tier.recommended::before { content: 'KHUYẾN NGHỊ'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--amber); color: white; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; }
+.tier h3 { font-size: 20px; margin-bottom: 8px; }
+.tier .price { font-size: 32px; font-weight: 800; margin: 8px 0; }
+.tier .price small { font-size: 14px; font-weight: 500; color: var(--gray); }
+.tier .yearly { font-size: 13px; color: var(--gray); margin-bottom: 12px; }
+.tier .save { color: var(--green); font-weight: 600; }
+.tier .quota { background: #f3f4f6; padding: 10px; border-radius: 8px; text-align: center; margin: 12px 0; font-weight: 600; }
+.tier ul { list-style: none; padding: 0; margin: 16px 0; }
+.tier li { padding: 6px 0; font-size: 14px; }
+.tier li.yes::before { content: '✓ '; color: var(--green); font-weight: 700; }
+.tier li.no { color: #9ca3af; }
+.tier li.no::before { content: '✗ '; color: #ef4444; }
+.tier .cta { display: block; width: 100%; padding: 12px; text-align: center; border-radius: 10px; font-weight: 700; text-decoration: none; margin-top: 16px; transition: opacity 0.2s; }
+.tier .cta:hover { opacity: 0.9; }
+.tier.free .cta { background: #f3f4f6; color: var(--text); }
+.tier.trial .cta { background: var(--green); color: white; }
+.tier.basic .cta { background: var(--blue); color: white; }
+.tier.pro .cta { background: var(--purple); color: white; }
+
+.compare-table { background: white; border-radius: 16px; padding: 24px; margin-top: 32px; overflow-x: auto; }
+.compare-table h2 { margin-bottom: 16px; }
+.compare-table table { width: 100%; border-collapse: collapse; }
+.compare-table th, .compare-table td { padding: 12px; text-align: center; border-bottom: 1px solid #f3f4f6; }
+.compare-table th { background: #f9fafb; font-weight: 600; }
+.compare-table td:first-child, .compare-table th:first-child { text-align: left; font-weight: 500; }
+
+.faq { background: white; border-radius: 16px; padding: 24px; margin-top: 32px; }
+.faq h2 { margin-bottom: 20px; }
+.faq details { margin-bottom: 12px; border-bottom: 1px solid #f3f4f6; padding-bottom: 12px; }
+.faq summary { cursor: pointer; font-weight: 600; padding: 8px 0; }
+.faq summary:hover { color: var(--blue); }
+.faq p { padding: 8px 0; color: var(--gray); }
+
+.footer { text-align: center; padding: 32px; color: var(--gray); font-size: 14px; }
+.footer a { color: var(--blue); }
+</style>
+</head>
+<body>
+<div class="container">
+
+<nav class="nav">
+  <a href="/">Trang chủ</a>
+  <a href="/setup.html">Hướng dẫn cài đặt</a>
+  <a href="/pricing.html" style="color:var(--purple)">Bảng giá</a>
+  <a href="/privacy.html">Bảo mật</a>
+</nav>
+
+<div class="hero">
+  <h1>Bảng giá ShopReply</h1>
+  <p>Bot AI trả lời tự động cho Facebook + Zalo. Chọn gói theo số khách hàng/tháng. Hỗ trợ cả 2 nền tảng trên mọi gói.</p>
+  <div class="trial-banner">🎁 Cài đặt lần đầu = 7 ngày dùng thử full tính năng — không cam kết</div>
+</div>
+
+<div class="tiers">
+
+  <!-- Trial -->
+  <div class="tier trial">
+    <h3>🎁 Dùng thử</h3>
+    <div class="price">0đ<small>/7 ngày</small></div>
+    <div class="yearly">Tự động kích hoạt khi cài extension</div>
+    <div class="quota">Không giới hạn khách</div>
+    <ul>
+      <li class="yes">Full tính năng Pro</li>
+      <li class="yes">Auto-reply 24/7</li>
+      <li class="yes">AI suggest (Gemma3:4b local)</li>
+      <li class="yes">Hỗ trợ FB + Zalo</li>
+      <li class="yes">Q&A không giới hạn</li>
+      <li class="yes">Bulk import CSV/Excel</li>
+    </ul>
+    <a class="cta" href="https://chromewebstore.google.com/search/ShopReply" target="_blank">Cài extension ngay</a>
+  </div>
+
+  <!-- Free -->
+  <div class="tier free">
+    <h3>Miễn phí</h3>
+    <div class="price">0đ<small>/tháng</small></div>
+    <div class="yearly">Sau khi hết trial 7 ngày</div>
+    <div class="quota">Suggestion mode</div>
+    <ul>
+      <li class="yes">30 cặp Q&A active</li>
+      <li class="yes">Gợi ý câu trả lời thủ công</li>
+      <li class="yes">Hỗ trợ FB + Zalo</li>
+      <li class="no">Auto-reply 24/7</li>
+      <li class="no">AI suggest</li>
+      <li class="no">Q&A không giới hạn</li>
+    </ul>
+    <a class="cta" href="/setup.html">Hướng dẫn cài đặt</a>
+  </div>
+
+  <!-- Basic -->
+  <div class="tier basic recommended">
+    <h3>📦 Basic</h3>
+    <div class="price">299K<small>/tháng</small></div>
+    <div class="yearly">2.99M/năm — <span class="save">tiết kiệm 17%</span></div>
+    <div class="quota">400 khách/tháng</div>
+    <ul>
+      <li class="yes">Auto-reply 24/7 cho FB + Zalo</li>
+      <li class="yes">AI suggest (Ollama local)</li>
+      <li class="yes">Q&A không giới hạn</li>
+      <li class="yes">Semantic matching</li>
+      <li class="yes">Bulk import CSV/Excel</li>
+      <li class="yes">Support qua email/Zalo</li>
+    </ul>
+    <a class="cta" href="/pay.html?plan=Basic&period=month&amount=299000">Mua Basic 299K</a>
+  </div>
+
+  <!-- Pro -->
+  <div class="tier pro">
+    <h3>🚀 Pro</h3>
+    <div class="price">499K<small>/tháng</small></div>
+    <div class="yearly">4.99M/năm — <span class="save">tiết kiệm 17%</span></div>
+    <div class="quota">1,500 khách/tháng</div>
+    <ul>
+      <li class="yes">Tất cả tính năng Basic</li>
+      <li class="yes">Quota 1,500 khách (vs Basic 400)</li>
+      <li class="yes">Priority Zalo support</li>
+      <li class="yes">Hỗ trợ trực tiếp từ dev</li>
+      <li class="yes">Phù hợp shop 50+ đơn/ngày</li>
+      <li class="yes">Tư vấn setup theo yêu cầu</li>
+    </ul>
+    <a class="cta" href="/pay.html?plan=Pro&period=month&amount=499000">Mua Pro 499K</a>
+  </div>
+
+</div>
+
+<div class="faq">
+  <h2>Câu hỏi thường gặp</h2>
+
+  <details>
+    <summary>Trial 7 ngày kích hoạt thế nào?</summary>
+    <p>Tự động khi bạn cài extension vào Chrome lần đầu. Mở popup ShopReply sẽ thấy banner xanh "🎁 Trial — Còn 7 ngày". Không cần nhập thẻ, không cần email. Hết 7 ngày, extension tự revert về gói Miễn phí (suggestion mode).</p>
+  </details>
+
+  <details>
+    <summary>"Khách hàng/tháng" được tính thế nào?</summary>
+    <p>Mỗi customer ID duy nhất (FB user ID hoặc Zalo user ID) nhắn tin tới shop của bạn trong tháng tính là 1 khách. Khách quay lại nhắn lần 2 vẫn tính 1. Reset vào ngày 1 mỗi tháng. Khi vượt giới hạn, khách CŨ vẫn được auto-reply tới hết tháng, chỉ khách MỚI bị chuyển sang suggestion mode.</p>
+  </details>
+
+  <details>
+    <summary>Có hỗ trợ cả Facebook và Zalo trên gói thấp không?</summary>
+    <p>Có! Cả 4 gói (Trial / Free / Basic / Pro) đều hỗ trợ Facebook Messenger + Zalo Chat cùng lúc. Khác biệt giữa các gói chỉ là quota khách hàng/tháng.</p>
+  </details>
+
+  <details>
+    <summary>Thanh toán bằng cách nào?</summary>
+    <p>Chuyển khoản ngân hàng qua SePay/VietQR. Tự động cấp license sau khi nhận đủ tiền (1-2 phút). Hiện tại chưa hỗ trợ thẻ tín dụng/PayPal. Phù hợp shop Việt Nam.</p>
+  </details>
+
+  <details>
+    <summary>Mua Basic sau có upgrade lên Pro được không?</summary>
+    <p>Được. Khi nâng cấp, quota khách hàng/tháng tăng từ 400 → 1,500 ngay lập tức. Tiền chênh lệch tính prorate theo số ngày còn lại của gói Basic.</p>
+  </details>
+
+  <details>
+    <summary>Vượt quá 1,500 khách/tháng (gói Pro) thì sao?</summary>
+    <p>Liên hệ chúng tôi qua Zalo để được báo giá Enterprise riêng (5,000+ khách). Hiện tại tier Pro phù hợp shop bán ~50 đơn/ngày.</p>
+  </details>
+
+  <details>
+    <summary>Có hoàn tiền nếu không hài lòng?</summary>
+    <p>Trial 7 ngày là để bạn test toàn bộ tính năng trước khi trả tiền. Sau khi đã trả phí Basic/Pro, không hỗ trợ hoàn tiền — vì vậy hãy tận dụng tối đa 7 ngày trial.</p>
+  </details>
+
+  <details>
+    <summary>Dữ liệu khách hàng có bị gửi lên cloud không?</summary>
+    <p>KHÔNG. ShopReply chạy 100% trên máy bạn (backend EXE local + Ollama LLM local). Dữ liệu khách hàng, Q&A, lịch sử chat đều lưu ở máy bạn. Worker Cloudflare chỉ verify license — không nhận nội dung tin nhắn. Xem chi tiết trong <a href="/privacy.html">chính sách bảo mật</a>.</p>
+  </details>
+
+</div>
+
+<div class="footer">
+  <p>© 2026 ShopReply — AI Auto-Reply for Facebook & Zalo</p>
+  <p>Mọi câu hỏi: <a href="mailto:nhamingroup@gmail.com">nhamingroup@gmail.com</a></p>
+</div>
+
+</div>
+</body>
+</html>

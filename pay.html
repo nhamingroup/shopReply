@@ -876,6 +876,12 @@
   var period = (params.get('period') || 'month').toLowerCase();
   var amount = parseInt(params.get('amount'), 10);
   var refCode = params.get('ref') || null;
+  // v1.3.0: renew=SHOP-AAAA-BBBB-CCCC → extend existing license instead of new key
+  var renewKey = (params.get('renew') || '').toUpperCase().trim();
+  // Validate format
+  if (renewKey && !/^SHOP-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(renewKey)) {
+    renewKey = '';
+  }
 
   // Apply Vietnamese translations on load
   setLang('vi');
@@ -883,7 +889,7 @@
   if (!plan || !amount || isNaN(amount)) {
     document.getElementById('errorPage').style.display = '';
   } else {
-    init(plan, period, amount);
+    init(plan, period, amount, renewKey);
   }
 
   function generateOrderCode() {
@@ -899,7 +905,7 @@
     return num.toLocaleString('vi-VN') + '\u20AB';
   }
 
-  function init(plan, period, amount) {
+  function init(plan, period, amount, renewKey) {
     document.getElementById('paymentCard').style.display = '';
 
     var orderCode = generateOrderCode();
@@ -909,13 +915,38 @@
     var periodLabel = isYearly
       ? (currentLang === 'en' ? '1 year' : '1 n\u0103m')
       : (currentLang === 'en' ? '1 month' : '1 th\u00e1ng');
-    var transferContent = 'SHOPREPLY ' + planUpper.toUpperCase() + periodCode + ' ' + orderCode;
 
-    // Plan info
-    document.getElementById('planBadge').textContent = 'G\u00f3i / Plan: ' + planUpper + ' \u2014 ' + periodLabel;
+    // v1.3.0: append R-XXXXXXXXXXXX (compact license key) for renewal flow.
+    // Worker parses this to extend existing license instead of creating new key.
+    var renewSuffix = '';
+    if (renewKey) {
+      // SHOP-AAAA-BBBB-CCCC \u2192 AAAABBBBCCCC (12 chars)
+      var compact = renewKey.replace(/^SHOP-/, '').replace(/-/g, '');
+      renewSuffix = ' R-' + compact;
+    }
+    var transferContent = 'SHOPREPLY ' + planUpper.toUpperCase() + periodCode + ' ' + orderCode + renewSuffix;
+
+    // Plan info \u2014 show renewal label if renewing
+    var planLabel = renewKey
+      ? ('Gia h\u1ea1n / Renew: ' + planUpper + ' \u2014 +' + periodLabel)
+      : ('G\u00f3i / Plan: ' + planUpper + ' \u2014 ' + periodLabel);
+    document.getElementById('planBadge').textContent = planLabel;
     document.getElementById('planAmount').textContent = formatAmount(amount);
     document.getElementById('displayAmount').textContent = formatAmount(amount);
     document.getElementById('transferContent').textContent = transferContent;
+
+    // Show renewal notice with current license key (if renew flow)
+    if (renewKey) {
+      var notice = document.getElementById('renewNotice');
+      if (!notice) {
+        notice = document.createElement('div');
+        notice.id = 'renewNotice';
+        notice.style.cssText = 'background:#ecfdf5;border:2px solid #10b981;color:#065f46;padding:12px 16px;border-radius:10px;margin:12px 0;font-size:14px;';
+        notice.innerHTML = '\ud83d\udd04 <strong>Gia h\u1ea1n license:</strong> <code>' + renewKey + '</code><br>Sau thanh to\u00e1n, license n\u00e0y s\u1ebd \u0111\u01b0\u1ee3c gia h\u1ea1n +' + periodLabel + '. Kh\u00f4ng c\u1ea7n nh\u1eadp m\u00e3 m\u1edbi.';
+        var paymentCard = document.getElementById('paymentCard');
+        paymentCard.insertBefore(notice, paymentCard.firstChild);
+      }
+    }
 
     // QR image
     var qrUrl = 'https://img.vietqr.io/image/' + BANK_CODE + '-' + ACCOUNT_NUMBER + '-compact.png'

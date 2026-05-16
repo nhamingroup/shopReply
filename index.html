@@ -689,6 +689,7 @@
   <nav class="sidebar" id="sidebar">
     <div class="sidebar-title" data-i18n="toc_title">Mục lục</div>
     <ul class="toc-list">
+      <li><a href="/pricing.html" data-i18n="toc_pricing" style="color:#a855f7;font-weight:600;">💰 Bảng giá</a></li>
       <li><a href="#yeu-cau" data-i18n="toc_req">Yêu cầu hệ thống</a></li>
       <li><a href="#ollama" class="toc-sub" data-i18n="toc_ollama">Cài Ollama (tùy chọn)</a></li>
       <li><a href="#buoc-1" data-i18n="toc_step1">Bước 1: Cài Backend</a></li>
@@ -717,6 +718,9 @@
       <h1 data-i18n="hero_title">Hướng dẫn cài đặt ShopReply</h1>
       <p data-i18n="hero_desc">Phần mềm tự động trả lời tin nhắn cho shop bán hàng trên Facebook & Zalo.<br>
       Mọi dữ liệu đều được xử lý <strong>trên máy của bạn</strong> — không gì bị gửi lên cloud.</p>
+      <div class="trial-badge" data-i18n="hero_trial" style="background:#ecfdf5;border:2px solid #10b981;color:#065f46;padding:10px 18px;border-radius:12px;margin:14px 0 6px;display:inline-flex;align-items:center;gap:8px;font-weight:600;">
+        🎁 Cài đặt lần đầu = tự động kích hoạt 7 ngày dùng thử full tính năng — không cam kết
+      </div>
       <div class="privacy-badge">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         <span data-i18n="hero_privacy">100% bảo mật — dữ liệu không rời máy bạn</span>
@@ -784,7 +788,7 @@
 
       <div class="card">
         <ol>
-          <li data-i18n="sec_s1_1"><a href="https://github.com/nhamingroup/ShopReply-Backend/releases/latest/download/ShopReply-Backend-v1.0.3.zip" target="_blank" style="color:#2563eb;font-weight:600;">⬇ Tải ShopReply-Backend-v1.0.3.zip</a> — giải nén ra sẽ có file <code>ShopReply-Backend.exe</code></li>
+          <li data-i18n="sec_s1_1"><a href="https://github.com/nhamingroup/ShopReply-Backend/releases/latest/download/ShopReply-Backend-v1.0.4.zip" target="_blank" style="color:#2563eb;font-weight:600;">⬇ Tải ShopReply-Backend-v1.0.4.zip</a> — giải nén ra sẽ có file <code>ShopReply-Backend.exe</code></li>
           <li data-i18n="sec_s1_2">Tạo 1 thư mục riêng, ví dụ: <code>C:\ShopReply\</code></li>
           <li data-i18n="sec_s1_3">Bỏ file .exe vào thư mục đó</li>
           <li data-i18n="sec_s1_4">Double-click để chạy</li>
@@ -918,8 +922,8 @@
           <li data-i18n="sec_s4_2">Mở <strong>Facebook Messages</strong> (<code>facebook.com/messages</code>) hoặc <strong>Zalo Web</strong> (<code>chat.zalo.me</code>)</li>
           <li data-i18n="sec_s4_3">Khi có tin nhắn khách hàng:
             <ul>
-              <li data-i18n="sec_s4_3a"><strong>Câu đã có sẵn trong DB đã duyệt</strong> (độ khớp &ge; 80%) — ShopReply <strong>tự động trả lời</strong> (chỉ áp dụng gói <strong>Pro</strong>)</li>
-              <li data-i18n="sec_s4_3b"><strong>Câu tương tự</strong> (65-79%) — Hiện bảng đề xuất, bạn chọn/sửa rồi gửi</li>
+              <li data-i18n="sec_s4_3a"><strong>Câu đã có sẵn trong DB đã duyệt</strong> (độ khớp &ge; 80%) — ShopReply <strong>tự động trả lời</strong> (áp dụng cho gói <strong>Trial / Basic / Pro</strong> — gói Free chỉ gợi ý, không tự động gửi)</li>
+              <li data-i18n="sec_s4_3b"><strong>Câu tương tự</strong> (50-79%) — Hiện bảng đề xuất, bạn chọn/sửa rồi gửi</li>
               <li data-i18n="sec_s4_3c"><strong>Câu hoàn toàn mới</strong> — Hiện gợi ý từ AI (nếu có Ollama), bạn tự viết/chỉnh rồi gửi. AI <strong>không bao giờ tự gửi</strong> — tránh bịa sai</li>
               <li data-i18n="sec_s4_3d"><strong>Cảnh báo</strong> — Nếu khách hỏi không liên quan shop hoặc yêu cầu gặp người thật, ShopReply hiện cảnh báo để bạn xử lý trực tiếp</li>
             </ul>
@@ -1044,7 +1048,7 @@
           Đã có mã rồi? Vào <a href="affiliate.html" target="_blank">trang giới thiệu</a> > nhập mã <code>REF-XXXXXX</code> để xem dashboard thống kê.
         </p>
         <div style="margin-top:16px;text-align:center;">
-          <a href="affiliate.html" target="_blank" style="display:inline-block;background:var(--blue-600);color:#fff;padding:12px 28px;border-radius:10px;font-weight:600;text-decoration:none;" data-i18n="sec_affiliate_cta">Đăng ký Affiliate ngay →</a>
+          <a href="affiliate.html" target="_blank" style="display:inline-block;background:var(--blue-600);color:#fff;padding:12px 28px;border-radius:10px;font-weight:600;text-decoration:none;" data-i18n="sec_affiliate_cta">Đăng ký Affiliate ngay</a>
         </div>
       </div>
     </section>
@@ -1119,6 +1123,7 @@
       // Hero
       hero_title: 'ShopReply Setup Guide',
       hero_desc: 'Auto-reply software for shop owners on Facebook & Zalo.<br>All data is processed <strong>on your computer</strong> — nothing is sent to the cloud.',
+      hero_trial: '🎁 First install = 7-day full-feature trial automatically activated — no commitment',
       hero_privacy: '100% private — your data never leaves your machine',
       // Sections — using data-i18n-section on parent containers
       sec_req_title: 'System Requirements',
@@ -1143,7 +1148,7 @@
       sec_ollama_tip: '<strong>Note:</strong> Without Ollama, ShopReply still works normally — you just won\'t have AI suggestions for new questions.',
       // Step 1
       sec_s1_title: 'Install Backend (one-time only)',
-      sec_s1_1: '<a href="https://github.com/nhamingroup/ShopReply-Backend/releases/latest/download/ShopReply-Backend-v1.0.3.zip" target="_blank" style="color:#2563eb;font-weight:600;">⬇ Download ShopReply-Backend-v1.0.3.zip</a> — extract to get <code>ShopReply-Backend.exe</code>',
+      sec_s1_1: '<a href="https://github.com/nhamingroup/ShopReply-Backend/releases/latest/download/ShopReply-Backend-v1.0.4.zip" target="_blank" style="color:#2563eb;font-weight:600;">⬇ Download ShopReply-Backend-v1.0.4.zip</a> — extract to get <code>ShopReply-Backend.exe</code>',
       sec_s1_2: 'Create a folder, e.g.: <code>C:\\ShopReply\\</code>',
       sec_s1_3: 'Place the .exe file in that folder',
       sec_s1_4: 'Double-click to run',
@@ -1195,9 +1200,9 @@
       sec_s4_title: 'Start using',
       sec_s4_1: 'Make sure ShopReply Backend is running (green icon in system tray)',
       sec_s4_2: 'Open <strong>Facebook Messages</strong> (<code>facebook.com/messages</code>) or <strong>Zalo Web</strong> (<code>chat.zalo.me</code>)',
-      sec_s4_3: 'When a customer message arrives:<ul><li data-i18n="sec_s4_3a"><strong>Known question in DB</strong> (accuracy &ge; 85%) — ShopReply <strong>auto-replies instantly</strong></li><li data-i18n="sec_s4_3b"><strong>Similar question</strong> (50-84%) — Shows suggestion panel, you pick/edit then send</li><li data-i18n="sec_s4_3c"><strong>Completely new question</strong> — Shows AI suggestion (if Ollama installed), you write and send</li></ul>',
-      sec_s4_3a: '<strong>Known question in DB</strong> (accuracy &ge; 85%) — ShopReply <strong>auto-replies instantly</strong>',
-      sec_s4_3b: '<strong>Similar question</strong> (50-84%) — Shows suggestion panel, you pick/edit then send',
+      sec_s4_3: 'When a customer message arrives:<ul><li data-i18n="sec_s4_3a"><strong>Known question in DB</strong> (accuracy &ge; 80%) — ShopReply <strong>auto-replies instantly</strong> (Trial / Basic / Pro — Free shows suggestion only, no auto-send)</li><li data-i18n="sec_s4_3b"><strong>Similar question</strong> (50-79%) — Shows suggestion panel, you pick/edit then send</li><li data-i18n="sec_s4_3c"><strong>Completely new question</strong> — Shows AI suggestion (if Ollama installed), you write and send</li></ul>',
+      sec_s4_3a: '<strong>Known question in DB</strong> (accuracy &ge; 80%) — ShopReply <strong>auto-replies instantly</strong> (Trial / Basic / Pro)',
+      sec_s4_3b: '<strong>Similar question</strong> (50-79%) — Shows suggestion panel, you pick/edit then send',
       sec_s4_3c: '<strong>Completely new question</strong> — Shows AI suggestion (if Ollama installed), you write and send',
       sec_s4_4: 'Every time you reply to a new question, ShopReply learns it for next time',
       sec_s4_tip: '<strong>The more you use it, the smarter it gets.</strong> After 1-2 weeks, the bot can auto-reply to 80-90% of questions.',
@@ -1245,7 +1250,7 @@
       sec_affiliate_4: 'When friends buy ShopReply via that link, you earn <strong>50,000đ</strong>',
       sec_affiliate_5: 'Commissions are paid out <strong>every Sunday</strong> (minimum 200,000đ — transferred to your registered bank account)',
       sec_affiliate_note: 'Already have a code? Visit the <a href="affiliate.html" target="_blank">referral page</a> > enter your <code>REF-XXXXXX</code> code to view the stats dashboard.',
-      sec_affiliate_cta: 'Register as Affiliate →',
+      sec_affiliate_cta: 'Register as Affiliate',
       // Donate
       toc_donate: 'Support the author',
       sec_donate_title: 'Support the Author',

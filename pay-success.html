@@ -336,7 +336,7 @@
       step1: 'Sao chép license key phía trên',
       step2: 'Quay lại ShopReply extension',
       step3: 'Vào Settings → Nhập license key → Kích hoạt',
-      back_btn: '← Quay lại hướng dẫn',
+      back_btn: 'Quay lại hướng dẫn',
       plan_info: 'Gói {plan} · Hết hạn {date}'
     },
     en: {
@@ -351,7 +351,7 @@
       step1: 'Copy the license key above',
       step2: 'Open the ShopReply extension',
       step3: 'Go to Settings → Enter license key → Activate',
-      back_btn: '← Back to guide',
+      back_btn: 'Back to guide',
       plan_info: '{plan} plan · Expires {date}'
     }
   };
@@ -409,6 +409,26 @@
     document.getElementById('licenseBox').style.display = '';
     document.getElementById('errorBox').style.display = 'none';
     document.getElementById('licenseKey').textContent = data.licenseKey;
+
+    // v1.3.0: detect renewal flow — license key is the SAME as previous
+    if (data.renewedFor || data.newExpiresAt) {
+      var heading = document.querySelector('[data-t="title"]');
+      if (heading) heading.textContent = '🔄 Gia hạn thành công! / Renewed!';
+      var subtitle = document.querySelector('[data-t="subtitle"]');
+      if (subtitle) subtitle.textContent = 'License của bạn đã được gia hạn — không cần nhập key mới.';
+      var label = document.querySelector('[data-t="license_label"]');
+      if (label) label.textContent = 'License đã gia hạn — vẫn dùng key này:';
+      // Hide "Steps" because user doesn't need to re-activate
+      var steps = document.querySelector('.steps');
+      if (steps) {
+        steps.innerHTML = '<h3>✅ Đã xong — bot tiếp tục hoạt động</h3>' +
+          '<p style="color:#6b7280;font-size:14px;">Bạn KHÔNG cần nhập lại key. Extension sẽ tự nhận biết license đã gia hạn trong vài phút.</p>' +
+          (data.newExpiresAt
+            ? '<p style="color:#16a34a;font-weight:600;font-size:14px;">Hết hạn mới: ' + new Date(data.newExpiresAt).toLocaleDateString('vi-VN') + '</p>'
+            : '');
+      }
+    }
+
     renderPlanInfo();
   }
 
